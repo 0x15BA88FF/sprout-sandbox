@@ -1,0 +1,7 @@
+/node_modules
+/public/style/output.css
+
+.gitconfig
+.package-lock.json
+
+*.env

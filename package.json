@@ -1,11 +1,30 @@
 {
-  "name": "sprout",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "cybotics",
-  "license": "ISC",
-  "description": ""
+    "name": "sprout",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "npx nodemon app.js",
+        "style": "npx tailwindcss -i ./public/styles/style.css -o ./public/styles/output.css --watch",
+        "run": "node app.js"
+    },
+    "author": "cybotics",
+    "license": "ISC",
+    "devDependencies": {
+        "tailwindcss": "^3.4.3"
+    },
+    "dependencies": {
+        "autoprefixer": "^10.4.19",
+        "bcryptjs": "^2.4.3",
+        "connect-mongodb-session": "^2.2.0",
+        "dotenv": "^16.4.5",
+        "ejs": "^3.1.10",
+        "express": "^4.19.2",
+        "express-session": "^1.18.0",
+        "mongoose": "^8.3.4",
+        "multer": "^1.4.5-lts.1",
+        "nodemon": "^3.1.0",
+        "postcss": "^8.4.38",
+        "postcss-cli": "^11.0.0"
+    }
 }
