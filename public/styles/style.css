@@ -40,13 +40,21 @@
 }
 
 body { @apply w-screen min-h-screen flex flex-col gap-4 }
+
+section { @apply flex flex-col gap-4  }
+footer { @apply flex flex-col gap-4 }
+footer .main { @apply flex flex-col gap-2 }
+footer .main hr { @apply w-full border-[1px] mx-auto }
+footer .links { @apply flex flex-wrap items-center gap-12 }
+footer .copyright { @apply flex items-center justify-center p-2 bg-background-100 }
+
 h1 { @apply text-4xl font-bold text-text-800; }
 h2 { @apply text-3xl font-bold text-text-800; }
 h3 { @apply text-2xl font-bold text-text-800; }
 h4 { @apply text-xl font-bold text-text-800; }
 h5 { @apply text-lg font-bold text-text-800; }
 h6 { @apply text-base font-bold text-text-800; }
-p { @apply text-base text-text-600 mb-4; }
+p { @apply text-base text-text-800; }
 a { @apply cursor-pointer; }
 
 .container { @apply mx-auto px-4; }
@@ -58,8 +66,14 @@ a { @apply cursor-pointer; }
 .secondary { @apply bg-primary-200; }
 
 .icon { @apply aspect-square }
+.icon-sm { @apply icon h-6 w-6 }
 .icon-base { @apply icon h-6 w-6 }
 .icon-md { @apply icon h-12 w-12 }
+
+.thumbnail { @apply aspect-square }
+.thumbnail-base { @apply thumbnail w-12 h-12 }
+.thumbnail-auto { @apply thumbnail w-full }
+.thumbnail-md { @apply thumbnail w-16 h-16 }
 
 /* Components */
 .navbar { @apply flex flex-col gap-2 w-full p-2 bg-background-50 border-b-2 }
@@ -71,5 +85,30 @@ a { @apply cursor-pointer; }
 .navbar form.search input { @apply w-full bg-background-100 }
 .navbar .filter { @apply items-start justify-between }
 
+.category-card { @apply w-max flex flex-col gap-2 items-center }
+.category-card img { @apply thumbnail-md rounded-full }
+.category-card .title { @apply text-lg text-center text-text-900 font-semibold }
+
+.price { @apply flex items-baseline }
+.price-base .currency { @apply font-semibold }
+.price-base .priceWhole { @apply text-xl text-text-900 font-bold }
+.price-base .priceDecimal { @apply text-lg text-text-900 font-bold }
+.price-base .quantity { @apply text-base text-text-900 font-semibold }
+
+.price-lg .currency { @apply font-semibold }
+.price-lg .priceWhole { @apply text-3xl text-text-900 font-bold }
+.price-lg .priceDecimal { @apply text-lg text-text-900 font-bold }
+.price-lg .quantity { @apply text-base text-text-900 font-semibold }
+
+.ratings { @apply flex gap-1 }
+
+.product-card { @apply flex flex-col gap-2 p-2 }
+.product-card .title { @apply text-lg text-text-900 font-semibold truncate text-ellipsis }
+.product-card .image { @apply thumbnail-auto bg-background-100 rounded-lg }
+.product-card .cart-button { @apply w-max h-max p-4 m-4 bg-background-50 rounded-full shadow-lg }
+
+
 /* Elements */
 .error-section { @apply w-full h-full flex-grow flex flex-col items-center justify-center }
+.categories-section { @apply flex flex-wrap justify-between }
+.products-section { @apply grid grid-flow-row grid-cols-2 justify-between }
