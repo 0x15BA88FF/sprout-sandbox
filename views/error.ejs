@@ -6,7 +6,9 @@
 </head>
 
 <body>
-    <section>
+    <%- include('./components/navbar') %>
+
+    <section class="container error-section">
         <h1>ERROR: <%= statusCode %></h1>
         <p><%= statusMessage %></p>
     </section>
