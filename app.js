@@ -3,6 +3,8 @@ const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
+// const notFound = require('./routes/middleware/notFound');
+// const serverError = require('./routes/middleware/serverError');
 
 const app = express();
 const port = 3000 || process.env.PORT;
@@ -47,5 +49,8 @@ fs.readdirSync(routesDirectory).forEach(file => {
 
     }
 });
+
+// notFound
+// serverError
 
 app.listen(port, () => console.log(`Server listening on port ${ port }`));

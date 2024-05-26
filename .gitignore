@@ -2,6 +2,6 @@
 /public/style/output.css
 
 .gitconfig
-.package-lock.json
+package-lock.json
 
 *.env
