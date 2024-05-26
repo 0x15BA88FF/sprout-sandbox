@@ -1,5 +1,5 @@
 /node_modules
-/public/style/output.css
+/public/styles/output.css
 
 .gitconfig
 package-lock.json
