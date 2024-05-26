@@ -2,3 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    :root {
+        --text-50: #ffffff;
+        --text-100: #e6e6e6;
+        --text-200: #cccccc;
+        --text-300: #b3b3b3;
+        --text-400: #999999;
+        --text-500: #808080;
+        --text-600: #666666;
+        --text-700: #4d4d4d;
+        --text-800: #333333;
+        --text-900: #1a1a1a;
+        
+        --background-50: #ffffff;
+        --background-100: #e6e6e6;
+        --background-200: #cccccc;
+        --background-300: #b3b3b3;
+        --background-400: #999999;
+        --background-500: #808080;
+        --background-600: #666666;
+        --background-700: #4d4d4d;
+        --background-800: #333333;
+        --background-900: #1a1a1a;
+        
+        --primary-50: #e8fdf0;
+        --primary-100: #d1fae1;
+        --primary-200: #a2f6c4;
+        --primary-300: #74f1a6;
+        --primary-400: #45ed88;
+        --primary-500: #17e86b;
+        --primary-600: #12ba55;
+        --primary-700: #0e8b40;
+        --primary-800: #095d2b;
+        --primary-900: #052e15;
+    }
+}
+
+body { @apply w-screen min-h-screen flex flex-col gap-4 }
+h1 { @apply text-4xl font-bold text-text-800; }
+h2 { @apply text-3xl font-bold text-text-800; }
+h3 { @apply text-2xl font-bold text-text-800; }
+h4 { @apply text-xl font-bold text-text-800; }
+h5 { @apply text-lg font-bold text-text-800; }
+h6 { @apply text-base font-bold text-text-800; }
+p { @apply text-base text-text-600 mb-4; }
+a { @apply cursor-pointer; }
+
+.container { @apply mx-auto px-4; }
+
+.button { @apply p-2; }
+.link { @apply hover:text-primary-500; }
+.default { @apply bg-background-200; }
+.primary { @apply bg-primary-500; }
+.secondary { @apply bg-primary-200; }
+
+.icon { @apply aspect-square }
+.icon-base { @apply icon h-6 w-6 }
+.icon-md { @apply icon h-12 w-12 }
+
+/* Components */
+.navbar { @apply flex flex-col gap-2 w-full p-2 bg-background-50 border-b-2 }
+.navbar .main { @apply flex items-center justify-between }
+.navbar .container .left { @apply flex items-center gap-2 }
+.navbar .container .right { @apply flex items-center gap-2 }
+.navbar .logo { @apply text-2xl text-primary-500 font-bold }
+.navbar form.search { @apply flex flex-grow p-2 bg-background-100 rounded-lg }
+.navbar form.search input { @apply w-full bg-background-100 }
+.navbar .filter { @apply items-start justify-between }
+
+/* Elements */
+.error-section { @apply w-full h-full flex-grow flex flex-col items-center justify-center }

@@ -446,6 +446,39 @@ video {
   display: none;
 }
 
+:root {
+  --text-50: #ffffff;
+  --text-100: #e6e6e6;
+  --text-200: #cccccc;
+  --text-300: #b3b3b3;
+  --text-400: #999999;
+  --text-500: #808080;
+  --text-600: #666666;
+  --text-700: #4d4d4d;
+  --text-800: #333333;
+  --text-900: #1a1a1a;
+  --background-50: #ffffff;
+  --background-100: #e6e6e6;
+  --background-200: #cccccc;
+  --background-300: #b3b3b3;
+  --background-400: #999999;
+  --background-500: #808080;
+  --background-600: #666666;
+  --background-700: #4d4d4d;
+  --background-800: #333333;
+  --background-900: #1a1a1a;
+  --primary-50: #e8fdf0;
+  --primary-100: #d1fae1;
+  --primary-200: #a2f6c4;
+  --primary-300: #74f1a6;
+  --primary-400: #45ed88;
+  --primary-500: #17e86b;
+  --primary-600: #12ba55;
+  --primary-700: #0e8b40;
+  --primary-800: #095d2b;
+  --primary-900: #052e15;
+}
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -554,3 +587,225 @@ video {
   --tw-contain-style:  ;
 }
 
+.container {
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .container {
+    max-width: 480px;
+  }
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+.flex {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
+
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+h1 {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 700;
+  color: var(--text-800);
+}
+
+h2 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+  color: var(--text-800);
+}
+
+h3 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  color: var(--text-800);
+}
+
+h4 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  color: var(--text-800);
+}
+
+h5 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  color: var(--text-800);
+}
+
+h6 {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 700;
+  color: var(--text-800);
+}
+
+p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--text-600);
+}
+
+a {
+  cursor: pointer;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.button {
+  padding: 0.5rem;
+}
+
+.link:hover {
+  color: var(--primary-500);
+}
+
+.default {
+  background-color: var(--background-200);
+}
+
+.primary {
+  background-color: var(--primary-500);
+}
+
+.secondary {
+  background-color: var(--primary-200);
+}
+
+.icon {
+  aspect-ratio: 1 / 1;
+}
+
+.icon-base {
+  height: 1.5rem;
+  width: 1.5rem;
+  aspect-ratio: 1 / 1;
+}
+
+.icon-md {
+  height: 3rem;
+  width: 3rem;
+  aspect-ratio: 1 / 1;
+}
+
+/* Components */
+
+.navbar {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-bottom-width: 2px;
+  background-color: var(--background-50);
+  padding: 0.5rem;
+}
+
+.navbar .main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar .container .left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar .container .right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  color: var(--primary-500);
+}
+
+.navbar form.search {
+  display: flex;
+  flex-grow: 1;
+  border-radius: 0.5rem;
+  background-color: var(--background-100);
+  padding: 0.5rem;
+}
+
+.navbar form.search input {
+  width: 100%;
+  background-color: var(--background-100);
+}
+
+.navbar .filter {
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+/* Elements */
+
+.error-section {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
