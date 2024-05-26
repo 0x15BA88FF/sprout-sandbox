@@ -3,8 +3,8 @@ const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
-// const notFound = require('./routes/middleware/notFound');
-// const serverError = require('./routes/middleware/serverError');
+const notFound = require('./routes/middleware/notFound');
+const serverError = require('./routes/middleware/serverError');
 
 const app = express();
 const port = 3000 || process.env.PORT;
@@ -43,14 +43,14 @@ fs.readdirSync(routesDirectory).forEach(file => {
                 break;
             default:
                 if (typeof route === 'function') { app.use(`/${ filename }`, route) }
-                else { throw new Error(`Invalid route handler in ${ routesDirectory + file }.`) }
+                else { console.error(`Invalid route handler in ${ file }.`) }
                 break;
         }
 
     }
 });
 
-// notFound
-// serverError
+app.use(notFound)
+app.use(serverError)
 
 app.listen(port, () => console.log(`Server listening on port ${ port }`));
