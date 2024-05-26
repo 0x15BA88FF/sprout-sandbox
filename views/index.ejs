@@ -9,8 +9,32 @@
     <%- include('./components/navbar') %>
 
     <section class="container">
-        <h2>Categories</h2>
+        <h3>Categories</h3>
+        <div class="categories-section">
+            <%- include('./components/categoryCard', { image: 'default.png', title: 'vegitables' }) %>
+            <%- include('./components/categoryCard', { image: 'default.png', title: 'vegitables' }) %>
+            <%- include('./components/categoryCard', { image: 'default.png', title: 'vegitables' }) %>
+            <%- include('./components/categoryCard', { image: 'default.png', title: 'vegitables' }) %>
+            <%- include('./components/categoryCard', { image: 'default.png', title: 'vegitables' }) %>
+            <%- include('./components/categoryCard', { image: 'default.png', title: 'vegitables' }) %>
+            <%- include('./components/categoryCard', { image: 'default.png', title: 'vegitables' }) %>
+            <%- include('./components/categoryCard', { image: 'default.png', title: 'vegitables' }) %>
+        </div>
+
+        <h3>Recommended</h3>
+        <div class="products-section">
+            <% products.forEach((product) => { %>
+                <%- include('./components/productCard', { title: product.title, currency: product.currency, price: product.price, quantity: product.quantity, rating: product.rating, isInCart: product.isInCart }) %>
+                <%- include('./components/productCard', { title: product.title, currency: product.currency, price: product.price, quantity: product.quantity, rating: product.rating, isInCart: product.isInCart }) %>
+                <%- include('./components/productCard', { title: product.title, currency: product.currency, price: product.price, quantity: product.quantity, rating: product.rating, isInCart: product.isInCart }) %>
+                <%- include('./components/productCard', { title: product.title, currency: product.currency, price: product.price, quantity: product.quantity, rating: product.rating, isInCart: product.isInCart }) %>
+                <%- include('./components/productCard', { title: product.title, currency: product.currency, price: product.price, quantity: product.quantity, rating: product.rating, isInCart: product.isInCart }) %>
+                <%- include('./components/productCard', { title: product.title, currency: product.currency, price: product.price, quantity: product.quantity, rating: product.rating, isInCart: product.isInCart }) %>
+            <% }); %>
+        </div>
     </section>
+
+    <%- include('./components/footer') %>
 </body>
 
 </html>

@@ -1,0 +1,6 @@
+<span class="price <%= classes %>">
+    <p class="currency"><%= currency %></p>
+    <p class="priceWhole"><%= String(price).split('.')[0] %></p>
+    <p class="priceDecimal">.<%= String(price).split('.')[1] %></p>
+    <p class="quantity">/<%= quantity %></p>
+</span>
