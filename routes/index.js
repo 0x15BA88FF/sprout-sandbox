@@ -1,18 +1,16 @@
 const express = require("express");
+const auth = require("./middleware/auth");
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.render('index', { products: [
-        {
-            title: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum laborum explicabo minima nisi libero quidem!",
-            rating: 3,
-            currency: 'GHS',
-            price: 59.99,
-            quantity: 'pcs',
-            isInCart: false,
-        }
-    ]
+router.get('/', auth, (req, res) => {
+    res.render('buy', {
+        products: [
+            { _id: 'sdfdsf0', title: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum laborum explicabo minima nisi libero quidem!", rating: 4, currency: 'GHS', price: 59.99, quantity: 'pcs', isInCart: false, }
+        ],
+        farmers : [],
+        traders: [],
+        agents: [],
     });
 });
 

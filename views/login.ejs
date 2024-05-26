@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+
+<head>
+    <%- include('./components/head', { title: 'Log in' }) %>
+</head>
+
+<body>
+    <%- include('./components/notificationsModal', { notifications }) %>
+    
+    <section class="login-section">
+        <img class="thumbnail-md" src="/images/logo.svg" alt="Logo">
+        <h1>Login</h1>
+        <form action="/login" method="post">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="e.g. example@mail.com" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="*************" required>
+
+            <input type="submit" value="Log in">
+            <p>Don't have an account? <a href="/signup">Sign up instead.</a></p>
+        </form>
+    </section>
+</body>
+
+</html>

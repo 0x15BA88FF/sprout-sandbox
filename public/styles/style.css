@@ -41,7 +41,7 @@
 
 body { @apply w-screen min-h-screen flex flex-col gap-4 }
 
-section { @apply flex flex-col gap-4  }
+section { @apply flex flex-col flex-grow gap-4  }
 footer { @apply flex flex-col gap-4 }
 footer .main { @apply flex flex-col gap-2 }
 footer .main hr { @apply w-full border-[1px] mx-auto }
@@ -57,7 +57,15 @@ h6 { @apply text-base font-bold text-text-800; }
 p { @apply text-base text-text-800; }
 a { @apply cursor-pointer; }
 
+svg * { fill: inherit; }
+
+input { @apply p-2 rounded-lg bg-background-100 }
+select { @apply p-2 rounded-lg bg-background-100 }
+
+input[type='submit'] { @apply text-text-50 bg-primary-400 hover:bg-primary-500 }
+
 .container { @apply mx-auto px-4; }
+.segment { @apply flex-col gap-2 }
 
 .button { @apply p-2; }
 .link { @apply hover:text-primary-500; }
@@ -76,6 +84,17 @@ a { @apply cursor-pointer; }
 .thumbnail-md { @apply thumbnail w-16 h-16 }
 
 /* Components */
+.notification-modal-container { @apply fixed top-0 w-screen h-[150px] flex flex-col items-center gap-2 p-4 overflow-y-hidden }
+.notification-modal { @apply w-full max-w-96 flex items-center justify-between p-4 rounded-lg shadow-lg }
+.notification-modal.error { @apply bg-red-100 border-2 border-red-200 }
+.notification-modal.warn { @apply bg-yellow-100 border-2 border-yellow-200 }
+.notification-modal.info { @apply bg-blue-100 border-2 border-blue-200 }
+.notification-modal .main { @apply flex items-center gap-4 }
+
+.notification-modal.error .main svg{ @apply fill-red-500 }
+.notification-modal.warn .main svg{ @apply fill-yellow-500 }
+.notification-modal.info .main svg{ @apply fill-blue-500 }
+
 .navbar { @apply flex flex-col gap-2 w-full p-2 bg-background-50 border-b-2 }
 .navbar .main { @apply flex items-center justify-between }
 .navbar .container .left { @apply flex items-center gap-2 }
@@ -85,7 +104,7 @@ a { @apply cursor-pointer; }
 .navbar form.search input { @apply w-full bg-background-100 }
 .navbar .filter { @apply items-start justify-between }
 
-.category-card { @apply w-max flex flex-col gap-2 items-center }
+.category-card { @apply w-full flex flex-col gap-2 items-center }
 .category-card img { @apply thumbnail-md rounded-full }
 .category-card .title { @apply text-lg text-center text-text-900 font-semibold }
 
@@ -107,8 +126,19 @@ a { @apply cursor-pointer; }
 .product-card .image { @apply thumbnail-auto bg-background-100 rounded-lg }
 .product-card .cart-button { @apply w-max h-max p-4 m-4 bg-background-50 rounded-full shadow-lg }
 
+.user-card { @apply flex items-center justify-between }
+.user-card .main { @apply flex items-center gap-4 }
+.user-card .main img { @apply bg-background-100 rounded-full }
+.user-card button { @apply rounded-lg }
 
 /* Elements */
+.signup-section { @apply flex flex-col flex-grow items-center justify-center }
+.signup-section form { @apply w-full max-w-80 flex flex-col gap-2 }
+
+.login-section { @apply flex flex-col flex-grow items-center justify-center }
+.login-section form { @apply w-full max-w-80 flex flex-col gap-2 }
+
 .error-section { @apply w-full h-full flex-grow flex flex-col items-center justify-center }
-.categories-section { @apply flex flex-wrap justify-between }
+.categories-section { @apply grid grid-flow-row grid-cols-3 justify-between gap-4 xs:grid-cols-4 sm:grid-cols-5 }
+.users-section { @apply flex flex-col gap-2 }
 .products-section { @apply grid grid-flow-row grid-cols-2 justify-between }

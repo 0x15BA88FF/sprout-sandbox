@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./components/head', { title: 'Buy quality goods' }) %>
+</head>
+
+<body>
+    <%- include('./components/navbar', { activeLink: '/' }) %>
+
+    <section class="container">
+        <div id="categories-segment" class="flex segment">
+            <h3>Categories</h3>
+            <div class="categories-section">
+                <%- include('./components/categoryCard', { image: 'default.png', title: 'Vegitables' }) %>
+                <%- include('./components/categoryCard', { image: 'default.png', title: 'Fruits' }) %>
+                <%- include('./components/categoryCard', { image: 'default.png', title: 'Dairy & Eggs' }) %>
+                <%- include('./components/categoryCard', { image: 'default.png', title: 'Meat & Fish' }) %>
+                <%- include('./components/categoryCard', { image: 'default.png', title: 'Flours & Doughs' }) %>
+                <%- include('./components/categoryCard', { image: 'default.png', title: 'Spices, Seeds & Nuts' }) %>
+                <%- include('./components/categoryCard', { image: 'default.png', title: 'Vitamins' }) %>
+                <%- include('./components/categoryCard', { image: 'default.png', title: 'Beverages' }) %>
+                <%- include('./components/categoryCard', { image: 'default.png', title: 'Others' }) %>
+            </div>
+        </div>
+
+        <div id="farmers-segment" class="hidden segment">
+            <h3>In Farmers</h3>
+            <div class="users-section">
+                <% farmers.forEach((user) => { %>
+                    <%- include('./components/userCard', { user }) %>
+                <% }); %>
+            </div>
+        </div>
+
+        <div id="traders-segment" class="hidden segment">
+            <h3>Traders</h3>
+            <div class="users-section">
+                <% traders.forEach((user) => { %>
+                    <%- include('./components/userCard', { user }) %>
+                <% }); %>
+            </div>
+        </div>
+
+        <div id="agents-segment" class="hidden segment">
+            <h3>In Agents</h3>
+            <div class="users-section">
+                <% agents.forEach((user) => { %>
+                    <%- include('./components/userCard', { user }) %>
+                <% }); %>
+            </div>
+        </div>
+
+        <div id="products-segment" class="segment">
+            <h3>Recommended Products</h3>
+            <div class="products-section">
+                <% products.forEach((product) => { %>
+                    <%- include('./components/productCard', { product, currency: product.currency, price: product.price, quantity: product.quantity, rating: product.rating }) %>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+
+    <%- include('./components/footer') %>
+</body>
+
+</html>
