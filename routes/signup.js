@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
 
 const router = express.Router();
 const userModel = require("../models/userModel");
@@ -16,15 +17,13 @@ router.post("/", async (req, res) => {
         const userExists = await userModel.findOne({ email });
 
         if (userExists) {
-            let err = new Error('Email is in use');
-            err.message = "This email has already been taken"
-
-            return res.render('signup', { notifications: [
-                { level: "error", message: err.message }
-            ]});
+            return res.render('signup', {
+                notifications: [{ level: "error", message: "This email has already been taken" }]
+            });
         }
 
-        const user = new userModel({ username, email, accountType, password });
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = new userModel({ username, email, accountType, password: hashedPassword });
         const savedUser = await user.save();
 
         req.session.isAuth = true;
@@ -33,9 +32,9 @@ router.post("/", async (req, res) => {
         res.redirect("/");
 
     } catch(err) {
-        res.render("signup", { notifications: [
-            { level: "error", message: err.message }
-        ]})
+        res.render("signup", {
+            notifications: [{ level: "error", message: err.message }]
+        });
     }
 });
 

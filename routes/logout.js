@@ -1,4 +1,7 @@
 module.exports = (req, res, next) => {
-    req.session.isAuth = false;
-    res.redirect('/login');
-};
+    req.session.destroy(err => {
+        if (err) { return res.redirect("/"); }
+        res.clearCookie("connect.sid");
+        res.redirect("/login");
+    });
+};;

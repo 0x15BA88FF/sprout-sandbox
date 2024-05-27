@@ -956,19 +956,22 @@ input[type='submit']:hover {
 .navbar form.search {
   display: flex;
   flex-grow: 1;
+  align-items: center;
   border-radius: 0.5rem;
   background-color: var(--background-100);
   padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .navbar form.search input {
   width: 100%;
   background-color: var(--background-100);
+  padding: 0px;
 }
 
 .navbar .filter {
-  align-items: flex-start;
-  justify-content: space-between;
+  gap: 4rem;
 }
 
 .category-card {
