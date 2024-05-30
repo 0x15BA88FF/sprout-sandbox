@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./components/head', { title: 'Buy quality goods' }) %>
+</head>
+
+<body>
+    <%- include('./components/navbar', { activeLink: '/' }) %>
+
+    <section class="container">
+        <%- include('./components/carousel') %>
+
+        <a class="flex items-center gap-4" href="/profile/">
+            <img class="rounded-full" src="/images/avatar.png" alt="user avatar">
+            <div class="main flex flex-col">
+                <p class="font-bold">Random User300</p>
+                <p>Farmer</p>
+            </div>
+        </a>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum qui nulla eos dicta error placeat saepe repudiandae tenetur, laborum rem.</p>
+        <%- include('./components/starRating', { rating: 4 }) %>
+
+        <div class="actions flex gap-2">
+            <button class="flex-grow button primary">Add To Cart</button>
+            <a class="flex-grow button secondary" href="/purchase/skdfjh">Buy Now</a>
+        </div>
+
+        <div class="reviews-section flex flex-col gap-2 p-4 bg-background-100 rounded-lg">
+            <div class="header flex items-center justify-between">
+                <h2>Reviews</h2>
+                <button class="link" onclick="showReviewsSection()" href="#">See More..</button>
+            </div>
+            <%- include('./components/reviewCard', { review: reviews[0] }) %>
+        </div>
+
+        <div class="specification-section flex flex-col gap-2 p-4 bg-background-100 rounded-lg">
+            <div class="header flex items-center justify-between">
+                <h2>Specification</h2>
+                <button class="link" onclick="showSpecification()" href="#">See More..</button>
+            </div>
+            <p id="specification" class="max-h-[5.8rem] text-ellipsis overflow-hidden" onclick="showSpecification()">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, ab temporibus. Cum incidunt laborum consequuntur quam tempora laboriosam dolores repellat, quis dolore animi? Repudiandae officiis necessitatibus neque sunt alias dolores similique porro. Corrupti recusandae veritatis non error repellat amet odio, laudantium reprehenderit sunt labore deleniti, ex, cumque doloribus. Deserunt, voluptatibus natus commodi ducimus quidem accusantium esse, expedita mollitia fugit adipisci sit iusto distinctio deleniti eius voluptate blanditiis temporibus perspiciatis voluptas!</p>
+        </div>
+
+        <div id="products-segment" class="segment">
+            <h2>Recommended</h2>
+            <div class="products-section">
+                <% products.forEach((product) => { %>
+                    <%- include('./components/productCard', { product, currency: product.currency, price: product.price, quantity: product.quantity, rating: product.rating }) %>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+
+    <section onclick="closeModals()" id="modal-backdrop" class="fixed top-0 z-40 w-screen h-screen block flex-col opacity-30 bg-background-900"></section>
+
+    <section id="reviews-section" class="fixed bottom-0 z-50 h-max">
+        <div class="flex flex-col gap-2 p-4 bg-background-100 rounded-t-lg">
+            <div class="header flex items-center justify-between">
+                <h2>Review</h2>
+                <button class="icon-base" onclick="closeModals()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M6.75806 17.2431L12.0011 12.0001L17.2441 17.2431M17.2441 6.75708L12.0001 12.0001L6.75806 6.75708" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+            <div class="h-[50vh] flex flex-col gap-2 overflow-y-scroll">
+                <% reviews.forEach((review) => { %>
+                    <%- include('./components/reviewCard', { review }) %>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+
+    <%- include('./components/footer') %>
+</body>
+
+<script>
+    const specifiation = document.querySelector('#specification');
+    const reviewSection = document.querySelector('#reviews-section')
+    const modalBackdrop = document.querySelector('#modal-backdrop')
+
+    const showSpecification = () => { specifiation.style.maxHeight = 'max-content' }
+
+    const closeModals = () => {
+        reviewSection.classList.replace('h-max', 'h-0');
+        modalBackdrop.classList.replace('block', 'hidden');
+    }
+
+    const showReviewsSection = () => {
+        reviewSection.classList.replace('h-0', 'h-max');
+        modalBackdrop.classList.replace('hidden', 'block');
+    }
+
+    closeModals()
+</script>
+
+</html>

@@ -67,11 +67,11 @@ input[type='submit'] { @apply text-text-50 bg-primary-400 hover:bg-primary-500 }
 .container { @apply mx-auto px-4; }
 .segment { @apply flex-col gap-2 }
 
-.button { @apply p-2; }
+.button { @apply p-2 text-center; }
 .link { @apply hover:text-primary-500; }
-.default { @apply bg-background-200; }
-.primary { @apply bg-primary-500; }
-.secondary { @apply bg-primary-200; }
+.default { @apply bg-background-200 rounded-lg; }
+.primary { @apply text-background-50 bg-primary-500 rounded-lg; }
+.secondary { @apply bg-primary-200 rounded-lg; }
 
 .icon { @apply aspect-square }
 .icon-sm { @apply icon h-6 w-6 }
@@ -131,6 +131,11 @@ input[type='submit'] { @apply text-text-50 bg-primary-400 hover:bg-primary-500 }
 .user-card .main img { @apply bg-background-100 rounded-full }
 .user-card button { @apply rounded-lg }
 
+.carousel { @apply w-full flex flex-col gap-4 }
+.carousel .main-image { @apply thumbnail-auto bg-background-100 rounded-lg }
+.carousel .main-image .position { @apply relative top-2 left-2 px-4 py-1 bg-background-50 rounded-full }
+.carousel img { @apply thumbnail-md bg-background-100 rounded-lg }
+
 /* Elements */
 .signup-section { @apply flex flex-col flex-grow items-center justify-center }
 .signup-section form { @apply w-full max-w-80 flex flex-col gap-2 }
@@ -142,3 +147,9 @@ input[type='submit'] { @apply text-text-50 bg-primary-400 hover:bg-primary-500 }
 .categories-section { @apply grid grid-flow-row grid-cols-3 justify-between gap-4 xs:grid-cols-4 sm:grid-cols-5 }
 .users-section { @apply flex flex-col gap-2 }
 .products-section { @apply grid grid-flow-row grid-cols-2 justify-between }
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}

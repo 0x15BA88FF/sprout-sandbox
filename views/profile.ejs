@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./components/head', { title: 'Buy quality goods' }) %>
+</head>
+
+<body>
+    <%- include('./components/navbar', { activeLink: '/' }) %>
+
+    <section class="container">
+        <div class="flex flex-col gap-1">
+            <div class="flex items-center gap-2">
+                <img class="thumbnail-md rounded-full" src="/images/avatar.png" alt="username">
+                <div class="main flex flex-col">
+                    <h4>Random User200</h4>
+                    <p>Producer</p>
+                </div>
+            </div>
+            <p>random@user.com</p>
+            <p>Presec, Legon</p>
+            <p>Since May 23, 2004</p>
+            <%- include('./components/starRating', { rating: 4 }) %>
+        </div>
+        <div class="actions flex items-center gap-2">
+            <button class="button primary flex-grow">Contact</button>
+            <button class="button secondary flex-grow">Message</button>
+        </div>
+        <div id="products-segment" class="segment">
+            <h3>Products</h3>
+            <div class="products-section">
+                <% products.forEach((product) => { %>
+                    <%- include('./components/productCard', { product, currency: product.currency, price: product.price, quantity: product.quantity, rating: product.rating }) %>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+
+    <%- include('./components/footer') %>
+</body>
+
+</html>

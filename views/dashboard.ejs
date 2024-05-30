@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./components/head', { title: 'My products' }) %>
+</head>
+
+<body>
+    <%- include('./components/navbar', { activeLink: '/products' }) %>
+
+    <section class="container">
+        <div class="status grid grid-flow-row grid-cols-2 gap-4">
+            <%- include('./components/statCard', { heading: "sales", data: "100k" }) %>
+            <%- include('./components/statCard', { heading: "sales", data: "100k" }) %>
+            <%- include('./components/statCard', { heading: "sales", data: "100k" }) %>
+            <%- include('./components/statCard', { heading: "sales", data: "100k" }) %>
+        </div>
+    </section>
+
+    <%- include('./components/footer') %>
+</body>
+
+</html>

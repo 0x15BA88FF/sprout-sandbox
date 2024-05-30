@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <%- include('./components/head', { title: 'buy quality goods' }) %>
+</head>
+
+<body>
+    <%- include('./components/navbar', { activelink: '/' }) %>
+
+    <section class="container">
+        <%- include('./components/inputCarousel') %>
+
+        <input type="text" name="title" id="title" placeholder="Enter a title for the product..." required>
+        
+        <form class="flex flex-col gap-2" action="/purchase" method="post">
+            <div class="quantity-section flex flex-col gap-4 p-4 bg-background-100 rounded-lg">
+                <div class="header flex items-center justify-between">
+                    <h2>quantity</h2>
+                </div>
+                <div class="flex items-center justify-between">
+                    <h6>Price</h6>
+                    <%- include('./components/numberinput') %>
+                </div>
+                <div class="flex items-center justify-between">
+                    <h6>Minimum quantity</h6>
+                    <%- include('./components/numberinput') %>
+                </div>
+                <div class="flex items-center justify-between">
+                    <h6>Maximum quantity</h6>
+                    <%- include('./components/numberinput') %>
+                </div>
+                <div class="flex items-center justify-between">
+                    <h6>Currency</h6>
+                    <select class="bg-background-50" name="currency" id="currency" required>
+                        <option value="ghs">GHC</option>
+                        <option value="usd">USD</option>
+                    </select>
+                </div>
+                <div class="flex items-center justify-between">
+                    <h6>Quantity</h6>
+                    <select class="bg-background-50" name="quantity" id="quantity" required>
+                        <option value="pcs">Per piecs</option>
+                        <option value="ltr">Per Liter</option>
+                        <option value="gram">Per Gram</option>
+                        <option value="kg">Per Kilogram</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="quantity-section flex flex-col gap-4 p-4 bg-background-100 rounded-lg">
+                <textarea class="p-2 rounded-lg" name="specification" id="specification" cols="30" rows="10" placeholder="Enter your products specifications..." required></textarea>
+            </div>
+
+            <input class="button primary" type="submit" value="purchase">
+        </form>
+    </section>
+
+    <%- include('./components/footer') %>
+</body>
+
+</html>

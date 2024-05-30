@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./components/head', { title: 'Buy quality goods' }) %>
+</head>
+
+<body>
+    <%- include('./components/navbar', { activeLink: '/' }) %>
+
+    <section class="container">
+        <h1>My Cart</h1>
+        <div class="cart-items flex flex-col gap-2">
+            <% items.forEach((item) => { %>
+                <%- include('./components/cartItemCard', { item }) %>
+            <% }); %>
+        </div>
+    </section>
+</body>
+
+</html>
