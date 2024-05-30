@@ -1,7 +1,8 @@
 /node_modules
+/uploads
 /public/styles/output.css
 
-.gitconfig
 package-lock.json
 
+.gitconfig
 *.env
