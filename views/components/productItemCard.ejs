@@ -1,0 +1,9 @@
+<div class="w-full flex items-center gap-2 justify-between">
+    <div class="main w-4/5 flex items-center gap-2">
+        <img class="thumbnail-md rounded-lg" src="<%= item.images[0] %>" alt="<%= item.title %>">
+        <div class="details w-full flex flex-col">
+            <p class="font-semibold truncate text-ellipsis"><%= item.title %></p>
+            <%- include('./price', { currency: 'GHC', price: 56.77, quantity: 'pcs', classes: 'price-sm' }) %>
+        </div>
+    </div>
+</div>
