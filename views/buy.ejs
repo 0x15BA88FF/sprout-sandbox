@@ -55,7 +55,7 @@
             <h3>Recommended Products</h3>
             <div class="products-section">
                 <% products.forEach((product) => { %>
-                    <%- include('./components/productCard', { product, currency: product.currency, price: product.price, metric: product.metric, rating: product.rating }) %>
+                    <%- include('./components/productCard', { product }) %>
                 <% }); %>
             </div>
         </div>

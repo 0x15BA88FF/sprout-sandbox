@@ -53,8 +53,6 @@ router.get('/', auth, async (req, res) => {
             }
         }
 
-        console.log(products, producers, traders, drivers)
-
         res.render('buy', { category, accountType: req.session.user.accountType, products, producers, traders, drivers });
     }
 });

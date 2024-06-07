@@ -33,8 +33,12 @@ module.exports = mongoose.model("Product", mongoose.Schema({
     },
     images: {
         type: Array,
+        required: true
     },
     reviews: {
         type: Array,
+    },
+    rating: {
+        type: Number,
     },
 }));

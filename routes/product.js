@@ -20,20 +20,10 @@ router.get('/:id', auth, allowAccess('trader', 'producer', 'consumer'), async (r
         const user = await userModel.findById(review.fromId);
         return { _id: review._id, fromId: review.fromId, username: user.username, rating: review.rating, comment: review.comment };
     });
+
     const reviews = await Promise.all(reviewPromises);
 
-    const ratings = reviews.map(review => review.rating);
-    const totalRatings = ratings.reduce((acc, rating) => acc + rating, 0);
-    const rating = totalRatings / ratings.length;
-
-    res.render('product', {
-        accountType: req.session.user.accountType,
-        product,
-        author,
-        products,
-        reviews,
-        rating
-    });
+    res.render('product', { accountType: req.session.user.accountType, product, author, products, reviews });
 });
 
 module.exports = router;

@@ -12,7 +12,7 @@
         <%- include('./components/carousel', { images: product.images }) %>
 
         <p><%= product.title %></p>
-        <%- include('./components/starRating', { rating }) %>
+        <%- include('./components/starRating', { rating: product.rating }) %>
 
         <form class="flex flex-col gap-2" action="/purchase/<%= product._id %>" method="post">
             <div class="quantity-section flex flex-col gap-4 p-4 bg-background-100 rounded-lg">
@@ -74,7 +74,7 @@
             </div>
             <form action="/review/<%= product._id %>" method="post" class="h-[50vh] flex flex-col gap-4 overflow-y-scroll">
                 <%- include('./components/ratinginput') %>
-                <textarea class="p-2 rounded-lg" name="comment" id="comment" cols="30" rows="10" placeholder="give us your feedback..."></textarea>
+                <textarea required class="p-2 rounded-lg" name="comment" id="comment" cols="30" rows="10" placeholder="give us your feedback..."></textarea>
                 <input type="submit" value="submit review">
             </form>
         </div>

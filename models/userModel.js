@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
         default: Date.now
     },
     phoneNumbers: {
-        type: [String], // Array of strings for phone numbers
+        type: [String],
         required: false,
     },
     location: {

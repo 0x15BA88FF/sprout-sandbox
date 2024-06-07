@@ -20,7 +20,7 @@
         </a>
 
         <p><%= product.title %></p>
-        <%- include('./components/starRating', { rating }) %>
+        <%- include('./components/starRating', { rating: product.rating }) %>
 
         <div class="actions flex gap-2">
             <button onclick="addToCart('<%= product._id %>')" class="flex-grow button primary">Add To Cart</button>
@@ -32,7 +32,11 @@
                 <h2>Reviews</h2>
                 <button class="link" onclick="showReviewsSection()" href="#">See More..</button>
             </div>
-            <%- include('./components/reviewCard', { review: reviews[0] }) %>
+            <% if (reviews.length > 0) { %>
+                <%- include('./components/reviewCard', { review: reviews[0] }) %>
+            <% } else { %>
+                <p>No Reviews Yet</p>
+            <% } %>
         </div>
 
         <div class="specification-section flex flex-col gap-2 p-4 bg-background-100 rounded-lg">

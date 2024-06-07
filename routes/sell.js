@@ -1,35 +1,81 @@
 const express = require("express");
+const mongodb = require('mongodb');
 const auth = require("./middleware/auth");
 const allowAccess = require("./middleware/allowAccess");
 const productModel = require("../models/productModel");
+const userModel = require("../models/userModel");
 
 const router = express.Router();
+const ObjectId = mongodb.ObjectId;
 
-router.get('/:id', auth, allowAccess('producer', 'trader'), (req, res) => {
-    res.render('newProduct', {
-        accountType: req.session.user.accountType,
+router.get('/', auth, allowAccess('producer', 'trader'), async (req, res) => {
+    const userId = new ObjectId(req.session.user._id);
+    const user = await userModel.findOne({ _id: userId });
+
+    const productPromises = user.products.map(async productId => {
+        const product = await productModel.findOne({ _id: productId });
+        const isInCart = user.cart.some(cartId => cartId.equals(productId));
+        return { ...product.toObject(), isInCart };
     });
+
+    const products = await Promise.all(productPromises);
+
+    res.render('sell', { accountType: req.session.user.accountType, products });
 });
 
-router.get('/', auth, allowAccess('producer', 'trader'), (req, res) => {
-    res.render('sell', {
-        accountType: req.session.user.accountType,
-        items: [
-            { _id: 'sdfdsf0', images: ["/images/avatar.png"], title: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum laborum explicabo minima nisi libero quidem!", rating: 4, currency: 'GHS', price: 59.99, quantity: 'pcs', isInCart: false },
-        ]
-    });
-});
-
-router.post('/', auth, allowAccess('producer', 'trader'), async (req, res) => {
+router.get('/new', auth, allowAccess('producer', 'trader'), async (req, res) => {
     try {
-        const data = await req.body
-        const product = new productModel({ images, title, price, minQuantity, maxQuantity, currency, metric, specification } = data);
+        const product = new productModel({ title: " ", specification: " ", price: 0.00, minQuantity: 1, maxQuantity: 1, });
         const savedProduct = await product.save();
+
+        res.redirect(`/sell/${ savedProduct._id }`);
+
+    } catch(err) {
+        const userId = new ObjectId(req.session.user._id);
+        const user = await userModel.findOne({ _id: userId });
+
+        const productPromises = user.products.map(async productId => {
+            const product = await productModel.findOne({ _id: productId });
+            const isInCart = user.cart.some(cartId => cartId.equals(productId));
+            return { ...product.toObject(), isInCart };
+        });
+
+        const products = await Promise.all(productPromises);
+
+        res.render("sell", { notifications: [{ level: "error", message: err.message }], accountType: req.session.user.accountType, products });
+    }
+});
+
+router.get('/:id', auth, allowAccess('producer', 'trader'), async (req, res) => {
+    const productId = new ObjectId(req.params.id);
+    const product = await productModel.findOne({ _id: productId });
+    const userId = req.session.user._id;
+    const updatedUser = await userModel.findByIdAndUpdate({ _id: userId }, { $set: { products: productId }}, { new: true });
+
+    res.render('newProduct', { accountType: req.session.user.accountType, product });
+});
+
+router.post('/:id', auth, allowAccess('producer', 'trader'), async (req, res) => {
+    try {
+        const { images, title, price, minQuantity, maxQuantity, currency, metric, specification } = await req.body
+        const productId = new ObjectId(req.params.id);
+
+        let updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { title: title }}, { new: true });
+            updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { price: price }}, { new: true });
+            updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { metric: metric }}, { new: true });
+            updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { currency: currency }}, { new: true });
+            updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { specification: images }}, { new: true });
+            updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { minQuantity: minQuantity }}, { new: true });
+            updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { maxQuantity: maxQuantity }}, { new: true });
+            updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { specification: specification }}, { new: true });
 
         res.redirect("/sell");
 
     } catch(err) {
+        const productId = new ObjectId(req.params.id);
+
         res.render("newProduct", {
+            id: productId, 
             notifications: [{ level: "error", message: err.message }],
             accountType: req.session.user.accountType,
         });

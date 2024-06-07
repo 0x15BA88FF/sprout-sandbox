@@ -46,18 +46,10 @@ router.post('/:productId', auth, allowAccess('consumer', 'trader'), async (req, 
         const author = await userModel.findOne({ products: { $in: [productId] }}).exec();
         const products = await productModel.find({ }).sort({ rating: -1 }).limit(10).exec();
 
-        const reviewPromises = product.reviews.map(async reviewId => {
-            const review = await reviewModel.findById(reviewId);
-            const user = await userModel.findById(review.fromId);
-            return { _id: review._id, fromId: review.fromId, username: user.username, rating: review.rating, comment: review.comment };
-        });
+        const reviewPromises = product.reviews.map(reviewId => reviewModel.findOne({ _id: reviewId }));
         const reviews = await Promise.all(reviewPromises);
 
-        const ratings = reviews.map(review => review.rating);
-        const totalRatings = ratings.reduce((acc, rating) => acc + rating, 0);
-        const rating = totalRatings / ratings.length;
-
-        res.render('purchase', { accountType: req.session.user.accountType, product, author, products, reviews, rating, notifications: [{ level: "error", message: err.message }] });
+        res.render('purchase', { accountType: req.session.user.accountType, product, author, products, reviews, notifications: [{ level: "error", message: err.message }] });
     }
 });
 

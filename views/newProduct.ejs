@@ -2,17 +2,17 @@
 <html lang="en">
 
 <head>
-    <%- include('./components/head', { title: 'buy quality goods' }) %>
+    <%- include('./components/head', { title: 'Sell' }) %>
 </head>
 
 <body>
     <%- include('./components/navbar', { activelink: '/sell', accountType }) %>
 
     <section class="container">
-        <form class="flex flex-col gap-2" action="/sell" method="post">
-            <%- include('./components/inputCarousel') %>
+        <form class="flex flex-col gap-2" action="/sell/<%= product._id %>" method="post">
+            <%- include('./components/inputCarousel', { images: product.images }) %>
 
-            <input type="text" name="title" id="title" placeholder="Enter a title for the product..." required>
+            <input type="text" name="title" id="title" value="<%= product.title.trim() %>" placeholder="Enter a title for the product..." required>
         
             <div class="quantity-section flex flex-col gap-4 p-4 bg-background-100 rounded-lg">
                 <div class="header flex items-center justify-between">
@@ -20,27 +20,27 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <h6>Price</h6>
-                    <%- include('./components/numberinput', { id: "price", name: "price" }) %>
+                    <input class="quantity-input w-20 text-center bg-background-50 rounded-lg" type="number" name="price" id="price" value="<%= product.price %>">
                 </div>
                 <div class="flex items-center justify-between">
                     <h6>Minimum quantity</h6>
-                    <%- include('./components/numberinput', { id: "minQuantity", name: "minQuantity" }) %>
+                    <input class="quantity-input w-20 text-center bg-background-50 rounded-lg" type="number" name="minQuantity" id="minQuantity" value="<%= product.minQuantity %>">
                 </div>
                 <div class="flex items-center justify-between">
                     <h6>Maximum quantity</h6>
-                    <%- include('./components/numberinput', { id: "maxQuantity", name: "maxQuantity" }) %>
+                    <input class="quantity-input w-20 text-center bg-background-50 rounded-lg" type="number" name="maxQuantity" id="maxQuantity" value="<%= product.maxQuantity %>">
                 </div>
                 <div class="flex items-center justify-between">
                     <h6>Currency</h6>
-                    <select class="bg-background-50" name="currency" id="currency" required>
+                    <select class="bg-background-50" name="currency" id="currency" value="<%= product.currency %>" required>
                         <option value="ghs">GHC</option>
                         <option value="usd">USD</option>
                     </select>
                 </div>
                 <div class="flex items-center justify-between">
                     <h6>Quantity</h6>
-                    <select class="bg-background-50" name="metric" id="metric" required>
-                        <option value="pcs">Per piecs</option>
+                    <select class="bg-background-50" name="metric" id="metric" value="<%= product.metric %>" required>
+                        <option value="pcs">Per piece</option>
                         <option value="ltr">Per Liter</option>
                         <option value="gram">Per Gram</option>
                         <option value="kg">Per Kilogram</option>
@@ -49,10 +49,10 @@
             </div>
 
             <div class="quantity-section flex flex-col gap-4 p-4 bg-background-100 rounded-lg">
-                <textarea class="p-2 rounded-lg" name="specification" id="specification" cols="30" rows="10" placeholder="Enter your products specifications..." required></textarea>
+                <textarea class="p-2 rounded-lg" name="specification" id="specification" cols="30" rows="10" placeholder="Enter your products specifications..." required><%= product.specification.trim() %></textarea>
             </div>
 
-            <input class="button primary" type="submit" value="purchase">
+            <input class="button primary" type="submit" value="Sell Now">
         </form>
     </section>
 

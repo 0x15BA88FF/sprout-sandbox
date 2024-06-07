@@ -631,6 +631,10 @@ video {
   pointer-events: none;
 }
 
+.pointer-events-auto {
+  pointer-events: auto;
+}
+
 .fixed {
   position: fixed;
 }
@@ -802,6 +806,14 @@ video {
 
 .text-ellipsis {
   text-overflow: ellipsis;
+}
+
+.whitespace-break-spaces {
+  white-space: break-spaces;
+}
+
+.text-wrap {
+  text-wrap: wrap;
 }
 
 .rounded-full {

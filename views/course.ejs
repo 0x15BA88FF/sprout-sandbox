@@ -9,7 +9,7 @@
     <%- include('./components/navbar', { activeLink: '/course', accountType }) %>
 
         <section class="container">
-            <h1><%= title %></h1>
+            <h1 class="text-wrap"><%= course.title %></h1>
             <div id="content-container"></div>
         </section>
 
@@ -18,7 +18,7 @@
 
 <script type="module">
     import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
-    document.getElementById('content-container').innerHTML = marked.parse('<%= content %>');
+    document.getElementById('content-container').innerHTML = marked.parse('<%= course.content %>');
 </script>
 
 </html>
