@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 module.exports = mongoose.model("Review", mongoose.Schema({
-    fromID: {
+    fromId: {
         type: String,
         required: true,
     },
-    toID: {
-        type: String,
+    rating: {
+        type: Number,
         required: true,
     },
     comment: {

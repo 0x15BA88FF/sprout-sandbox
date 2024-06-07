@@ -1,19 +1,18 @@
 const mongoose = require("mongoose");
 
 module.exports = mongoose.model("Product", mongoose.Schema({
-    name: {
+    title: {
         type: String,
         required: true,
     },
-    description: {
+    specification: {
         type: String,
         required: true,
     },
-    specifications: {
+    category: {
         type: String,
-        required: true,
     },
-    cost: {
+    price: {
         type: Number,
         required: true,
     },
@@ -21,11 +20,6 @@ module.exports = mongoose.model("Product", mongoose.Schema({
         type: String,
         required: true,
         default: 'pcs',
-    },
-    dateOfHarvest: {
-        type: Date,
-        required: true,
-        default: Date.now(),
     },
     minQuantity: {
         type: Number,
@@ -39,18 +33,8 @@ module.exports = mongoose.model("Product", mongoose.Schema({
     },
     images: {
         type: Array,
-        required: true,
-    },
-    quantity: {
-        type: Number,
-        required: true,
-    },
-    rating: {
-        type: Number,
-        required: true,
     },
     reviews: {
         type: Array,
-        required: true,
     },
 }));

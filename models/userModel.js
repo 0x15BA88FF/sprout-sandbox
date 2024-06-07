@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-module.exports = mongoose.model("User", mongoose.Schema({
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
@@ -28,7 +28,7 @@ module.exports = mongoose.model("User", mongoose.Schema({
         default: Date.now
     },
     phoneNumbers: {
-        type: String,
+        type: [String], // Array of strings for phone numbers
         required: false,
     },
     location: {
@@ -40,12 +40,12 @@ module.exports = mongoose.model("User", mongoose.Schema({
         required: true,
         default: 0,
     },
-    product: {
-        type: Array,
+    products: {
+        type: [String],
         required: false,
     },
     cart: {
-        type: Array,
+        type: [String],
         required: false,
     },
     numberPlate: {
@@ -56,4 +56,30 @@ module.exports = mongoose.model("User", mongoose.Schema({
         type: Boolean,
         required: false,
     },
-}))
+    houseAddress: {
+        type: String,
+        required: false,
+    },
+    region: {
+        type: String,
+        required: false,
+    },
+    carColor: {
+        type: String,
+        required: false,
+    },
+    driversLicense: {
+        type: String,
+        required: false,
+    },
+    carModel: {
+        type: String,
+        required: false,
+    },
+    ghanaCardNumber: {
+        type: String,
+        required: false,
+    }
+});
+
+module.exports = mongoose.model("User", userSchema);
