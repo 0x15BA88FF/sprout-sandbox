@@ -50,7 +50,7 @@ router.get('/:id', auth, allowAccess('producer', 'trader'), async (req, res) => 
     const productId = new ObjectId(req.params.id);
     const product = await productModel.findOne({ _id: productId });
     const userId = req.session.user._id;
-    const updatedUser = await userModel.findByIdAndUpdate({ _id: userId }, { $set: { products: productId }}, { new: true });
+    const updatedUser = await userModel.findByIdAndUpdate({ _id: userId }, { $push: { products: productId }}, { new: true });
 
     res.render('newProduct', { accountType: req.session.user.accountType, product });
 });
