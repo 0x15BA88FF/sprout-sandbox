@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./components/head', { title: 'Assistant' }) %>
+</head>
+
+<body>
+    <section class="flex flex-col gap-0">
+        <div class="flex items-center justify-between shadow-lg">
+            <a class="icon-md button" href="/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><g clip-path="url(#clip0_101_8720)"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.29303 12.7071C8.10556 12.5196 8.00024 12.2653 8.00024 12.0001C8.00024 11.7349 8.10556 11.4806 8.29303 11.2931L13.95 5.6361C14.0423 5.54059 14.1526 5.46441 14.2746 5.412C14.3966 5.35959 14.5279 5.332 14.6606 5.33085C14.7934 5.32969 14.9251 5.355 15.048 5.40528C15.1709 5.45556 15.2825 5.52981 15.3764 5.6237C15.4703 5.7176 15.5446 5.82925 15.5949 5.95214C15.6451 6.07504 15.6704 6.20672 15.6693 6.3395C15.6681 6.47228 15.6405 6.6035 15.5881 6.7255C15.5357 6.84751 15.4595 6.95785 15.364 7.0501L10.414 12.0001L15.364 16.9501C15.5462 17.1387 15.647 17.3913 15.6447 17.6535C15.6424 17.9157 15.5373 18.1665 15.3518 18.3519C15.1664 18.5373 14.9156 18.6425 14.6534 18.6448C14.3912 18.6471 14.1386 18.5463 13.95 18.3641L8.29303 12.7071Z" fill="black"/></g><defs><clipPath id="clip0_101_8720"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></a>
+        </div>
+        <div id="chatbox" class="chat-area flex-grow bg-background-100">
+        </div>
+        <div class="input-area flex-flex-col gap-2">
+            <div class="flex gap-2 p-2 rounded-lg">
+                <input class="flex-grow bg-background-300" type="text" name="prompt" id="promptInput" placeholder="Ask a question...">
+                <button id="sendMessageBtn" class="button primary icon-md"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path d="M4.99994 12L4.39594 6.563C4.22294 5.007 5.82494 3.864 7.23994 4.535L19.1839 10.193C20.7089 10.915 20.7089 13.085 19.1839 13.807L7.23994 19.466C5.82494 20.136 4.22294 18.994 4.39594 17.438L4.99994 12ZM4.99994 12H11.9999" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            </div>
+        </div>
+    </section>
+</body>
+
+<script>
+    const chatbox = document.getElementById('chatbox');
+    const messageInput = document.getElementById('promptInput');
+    const sendMessageBtn = document.getElementById('sendMessageBtn');
+
+    function appendMessage(content, sender) {
+        let message = '';
+
+        if (sender === 'user') {
+            message = `<%- include('./components/chatBubble', { username, message: "${ content }" }) %>`;
+        } else {
+            message = `<%- include('./components/chatBubble', { username: "Assistant", message: "${ content }" }) %>`;
+        }
+
+        chatbox.innerHTML += message;
+        chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    sendMessageBtn.addEventListener('click', () => {
+        const message = messageInput.value.trim();
+        if (message) {
+            appendMessage(message, 'user');
+            messageInput.value = '';
+            setTimeout(() => {
+                appendMessage('This is a simulated response from the AI Assistant.', 'ai');
+            }, 1000);
+        }
+    });
+
+    messageInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            sendMessageBtn.click();
+        }
+    });
+
+</script>
+
+</html>

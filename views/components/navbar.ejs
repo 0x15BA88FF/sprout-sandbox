@@ -1,72 +1,87 @@
 <nav class="navbar">
     <div class="main container">
         <div class="left">
-            <button class="icon-base" onclick="toogleFilter()">
-                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="48" d="M88 152h336M88 256h336M88 360h336"></path></svg>
-            </button>
+            <% if (accountType != 'agent' && accountType != 'producer') { %>
+                <button class="icon-base" onclick="toogleFilter()"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="48" d="M88 152h336M88 256h336M88 360h336"></path></svg></button>
+            <% } %>
+
             <a class="logo" href="/">Sprout</a>
         </div>
         <div class="right">
-            <button class="icon-base" onclick="toogleSearch()">
-                <svg stroke="currentColor" fill="currentColor" stroke-width="1" version="1.1" id="search" x="0px" y="0px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g><path d="M20.031,20.79c0.46,0.46,1.17-0.25,0.71-0.7l-3.75-3.76c1.27-1.41,2.04-3.27,2.04-5.31 c0-4.39-3.57-7.96-7.96-7.96s-7.96,3.57-7.96,7.96c0,4.39,3.57,7.96,7.96,7.96c1.98,0,3.81-0.73,5.21-1.94L20.031,20.79z M4.11,11.02c0-3.84,3.13-6.96,6.96-6.96c3.84,0,6.96,3.12,6.96,6.96c0,3.84-3.12,6.96-6.96,6.96C7.24,17.98,4.11,14.86,4.11,11.02 z"></path></g></svg>
-            </button>
-            <a class="icon-base" href="/profile/">
-                <svg stroke="currentColor" fill="currentColor" stroke-width="1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="User"><g><path d="M17.438,21.937H6.562a2.5,2.5,0,0,1-2.5-2.5V18.61c0-3.969,3.561-7.2,7.938-7.2s7.938,3.229,7.938,7.2v.827A2.5,2.5,0,0,1,17.438,21.937ZM12,12.412c-3.826,0-6.938,2.78-6.938,6.2v.827a1.5,1.5,0,0,0,1.5,1.5H17.438a1.5,1.5,0,0,0,1.5-1.5V18.61C18.938,15.192,15.826,12.412,12,12.412Z"></path><path d="M12,9.911a3.924,3.924,0,1,1,3.923-3.924A3.927,3.927,0,0,1,12,9.911Zm0-6.847a2.924,2.924,0,1,0,2.923,2.923A2.926,2.926,0,0,0,12,3.064Z"></path></g></g></svg>
-            </a>
-            <a class="icon-base" href="/cart/">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M19 7H16V6C16 4.93913 15.5786 3.92172 14.8284 3.17157C14.0783 2.42143 13.0609 2 12 2C10.9391 2 9.92172 2.42143 9.17157 3.17157C8.42143 3.92172 8 4.93913 8 6V7H5C4.73478 7 4.48043 7.10536 4.29289 7.29289C4.10536 7.48043 4 7.73478 4 8V19C4 19.7956 4.31607 20.5587 4.87868 21.1213C5.44129 21.6839 6.20435 22 7 22H17C17.7956 22 18.5587 21.6839 19.1213 21.1213C19.6839 20.5587 20 19.7956 20 19V8C20 7.73478 19.8946 7.48043 19.7071 7.29289C19.5196 7.10536 19.2652 7 19 7ZM10 6C10 5.46957 10.2107 4.96086 10.5858 4.58579C10.9609 4.21071 11.4696 4 12 4C12.5304 4 13.0391 4.21071 13.4142 4.58579C13.7893 4.96086 14 5.46957 14 6V7H10V6ZM18 19C18 19.2652 17.8946 19.5196 17.7071 19.7071C17.5196 19.8946 17.2652 20 17 20H7C6.73478 20 6.48043 19.8946 6.29289 19.7071C6.10536 19.5196 6 19.2652 6 19V9H8V10C8 10.2652 8.10536 10.5196 8.29289 10.7071C8.48043 10.8946 8.73478 11 9 11C9.26522 11 9.51957 10.8946 9.70711 10.7071C9.89464 10.5196 10 10.2652 10 10V9H14V10C14 10.2652 14.1054 10.5196 14.2929 10.7071C14.4804 10.8946 14.7348 11 15 11C15.2652 11 15.5196 10.8946 15.7071 10.7071C15.8946 10.5196 16 10.2652 16 10V9H18V19Z" fill="black"/></svg>
-            </a>
+            <% if (accountType != 'agent' && accountType != 'producer') { %>
+                <button class="icon-base" onclick="toogleSearch()"><svg stroke="currentColor" fill="currentColor" stroke-width="1" version="1.1" id="search" x="0px" y="0px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g><path d="M20.031,20.79c0.46,0.46,1.17-0.25,0.71-0.7l-3.75-3.76c1.27-1.41,2.04-3.27,2.04-5.31 c0-4.39-3.57-7.96-7.96-7.96s-7.96,3.57-7.96,7.96c0,4.39,3.57,7.96,7.96,7.96c1.98,0,3.81-0.73,5.21-1.94L20.031,20.79z M4.11,11.02c0-3.84,3.13-6.96,6.96-6.96c3.84,0,6.96,3.12,6.96,6.96c0,3.84-3.12,6.96-6.96,6.96C7.24,17.98,4.11,14.86,4.11,11.02 z"></path></g></svg></button>
+            <% } %>
+            
+            <% if (accountType === 'agent' || accountType === 'producer') { %>
+                <a class="icon-base" href="/courses"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="black"><g clip-path="url(#clip0_147_1227)"><path d="M1 2.82788C1.885 2.45788 3.154 2.05888 4.388 1.93488C5.718 1.80088 6.846 1.99788 7.5 2.68688V12.4329C6.565 11.9029 5.38 11.8299 4.287 11.9399C3.107 12.0599 1.917 12.4009 1 12.7509V2.82788ZM8.5 2.68688C9.154 1.99788 10.282 1.80088 11.612 1.93488C12.846 2.05888 14.115 2.45788 15 2.82788V12.7509C14.082 12.4009 12.893 12.0589 11.713 11.9409C10.619 11.8299 9.435 11.9019 8.5 12.4329V2.68688ZM8 1.78288C7.015 0.935881 5.587 0.809881 4.287 0.939881C2.773 1.09288 1.245 1.61188 0.293 2.04488C0.205649 2.08461 0.131575 2.14863 0.079621 2.22931C0.0276667 2.30999 2.65714e-05 2.40392 0 2.49988L0 13.4999C2.3162e-05 13.5835 0.0210371 13.6659 0.0611171 13.7393C0.101197 13.8127 0.159062 13.8749 0.229411 13.9202C0.29976 13.9655 0.380345 13.9924 0.463783 13.9984C0.547222 14.0045 0.630848 13.9895 0.707 13.9549C1.589 13.5549 3.01 13.0739 4.387 12.9349C5.796 12.7929 6.977 13.0219 7.61 13.8119C7.65685 13.8703 7.71622 13.9174 7.78372 13.9498C7.85122 13.9822 7.92513 13.999 8 13.999C8.07487 13.999 8.14878 13.9822 8.21628 13.9498C8.28378 13.9174 8.34315 13.8703 8.39 13.8119C9.023 13.0219 10.204 12.7929 11.612 12.9349C12.99 13.0739 14.412 13.5549 15.293 13.9549C15.3692 13.9895 15.4528 14.0045 15.5362 13.9984C15.6197 13.9924 15.7002 13.9655 15.7706 13.9202C15.8409 13.8749 15.8988 13.8127 15.9389 13.7393C15.979 13.6659 16 13.5835 16 13.4999V2.49988C16 2.40392 15.9723 2.30999 15.9204 2.22931C15.8684 2.14863 15.7944 2.08461 15.707 2.04488C14.755 1.61188 13.227 1.09288 11.713 0.939881C10.413 0.808881 8.985 0.935881 8 1.78288Z" fill="black"/></g><defs><clipPath id="clip0_147_1227"><rect width="16" height="16" fill="white"/></clipPath></defs></svg></a>
+            <% } %>
+                
+            <% if (accountType != 'agent' && accountType != 'producer') { %>
+                <a class="icon-base" href="/cart/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M19 7H16V6C16 4.93913 15.5786 3.92172 14.8284 3.17157C14.0783 2.42143 13.0609 2 12 2C10.9391 2 9.92172 2.42143 9.17157 3.17157C8.42143 3.92172 8 4.93913 8 6V7H5C4.73478 7 4.48043 7.10536 4.29289 7.29289C4.10536 7.48043 4 7.73478 4 8V19C4 19.7956 4.31607 20.5587 4.87868 21.1213C5.44129 21.6839 6.20435 22 7 22H17C17.7956 22 18.5587 21.6839 19.1213 21.1213C19.6839 20.5587 20 19.7956 20 19V8C20 7.73478 19.8946 7.48043 19.7071 7.29289C19.5196 7.10536 19.2652 7 19 7ZM10 6C10 5.46957 10.2107 4.96086 10.5858 4.58579C10.9609 4.21071 11.4696 4 12 4C12.5304 4 13.0391 4.21071 13.4142 4.58579C13.7893 4.96086 14 5.46957 14 6V7H10V6ZM18 19C18 19.2652 17.8946 19.5196 17.7071 19.7071C17.5196 19.8946 17.2652 20 17 20H7C6.73478 20 6.48043 19.8946 6.29289 19.7071C6.10536 19.5196 6 19.2652 6 19V9H8V10C8 10.2652 8.10536 10.5196 8.29289 10.7071C8.48043 10.8946 8.73478 11 9 11C9.26522 11 9.51957 10.8946 9.70711 10.7071C9.89464 10.5196 10 10.2652 10 10V9H14V10C14 10.2652 14.1054 10.5196 14.2929 10.7071C14.4804 10.8946 14.7348 11 15 11C15.2652 11 15.5196 10.8946 15.7071 10.7071C15.8946 10.5196 16 10.2652 16 10V9H18V19Z" fill="black"/></svg></a>
+            <% } %>
+                    
+            <% if (accountType === 'agent' || accountType === 'producer') { %>
+                <a class="icon-base" href="/assistant/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="black"><path d="M216 44H39.9999C34.6956 44 29.6085 46.1071 25.8578 49.8579C22.1071 53.6086 19.9999 58.6957 19.9999 64V224C19.984 227.809 21.0658 231.541 23.1159 234.751C25.166 237.961 28.0976 240.513 31.5599 242.1C34.2173 243.346 37.1152 243.994 40.0499 244C44.7463 243.989 49.2874 242.317 52.8699 239.28L52.9899 239.17L84.4699 212H216C221.304 212 226.391 209.893 230.142 206.142C233.893 202.391 236 197.304 236 192V64C236 58.6957 233.893 53.6086 230.142 49.8579C226.391 46.1071 221.304 44 216 44ZM212 188H79.9999C77.1198 187.995 74.3351 189.032 72.1599 190.92L43.9999 215.23V68H212V188Z" fill="black"/></svg></a>
+            <% } %>
+
+            <a class="icon-base" href="/profile/"><svg stroke="currentColor" fill="currentColor" stroke-width="1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="User"><g><path d="M17.438,21.937H6.562a2.5,2.5,0,0,1-2.5-2.5V18.61c0-3.969,3.561-7.2,7.938-7.2s7.938,3.229,7.938,7.2v.827A2.5,2.5,0,0,1,17.438,21.937ZM12,12.412c-3.826,0-6.938,2.78-6.938,6.2v.827a1.5,1.5,0,0,0,1.5,1.5H17.438a1.5,1.5,0,0,0,1.5-1.5V18.61C18.938,15.192,15.826,12.412,12,12.412Z"></path><path d="M12,9.911a3.924,3.924,0,1,1,3.923-3.924A3.927,3.927,0,0,1,12,9.911Zm0-6.847a2.924,2.924,0,1,0,2.923,2.923A2.926,2.926,0,0,0,12,3.064Z"></path></g></g></svg></a>
         </div>
     </div>
-    <div id="search-bar" class="search container hidden">
-        <form class="search" action="/?search=" method="post">
-            <input class="search-input" type="search" name="search" id="search" placeholder="Enter a search...">
-            <button class="icon-base">
-                <svg stroke="currentColor" fill="currentColor" stroke-width="1" version="1.1" id="search" x="0px" y="0px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g><path d="M20.031,20.79c0.46,0.46,1.17-0.25,0.71-0.7l-3.75-3.76c1.27-1.41,2.04-3.27,2.04-5.31 c0-4.39-3.57-7.96-7.96-7.96s-7.96,3.57-7.96,7.96c0,4.39,3.57,7.96,7.96,7.96c1.98,0,3.81-0.73,5.21-1.94L20.031,20.79z M4.11,11.02c0-3.84,3.13-6.96,6.96-6.96c3.84,0,6.96,3.12,6.96,6.96c0,3.84-3.12,6.96-6.96,6.96C7.24,17.98,4.11,14.86,4.11,11.02 z"></path></g></svg>
-            </button>
-        </form>
-    </div>
-    <div id="filter-bar" class="container filter hidden">
-        <ul>
-            <li><h6>Categories</h6></li>
-            <li><a href="/?category=fuit">Fuit</a></li>
-            <li><a href="/?category=vegitables">Vegitables</a></li>
-            <li><a href="/?category=spices">Spices</a></li>
-        </ul>
-        <ul>
-            <li><h6>Filter</h6></li>
-            <li><a href="/?category=products">Products</a></li>
-            <li><a href="/?category=farmers">Farmers</a></li>
-            <li><a href="/?category=traders">Traders</a></li>
-            <li><a href="/?category=agents">Agents</a></li>
-        </ul>
-    </div>
+    <% if (accountType != 'agent' && accountType != 'producer') { %>
+        <div id="search-bar" class="search container hidden">
+            <form class="search" action="/?search=" method="get">
+                <input class="search-input" type="search" name="search" id="search" placeholder="Enter a search...">
+                <button class="icon-base">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="1" version="1.1" id="search" x="0px" y="0px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g><path d="M20.031,20.79c0.46,0.46,1.17-0.25,0.71-0.7l-3.75-3.76c1.27-1.41,2.04-3.27,2.04-5.31 c0-4.39-3.57-7.96-7.96-7.96s-7.96,3.57-7.96,7.96c0,4.39,3.57,7.96,7.96,7.96c1.98,0,3.81-0.73,5.21-1.94L20.031,20.79z M4.11,11.02c0-3.84,3.13-6.96,6.96-6.96c3.84,0,6.96,3.12,6.96,6.96c0,3.84-3.12,6.96-6.96,6.96C7.24,17.98,4.11,14.86,4.11,11.02 z"></path></g></svg>
+                </button>
+            </form>
+        </div>
+    <% } %>
+    <% if (accountType != 'agent' && accountType != 'producer') { %>
+        <div id="filter-bar" class="container filter hidden">
+            <ul>
+                <li><h6>Categories</h6></li>
+                <li><a href="/?category=fuit">Fuit</a></li>
+                <li><a href="/?category=vegitables">Vegitables</a></li>
+                <li><a href="/?category=spices">Spices</a></li>
+            </ul>
+            <ul>
+                <li><h6>Filter</h6></li>
+                <li><a href="/?filter=products">Products</a></li>
+                <li><a href="/?filter=producer">Producer</a></li>
+                <li><a href="/?filter=trader">Traders</a></li>
+                <li><a href="/?filter=driver">Agents</a></li>
+            </ul>
+        </div>
+    <% } %>
 </nav>
 
-<script>
-    const toogleFilter = () => {
-        const filterBar = document.querySelector('#filter-bar')
-        const searchBar = document.querySelector('#search-bar')
+<% if (accountType != 'agent' && accountType != 'producer') { %>
+    <script>
+        const toogleFilter = () => {
+            const filterBar = document.querySelector('#filter-bar')
+            const searchBar = document.querySelector('#search-bar')
 
-        if (filterBar.classList.contains('flex')) {
-            filterBar.classList.replace('flex', 'hidden')
-            searchBar.classList.replace('flex', 'hidden')
-        } else {
-            filterBar.classList.replace('hidden', 'flex')
-            searchBar.classList.replace('hidden', 'flex')
+            if (filterBar.classList.contains('flex')) {
+                filterBar.classList.replace('flex', 'hidden')
+                searchBar.classList.replace('flex', 'hidden')
+            } else {
+                filterBar.classList.replace('hidden', 'flex')
+                searchBar.classList.replace('hidden', 'flex')
+            }
         }
-    }
 
-    const toogleSearch = () => {
-        const filterBar = document.querySelector('#filter-bar')
-        const searchBar = document.querySelector('#search-bar')
+        const toogleSearch = () => {
+            const filterBar = document.querySelector('#filter-bar')
+            const searchBar = document.querySelector('#search-bar')
 
-        if (searchBar.classList.contains('flex')) {
-            searchBar.classList.replace('flex', 'hidden')
-            filterBar.classList.replace('flex', 'hidden')
-        } else {
-            searchBar.classList.replace('hidden', 'flex')
-            searchBar.querySelectorAll('input')[0].focus()
+            if (searchBar.classList.contains('flex')) {
+                searchBar.classList.replace('flex', 'hidden')
+                filterBar.classList.replace('flex', 'hidden')
+            } else {
+                searchBar.classList.replace('hidden', 'flex')
+                searchBar.querySelectorAll('input')[0].focus()
+            }
         }
-    }
-</script>
+    </script>
+<% } %>

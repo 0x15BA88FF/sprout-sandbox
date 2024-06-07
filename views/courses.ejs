@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./components/head', { title: 'Courses' }) %>
+</head>
+
+<body>
+    <%- include('./components/navbar', { activeLink: '/courses', accountType }) %>
+
+    <section class="container">
+        <% courses.forEach(course => { %>
+            <%- include('./components/courseCard', { _id: course._id, title: course.title, content: course.content }) %>
+        <% }) %>
+    </section>
+
+    <%- include('./components/footer') %>
+</body>
+
+</html>

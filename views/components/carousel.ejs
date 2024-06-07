@@ -1,8 +1,30 @@
 <div class="carousel">
-    <div class="main-image">
-        <span class="position">1/3</span>
+    <div id="image-view" class="main-image bg-cover">
+        <span id="image-position" class="position shadow-lg">1/3</span>
     </div>
-    <div class="images-flex">
-        <button><img src="/images/default.png" alt=""></button>
+    <div id="images-flex" class="images-flex">
+        <% images.forEach((image, index) => { %>
+            <button class="image-button" onclick="setActiveImage('<%= image %>', '<%= index %>')">
+                <img src="<%= image %>" alt="product picture <%= index %>">
+            </button>
+        <% }); %>
     </div>
 </div>
+
+<script>
+    const imageViewer = document.querySelector('#image-view');
+    const imagePosition = document.querySelector('#image-position');
+    const imagesContainer = document.querySelector('#images-flex');
+
+    let activeImageIndex = 0;
+    let position = "";
+
+    const setActiveImage = (image, index) => {
+        imageViewer.style.backgroundImage = `url("${ image }")`;
+        activeImageIndex = Number(index) + 1;
+        position = `${ activeImageIndex }/${ imagesContainer.children.length }`;
+        imagePosition.innerHTML = position;
+    }
+
+    setActiveImage('<%= images[0] %>', 0)
+</script>

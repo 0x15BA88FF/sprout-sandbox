@@ -2,29 +2,29 @@
 <html lang="en">
 
 <head>
-    <%- include('./components/head', { title: 'Buy quality goods' }) %>
+    <%- include('./components/head', { title: product.title }) %>
 </head>
 
 <body>
-    <%- include('./components/navbar', { activeLink: '/' }) %>
+    <%- include('./components/navbar', { activeLink: '/product', accountType }) %>
 
     <section class="container">
-        <%- include('./components/carousel') %>
+        <%- include('./components/carousel', { images: product.images }) %>
 
-        <a class="flex items-center gap-4" href="/profile/">
-            <img class="rounded-full" src="/images/avatar.png" alt="user avatar">
+        <a class="flex items-center gap-4" href="/profile/<%= author._id %>">
+            <img class="rounded-full" src="<%= author.avatar %>" alt="<%= author.username %>">
             <div class="main flex flex-col">
-                <p class="font-bold">Random User300</p>
-                <p>Farmer</p>
+                <p class="font-bold"><%= author.username %></p>
+                <p><%= author.accountType %></p>
             </div>
         </a>
 
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum qui nulla eos dicta error placeat saepe repudiandae tenetur, laborum rem.</p>
-        <%- include('./components/starRating', { rating: 4 }) %>
+        <p><%= product.title %></p>
+        <%- include('./components/starRating', { rating }) %>
 
         <div class="actions flex gap-2">
-            <button class="flex-grow button primary">Add To Cart</button>
-            <a class="flex-grow button secondary" href="/purchase/skdfjh">Buy Now</a>
+            <button onclick="addToCart('<%= product._id %>')" class="flex-grow button primary">Add To Cart</button>
+            <a class="flex-grow button secondary" href="/purchase/<%= product._id %>">Buy Now</a>
         </div>
 
         <div class="reviews-section flex flex-col gap-2 p-4 bg-background-100 rounded-lg">
@@ -40,14 +40,14 @@
                 <h2>Specification</h2>
                 <button class="link" onclick="showSpecification()" href="#">See More..</button>
             </div>
-            <p id="specification" class="max-h-[5.8rem] text-ellipsis overflow-hidden" onclick="showSpecification()">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, ab temporibus. Cum incidunt laborum consequuntur quam tempora laboriosam dolores repellat, quis dolore animi? Repudiandae officiis necessitatibus neque sunt alias dolores similique porro. Corrupti recusandae veritatis non error repellat amet odio, laudantium reprehenderit sunt labore deleniti, ex, cumque doloribus. Deserunt, voluptatibus natus commodi ducimus quidem accusantium esse, expedita mollitia fugit adipisci sit iusto distinctio deleniti eius voluptate blanditiis temporibus perspiciatis voluptas!</p>
+            <p id="specification" class="max-h-[5.8rem] text-ellipsis overflow-hidden" onclick="showSpecification()"><%= product.specification %></p>
         </div>
 
         <div id="products-segment" class="segment">
             <h2>Recommended</h2>
             <div class="products-section">
                 <% products.forEach((product) => { %>
-                    <%- include('./components/productCard', { product, currency: product.currency, price: product.price, quantity: product.quantity, rating: product.rating }) %>
+                    <%- include('./components/productCard', { product, currency: product.currency, price: product.price, metric: product.metric, rating: product.rating }) %>
                 <% }); %>
             </div>
         </div>
@@ -55,7 +55,7 @@
 
     <section onclick="closeModals()" id="modal-backdrop" class="fixed top-0 z-40 w-screen h-screen block flex-col opacity-30 bg-background-900"></section>
 
-    <section id="reviews-section" class="fixed bottom-0 z-50 h-max">
+    <section id="reviews-section" class="fixed bottom-0 z-50 w-full h-max">
         <div class="flex flex-col gap-2 p-4 bg-background-100 rounded-t-lg">
             <div class="header flex items-center justify-between">
                 <h2>Review</h2>
@@ -93,5 +93,7 @@
 
     closeModals()
 </script>
+
+<%- include("./components/cartHandler") %>
 
 </html>

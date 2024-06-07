@@ -1,12 +1,11 @@
-<div class="user-card">
-    <div class="main">
-        <img class="thumbnail-md" src="<%= user.image %>" alt="/images/avatar.png">
-        <div class="details">
-            <h6><%= user.username %></h6>
-            <p><%= user.data %></p>
+<a href="/profile/<%= user._id %>">
+    <div class="user-card">
+        <div class="main">
+            <img class="thumbnail-base" src="<%= user.image %>" alt="/images/avatar.png">
+            <div class="details">
+                <h6><%= user.username %></h6>
+                <p><%= user.data %></p>
+            </div>
         </div>
     </div>
-    <form action="<%= user.action %>" method="<%= method %>">
-        <button class="button secondary"><%= user.actionName %></button>
-    </form>
-</div>
+</a>

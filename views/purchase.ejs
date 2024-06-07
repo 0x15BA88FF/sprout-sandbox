@@ -2,35 +2,26 @@
 <html lang="en">
 
 <head>
-    <%- include('./components/head', { title: 'buy quality goods' }) %>
+    <%- include('./components/head', { title: product.title }) %>
 </head>
 
 <body>
-    <%- include('./components/navbar', { activelink: '/' }) %>
+    <%- include('./components/navbar', { activelink: '/purchase', accountType }) %>
 
     <section class="container">
-        <%- include('./components/carousel') %>
+        <%- include('./components/carousel', { images: product.images }) %>
 
-        <p>lorem ipsum dolor sit amet, consectetur adipisicing elit. eum qui nulla eos dicta error placeat saepe repudiandae tenetur, laborum rem.</p>
+        <p><%= product.title %></p>
+        <%- include('./components/starRating', { rating }) %>
 
-        <form class="flex flex-col gap-2" action="/purchase" method="post">
+        <form class="flex flex-col gap-2" action="/purchase/<%= product._id %>" method="post">
             <div class="quantity-section flex flex-col gap-4 p-4 bg-background-100 rounded-lg">
                 <div class="header flex items-center justify-between">
                     <h2>quantity</h2>
                 </div>
                 <div class="flex items-center justify-between">
-                    <%- include('./components/numberinput') %>
-                    <%- include('./components/price', { currency: 'ghc', price: 56.77, quantity: 'pcs', classes: 'price-lg' }) %>
-                </div>
-            </div>
-
-            <div class="payment-section flex flex-col gap-4 p-4 bg-background-100 rounded-lg">
-                <div class="header flex items-center justify-between">
-                    <h2>payment method</h2>
-                </div>
-                <div class="flex flex-col gap-2">
-                    <%- include('./components/methodcard', { image: '/images/avatar.png', title: 'lorem ipsum doro sit', description: 'lorem, ipsum dolor sit amet consectetur adipisicing elit. fugiat, quis!' }) %>
-                    <%- include('./components/methodcard', { image: '/images/avatar.png', title: 'lorem ipsum doro sit', description: 'lorem, ipsum dolor sit amet consectetur adipisicing elit. fugiat, quis!' }) %>
+                    <%- include('./components/numberinput', { id: "quantityInput", name: "quantity" }) %>
+                    <%- include('./components/price', { currency: 'ghc', price: 56.77, metric: 'pcs', classes: 'price-lg' }) %>
                 </div>
             </div>
 
@@ -38,9 +29,9 @@
                 <div class="header flex items-center justify-between">
                     <h2>delivery method</h2>
                 </div>
-                <div class="flex flex-col gap-2">
-                    <%- include('./components/methodcard', { image: '/images/avatar.png', title: 'lorem ipsum doro sit', description: 'lorem, ipsum dolor sit amet consectetur adipisicing elit. fugiat, quis!' }) %>
-                    <%- include('./components/methodcard', { image: '/images/avatar.png', title: 'lorem ipsum doro sit', description: 'lorem, ipsum dolor sit amet consectetur adipisicing elit. fugiat, quis!' }) %>
+                <div class="flex flex-col gap-1">
+                    <%- include('./components/methodcard', { image: '/images/avatar.png', title: 'Delivery', description: 'Hire a driver to deliver you goods at your door step.' }) %>
+                    <%- include('./components/methodcard', { image: '/images/avatar.png', title: 'Pick Up', description: 'Pick up your products the next time you drop by.' }) %>
                 </div>
             </div>
 
@@ -51,15 +42,14 @@
                 <div class="flex flex-col gap-2">
                     <div class="flex item-center justify-between">
                         <p>price</p>
-                        <%- include('./components/price', { currency: 'ghc', price: 56.77, quantity: 'pcs', classes: 'price-sm' }) %>
-                    </div>
-                    <div class="flex item-center justify-between">
-                        <p>transport</p>
-                        <%- include('./components/price', { currency: 'ghc', price: 56.77, quantity: 'pcs', classes: 'price-sm' }) %>
+                        <%- include('./components/price', { currency: product.currency, price: product.price, metric: product.metric, classes: 'price-sm' }) %>
                     </div>
                     <div class="flex item-center justify-between">
                         <p>total</p>
-                        <%- include('./components/price', { currency: 'ghc', price: 56.77, quantity: 'pcs', classes: 'price-lg' }) %>
+                        <span class="price price-lg">
+                            <p class="currency"><%= product.currency %></p>
+                            <p id="totalPrice" class="priceWhole"><%= product.price %></p>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -67,12 +57,12 @@
             <input class="button primary" type="submit" value="purchase">
         </form>
 
-        <a href="/track/sdfjoi" class="button secondary">track purchase</a>
-        <button onclick="showreviewsection()" class="button secondary">review</button>
+        <a href="/purchases" class="button secondary">View purchases</a>
+        <button onclick="showReviewSection()" class="button secondary">review</button>
 
     </section>
 
-    <section onclick="closemodals()" id="modal-backdrop" class="fixed top-0 z-40 w-screen h-screen block flex-col opacity-30 bg-background-900"></section>
+    <section onclick="closeModals()" id="modal-backdrop" class="fixed top-0 z-40 w-screen h-screen block flex-col opacity-30 bg-background-900"></section>
 
     <section id="review-section" class="fixed bottom-0 z-50 h-max w-full">
         <div class="flex flex-col gap-2 p-4 bg-background-100 rounded-t-lg">
@@ -82,11 +72,11 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none"><path d="m6.75806 17.2431l12.0011 12.0001l17.2441 17.2431m17.2441 6.75708l12.0001 12.0001l6.75806 6.75708" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
             </div>
-            <div class="h-[50vh] flex flex-col gap-4 overflow-y-scroll">
+            <form action="/review/<%= product._id %>" method="post" class="h-[50vh] flex flex-col gap-4 overflow-y-scroll">
                 <%- include('./components/ratinginput') %>
                 <textarea class="p-2 rounded-lg" name="comment" id="comment" cols="30" rows="10" placeholder="give us your feedback..."></textarea>
                 <input type="submit" value="submit review">
-            </>
+            </form>
         </div>
     </section>
 
@@ -94,23 +84,27 @@
 </body>
 
 <script>
-    const specifiation = document.queryselector('#specification');
-    const reviewsection = document.queryselector('#review-section')
-    const modalbackdrop = document.queryselector('#modal-backdrop')
+    const reviewsection = document.querySelector('#review-section')
+    const modalbackdrop = document.querySelector('#modal-backdrop')
 
-    const showspecification = () => { specifiation.style.maxheight = 'max-content' }
-
-    const closemodals = () => {
-        reviewsection.classlist.replace('h-max', 'h-0');
-        modalbackdrop.classlist.replace('block', 'hidden');
+    const closeModals = () => {
+        reviewsection.classList.replace('h-max', 'h-0');
+        modalbackdrop.classList.replace('block', 'hidden');
     }
 
-    const showreviewsection = () => {
-        reviewsection.classlist.replace('h-0', 'h-max');
-        modalbackdrop.classlist.replace('hidden', 'block');
+    const showReviewSection = () => {
+        reviewsection.classList.replace('h-0', 'h-max');
+        modalbackdrop.classList.replace('hidden', 'block');
     }
 
-    closemodals()
+    const input = document.querySelector("#quantityInput")
+    const priceElement = document.querySelector("#totalPrice")
+
+    input.addEventListener('change', () => {
+        priceElement.innerHTML = Number('<%= product.price %>') * input.value;
+    }) 
+
+    closeModals()
 </script>
 
 </html>

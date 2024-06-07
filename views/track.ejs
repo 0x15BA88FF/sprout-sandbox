@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./components/head', { title: 'Track' }) %>
+</head>
+
+<body>
+    <div class="map fixed top-0 bg-background-400 w-screen h-screen"></div>
+
+    <section class="fixed bottom-0 z-50 w-full flex flex-col p-4 bg-background-50 rounded-t-lg">
+            <div class="header flex items-center justify-between">
+                <h2>Delivery</h2>
+            </div>
+            <div class="flex flex-col gap-2">
+                <%- include('./components/agentCard', { username: "Pascall", distance: "100", avatar: "" } ) %>
+                <button class="button primary">Scan Now</button>
+            </div>
+    </section>
+
+</body>
+
+</html>

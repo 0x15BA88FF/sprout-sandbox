@@ -6,16 +6,17 @@
 </head>
 
 <body>
-    <%- include('./components/navbar', { activeLink: '/' }) %>
+    <%- include('./components/navbar', { activeLink: '/cart', accountType }) %>
 
     <section class="container">
         <h1>My Cart</h1>
         <div class="cart-items flex flex-col gap-2">
-            <% items.forEach((item) => { %>
-                <%- include('./components/cartItemCard', { item }) %>
+            <% products.forEach((product) => { %>
+                <%- include('./components/cartItemCard', { product }) %>
             <% }); %>
         </div>
     </section>
 </body>
 
+<%- include('./components/cartHandler') %>
 </html>

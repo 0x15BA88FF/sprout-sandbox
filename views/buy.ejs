@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <%- include('./components/navbar', { activeLink: '/' }) %>
+    <%- include('./components/navbar', { activeLink: '/', accountType }) %>
 
     <section class="container">
         <div id="categories-segment" class="flex segment">
@@ -24,16 +24,16 @@
             </div>
         </div>
 
-        <div id="farmers-segment" class="hidden segment">
-            <h3>In Farmers</h3>
+        <div id="farmers-segment" class="<%= producers.length < 1 ? 'hidden' : '' %> segment">
+            <h3>In Producers</h3>
             <div class="users-section">
-                <% farmers.forEach((user) => { %>
+                <% producers.forEach((user) => { %>
                     <%- include('./components/userCard', { user }) %>
                 <% }); %>
             </div>
         </div>
 
-        <div id="traders-segment" class="hidden segment">
+        <div id="traders-segment" class="<%= traders.length < 1 ? 'hidden' : '' %> segment">
             <h3>Traders</h3>
             <div class="users-section">
                 <% traders.forEach((user) => { %>
@@ -42,20 +42,20 @@
             </div>
         </div>
 
-        <div id="agents-segment" class="hidden segment">
-            <h3>In Agents</h3>
+        <div id="agents-segment" class="<%= drivers.length < 1 ? 'hidden' : '' %> segment">
+            <h3>In Drivers</h3>
             <div class="users-section">
-                <% agents.forEach((user) => { %>
+                <% drivers.forEach((user) => { %>
                     <%- include('./components/userCard', { user }) %>
                 <% }); %>
             </div>
         </div>
 
-        <div id="products-segment" class="segment">
+        <div id="products-segment" class="<%= products.length < 1 ? 'hidden' : '' %> segment">
             <h3>Recommended Products</h3>
             <div class="products-section">
                 <% products.forEach((product) => { %>
-                    <%- include('./components/productCard', { product, currency: product.currency, price: product.price, quantity: product.quantity, rating: product.rating }) %>
+                    <%- include('./components/productCard', { product, currency: product.currency, price: product.price, metric: product.metric, rating: product.rating }) %>
                 <% }); %>
             </div>
         </div>
@@ -63,5 +63,7 @@
 
     <%- include('./components/footer') %>
 </body>
+
+<%- include('./components/cartHandler') %>
 
 </html>
