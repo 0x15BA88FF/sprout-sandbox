@@ -1,8 +1,8 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const userModel = require("../models/userModel");
 
 const router = express.Router();
-const userModel = require("../models/userModel");
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
