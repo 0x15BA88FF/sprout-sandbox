@@ -14,7 +14,7 @@ router.post('/', auth, upload.single('files'), (req, res, next) => {
         error.httpStatusCode = 400;
         return next(error);
     }
-    let filename = file.path.split('\\').pop();
+    const filename = file.path.split('\\').pop();
     res.json(filename);
 });
 

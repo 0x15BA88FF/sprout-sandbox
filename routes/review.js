@@ -2,8 +2,8 @@ const express = require("express");
 const mongodb = require('mongodb');
 const auth = require("./middleware/auth");
 const userModel = require("../models/userModel");
-const productModel = require("../models/productModel");
 const reviewModel = require("../models/reviewModel");
+const productModel = require("../models/productModel");
 const allowAccess = require("./middleware/allowAccess");
 
 const router = express.Router();
@@ -11,9 +11,9 @@ const ObjectId = mongodb.ObjectId;
 
 router.post('/:id', auth, allowAccess('consumer', 'trader'), async (req, res) => {
     try {
+        const fromId = req.session.user._id;
         const { rating, comment } = req.body;
         const productId = new ObjectId(req.params.id);
-        const fromId = req.session.user._id;
 
         const review = new reviewModel({ fromId, rating, comment });
         const savedReview = await review.save();
@@ -24,10 +24,10 @@ router.post('/:id', auth, allowAccess('consumer', 'trader'), async (req, res) =>
         const ratings = reviews.map(review => review.rating);
         const averageRating = ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length;
 
-        let updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $push: { reviews: savedReview._id }}, { new: true });
-        updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { rating: averageRating }}, { new: true });
-        return res.redirect(`/purchase/${ productId }`);
+        await productModel.findByIdAndUpdate({ _id: productId }, { $push: { reviews: savedReview._id }}, { new: true });
+        await productModel.findByIdAndUpdate({ _id: productId }, { $set: { rating: averageRating }}, { new: true });
 
+        return res.redirect(`/purchase/${ productId }`);
     } catch(err) {
         const productId = new ObjectId(req.params.id);
         const product = await productModel.findOne({ _id: productId });

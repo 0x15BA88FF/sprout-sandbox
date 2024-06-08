@@ -1,8 +1,8 @@
 const express = require("express");
 const mongodb = require('mongodb');
 const auth = require("./middleware/auth");
-const userModel = require("../models/userModel")
-const productModel = require("../models/productModel")
+const userModel = require("../models/userModel");
+const productModel = require("../models/productModel");
 const allowAccess = require("./middleware/allowAccess");
 
 const router = express.Router();

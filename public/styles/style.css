@@ -39,6 +39,8 @@
     }
 }
 
+* { transition: 0.3s }
+
 body { @apply w-screen min-h-screen flex flex-col gap-4 }
 
 section { @apply flex flex-col flex-grow gap-4  }
@@ -72,11 +74,13 @@ input[type='submit'] { @apply text-text-50 bg-primary-400 hover:bg-primary-500 }
 .default { @apply bg-background-200 rounded-lg; }
 .primary { @apply text-background-50 bg-primary-500 rounded-lg; }
 .secondary { @apply bg-primary-200 rounded-lg; }
+.bad { @apply bg-red-300 rounded-lg; }
 
 .icon { @apply aspect-square }
 .icon-sm { @apply icon h-6 w-6 }
 .icon-base { @apply icon h-6 w-6 }
 .icon-md { @apply icon h-12 w-12 }
+.icon-md { @apply icon h-14 w-14 }
 
 .thumbnail { @apply aspect-square }
 .thumbnail-base { @apply thumbnail w-12 h-12 }

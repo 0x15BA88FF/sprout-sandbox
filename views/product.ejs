@@ -11,21 +11,25 @@
     <section class="container">
         <%- include('./components/carousel', { images: product.images }) %>
 
-        <a class="flex items-center gap-4" href="/profile/<%= author._id %>">
-            <img class="rounded-full" src="<%= author.avatar %>" alt="<%= author.username %>">
-            <div class="main flex flex-col">
-                <p class="font-bold"><%= author.username %></p>
-                <p><%= author.accountType %></p>
-            </div>
-        </a>
+        <% if (accountType != 'producer' && accountType != 'trader') { %>
+            <a class="flex items-center gap-4" href="/profile/<%= author._id %>">
+                <img class="rounded-full" src="<%= author.avatar %>" alt="<%= author.username %>">
+                <div class="main flex flex-col">
+                    <p class="font-bold"><%= author.username %></p>
+                    <p><%= author.accountType %></p>
+                </div>
+            </a>
+        <% } %>
 
-        <p><%= product.title %></p>
+        <p class="font-bold text-lg"><%= product.title %></p>
         <%- include('./components/starRating', { rating: product.rating }) %>
 
-        <div class="actions flex gap-2">
-            <button onclick="addToCart('<%= product._id %>')" class="flex-grow button primary">Add To Cart</button>
-            <a class="flex-grow button secondary" href="/purchase/<%= product._id %>">Buy Now</a>
-        </div>
+        <% if (accountType != 'producer') { %>
+            <div class="actions flex gap-2">
+                <button onclick="addToCart('<%= product._id %>')" class="flex-grow button primary">Add To Cart</button>
+                <a class="flex-grow button secondary" href="/purchase/<%= product._id %>">Buy Now</a>
+            </div>
+        <% } %>
 
         <div class="reviews-section flex flex-col gap-2 p-4 bg-background-100 rounded-lg">
             <div class="header flex items-center justify-between">
@@ -47,14 +51,16 @@
             <p id="specification" class="max-h-[5.8rem] text-ellipsis overflow-hidden" onclick="showSpecification()"><%= product.specification %></p>
         </div>
 
-        <div id="products-segment" class="segment">
-            <h2>Recommended</h2>
-            <div class="products-section">
-                <% products.forEach((product) => { %>
-                    <%- include('./components/productCard', { product, currency: product.currency, price: product.price, metric: product.metric, rating: product.rating }) %>
-                <% }); %>
+        <% if (accountType != 'producer') { %>
+            <div id="products-segment" class="segment">
+                <h2>Recommended</h2>
+                <div class="products-section">
+                    <% products.forEach((product) => { %>
+                        <%- include('./components/productCard', { product, currency: product.currency, price: product.price, metric: product.metric, rating: product.rating }) %>
+                    <% }); %>
+                </div>
             </div>
-        </div>
+        <% } %>
     </section>
 
     <section onclick="closeModals()" id="modal-backdrop" class="fixed top-0 z-40 w-screen h-screen block flex-col opacity-30 bg-background-900"></section>

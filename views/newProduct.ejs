@@ -54,7 +54,17 @@
 
             <input class="button primary" type="submit" value="Sell Now">
         </form>
+        <button onclick="deleteProduct()" class="button bad">Delete</button>
     </section>
+
+    <script>
+        const deleteProduct = () => {
+            fetch("/sell/<%= product._id %>", { method: 'DELETE' })
+                .then(response => response.text())
+                .then(data => { console.log(data); })
+                .catch(error => console.error('Error:', error));
+        };
+    </script>
 
     <%- include('./components/footer') %>
 </body>
