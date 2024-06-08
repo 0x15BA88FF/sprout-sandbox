@@ -16,7 +16,7 @@
 </div>
 
 <script>
-    const images = "<%= product.images %>".split(",").slice(1);
+    const images = "<%= product.images %>".split(",").filter(item => item !== '');
     const imageData = new FormData();
     const imagePreview = document.getElementById('main-image');
     const imagesList = document.getElementById('images-list');

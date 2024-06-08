@@ -8,7 +8,6 @@ const notFound = require('./routes/middleware/notFound');
 const serverError = require('./routes/middleware/serverError');
 
 const app = express();
-app.use(cors())
 const port = 3000 || process.env.PORT;
 const MONGOURI = "mongodb://localhost:27017/SPROUTCLUSERS";
 const mongoDBSession = require("connect-mongodb-session")(session);
@@ -21,6 +20,7 @@ mongoose.connect(MONGOURI)
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'uploads')));
