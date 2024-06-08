@@ -5,7 +5,7 @@ const deleteFile = require('./middleware/deleteFile');
 
 const router = express.Router();
 
-router.get('/:filename', auth, (req, res, next) => {
+router.delete('/:filename', auth, (req, res, next) => {
     const filename = req.params.filename;
     const filePath = path.join(__dirname, '../uploads', filename);
     deleteFile(filePath)(req, res, next);

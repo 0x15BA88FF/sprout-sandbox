@@ -6,12 +6,16 @@ const uploader = require('./middleware/uploadFile');
 const router = express.Router();
 const upload = uploader(path.join(__dirname, '../uploads'));
 
-router.post('/', auth, upload.array('files', maxCount = undefined), (req, res) => {
-    res.send('Files uploaded successfully');
-});
+router.post('/', auth, upload.single('files'), (req, res, next) => {
+    const file = req.file;
 
-router.get('/', (req, res) => {
-    res.render('upload');
+    if (!file) {
+        const error = new Error('Please upload a file');
+        error.httpStatusCode = 400;
+        return next(error);
+    }
+    let filename = file.path.split('\\').pop();
+    res.json(filename);
 });
 
 module.exports = router;

@@ -20,15 +20,15 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <h6>Price</h6>
-                    <input class="quantity-input w-20 text-center bg-background-50 rounded-lg" type="number" name="price" id="price" value="<%= product.price %>">
+                    <input class="quantity-input w-20 text-center bg-background-50 rounded-lg" type="number" name="price" id="price" step="0.01" min="1" value="<%= product.price %>">
                 </div>
                 <div class="flex items-center justify-between">
                     <h6>Minimum quantity</h6>
-                    <input class="quantity-input w-20 text-center bg-background-50 rounded-lg" type="number" name="minQuantity" id="minQuantity" value="<%= product.minQuantity %>">
+                    <input class="quantity-input w-20 text-center bg-background-50 rounded-lg" type="number" name="minQuantity" id="minQuantity" min="1" value="<%= product.minQuantity %>">
                 </div>
                 <div class="flex items-center justify-between">
                     <h6>Maximum quantity</h6>
-                    <input class="quantity-input w-20 text-center bg-background-50 rounded-lg" type="number" name="maxQuantity" id="maxQuantity" value="<%= product.maxQuantity %>">
+                    <input class="quantity-input w-20 text-center bg-background-50 rounded-lg" type="number" name="maxQuantity" id="maxQuantity" min="1" value="<%= product.maxQuantity %>">
                 </div>
                 <div class="flex items-center justify-between">
                     <h6>Currency</h6>

@@ -12,12 +12,7 @@ router.get('/', auth, allowAccess('producer', 'trader'), async (req, res) => {
     const userId = new ObjectId(req.session.user._id);
     const user = await userModel.findOne({ _id: userId });
 
-    const productPromises = user.products.map(async productId => {
-        const product = await productModel.findOne({ _id: productId });
-        const isInCart = user.cart.some(cartId => cartId.equals(productId));
-        return { ...product.toObject(), isInCart };
-    });
-
+    const productPromises = user.products.map(async productId => await productModel.findOne({ _id: productId }));
     const products = await Promise.all(productPromises);
 
     res.render('sell', { accountType: req.session.user.accountType, products });
@@ -34,12 +29,7 @@ router.get('/new', auth, allowAccess('producer', 'trader'), async (req, res) => 
         const userId = new ObjectId(req.session.user._id);
         const user = await userModel.findOne({ _id: userId });
 
-        const productPromises = user.products.map(async productId => {
-            const product = await productModel.findOne({ _id: productId });
-            const isInCart = user.cart.some(cartId => cartId.equals(productId));
-            return { ...product.toObject(), isInCart };
-        });
-
+        const productPromises = user.products.map(async productId =>  await productModel.findOne({ _id: productId }));
         const products = await Promise.all(productPromises);
 
         res.render("sell", { notifications: [{ level: "error", message: err.message }], accountType: req.session.user.accountType, products });
@@ -50,21 +40,26 @@ router.get('/:id', auth, allowAccess('producer', 'trader'), async (req, res) => 
     const productId = new ObjectId(req.params.id);
     const product = await productModel.findOne({ _id: productId });
     const userId = req.session.user._id;
-    const updatedUser = await userModel.findByIdAndUpdate({ _id: userId }, { $set: { products: productId }}, { new: true });
+    const user = await userModel.findOne({ _id: userId });
+
+    if (!user.products.includes(req.params.id)) {
+        const updatedUser = await userModel.findByIdAndUpdate({ _id: userId }, { $push: { products: productId }}, { new: true });
+    };
 
     res.render('newProduct', { accountType: req.session.user.accountType, product });
 });
 
 router.post('/:id', auth, allowAccess('producer', 'trader'), async (req, res) => {
     try {
-        const { images, title, price, minQuantity, maxQuantity, currency, metric, specification } = await req.body
+        const { title, price, minQuantity, maxQuantity, currency, metric, specification } = await req.body
+        const images = req.body.images.split(",")
         const productId = new ObjectId(req.params.id);
 
         let updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { title: title }}, { new: true });
             updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { price: price }}, { new: true });
             updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { metric: metric }}, { new: true });
+            updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { images: images }}, { new: true });
             updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { currency: currency }}, { new: true });
-            updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { specification: images }}, { new: true });
             updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { minQuantity: minQuantity }}, { new: true });
             updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { maxQuantity: maxQuantity }}, { new: true });
             updatedProduct = await productModel.findByIdAndUpdate({ _id: productId }, { $set: { specification: specification }}, { new: true });
@@ -73,11 +68,13 @@ router.post('/:id', auth, allowAccess('producer', 'trader'), async (req, res) =>
 
     } catch(err) {
         const productId = new ObjectId(req.params.id);
+        const product = await productModel.findOne({ _id: productId });
+        const userId = req.session.user._id;
 
-        res.render("newProduct", {
-            id: productId, 
-            notifications: [{ level: "error", message: err.message }],
+        res.render('newProduct', {
             accountType: req.session.user.accountType,
+            notifications: [{ level: "error", message: err.message }],
+            product
         });
     }
 });
