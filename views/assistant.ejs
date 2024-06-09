@@ -111,6 +111,10 @@
         messageContainer.classList.add('bg-blue-400', 'text-black', 'text-5xl', 'p-4',);
         messageRow.classList.add('justify-start', 'pl-12');
       } else {
+        const myName = document.createElement('div')
+        myName.textContent = 'Me'
+        myName.classList.add('text-white','align-center', 'font-sans', 'text-base', 'h-5', 'bg-transparent', 'font-bold', 'w-full','text-left')
+        messageContainer.appendChild(myName)
         messageContainer.classList.add('bg-green-400', 'text-white', 'text-5xl', 'p-4');
         messageRow.classList.add('justify-end');
       }
