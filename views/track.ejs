@@ -3,10 +3,11 @@
 
 <head>
     <%- include('./components/head', { title: 'Track' }) %>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 
 <body>
-    <div class="map fixed top-0 bg-background-400 w-screen h-screen"></div>
+    <div class="map fixed top-0 bg-background-400 w-screen h-screen" id="map"></div>
 
     <section class="fixed bottom-0 z-50 w-full flex flex-col p-4 bg-background-50 rounded-t-lg">
             <div class="header flex items-center justify-between">
@@ -19,5 +20,98 @@
     </section>
 
 </body>
+
+<script>
+    const map = L.map('map').setView([51.505, -0.09], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    let startMarker, endMarker, routeLayer, circle;
+
+    // Function to calculate the destination point given a start point, distance in meters, and bearing in degrees
+    function calculateDestination(lat, lon, distance, bearing) {
+        const R = 6371e3; // Earth's radius in meters
+        const φ1 = lat * Math.PI / 180; // Latitude in radians
+        const λ1 = lon * Math.PI / 180; // Longitude in radians
+        const θ = bearing * Math.PI / 180; // Bearing in radians
+        const δ = distance / R; // Angular distance in radians
+
+        const φ2 = Math.asin(Math.sin(φ1) * Math.cos(δ) +
+            Math.cos(φ1) * Math.sin(δ) * Math.cos(θ));
+        const λ2 = λ1 + Math.atan2(Math.sin(θ) * Math.sin(δ) * Math.cos(φ1),
+            Math.cos(δ) - Math.sin(φ1) * Math.sin(φ2));
+
+        const lat2 = φ2 * 180 / Math.PI; // Convert back to degrees
+        const lon2 = λ2 * 180 / Math.PI; // Convert back to degrees
+
+        return [lon2, lat2];
+    }
+
+    async function getRoute(start, end) {
+        const response = await fetch(`/route?start=${start}&end=${end}`);
+        const data = await response.json();
+        const route = data.routes[0].geometry;
+
+        // Add or update start and end markers
+        const startCoords = start.split(',').map(Number);
+        const endCoords = end.split(',').map(Number);
+
+        if (startMarker) {
+            startMarker.setLatLng([startCoords[1], startCoords[0]]);
+        } else {
+            startMarker = L.marker([startCoords[1], startCoords[0]]).addTo(map)
+                .bindPopup('Start Point')
+                .openPopup();
+        }
+
+        if (endMarker) {
+            endMarker.setLatLng([endCoords[1], endCoords[0]]);
+        } else {
+            endMarker = L.marker([endCoords[1], endCoords[0]]).addTo(map)
+                .bindPopup('End Point')
+                .openPopup();
+        }
+
+        // const cirlce =  L.circle([startCoords[1], startCoords[0]],{radius:accuracy})
+        
+
+        // Add or update route layer
+        if (routeLayer) {
+            routeLayer.clearLayers();
+            routeLayer.addData(route);
+        } else {
+            routeLayer = L.geoJSON(route).addTo(map);
+        }
+        map.fitBounds(routeLayer.getBounds());
+    }
+
+    function watchUserLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(position => {
+                const startLat = position.coords.latitude;
+                const startLon = position.coords.longitude;
+                const accuracy = position.coords.accuracy;
+                const start = `${startLon},${startLat}`;
+
+                // Calculate endpoint 100 meters to the east
+                const [endLon, endLat] = calculateDestination(startLat, startLon, 20, 90); // 90 degrees for east
+                const end = `${endLon},${endLat}`;
+
+                getRoute(start, end);
+            }, error => {
+                alert('Error getting your location. Please ensure location services are enabled.');
+            }, {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
+            });
+        } else {
+            alert('Geolocation is not supported by this browser.');
+        }
+    }
+
+    watchUserLocation();
+</script>
 
 </html>

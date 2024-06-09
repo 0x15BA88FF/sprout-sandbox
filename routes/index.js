@@ -20,6 +20,7 @@ router.get('/', auth, async (req, res) => {
 
     if (accountType === 'producer' || accountType === 'trader') {
         const user = await userModel.findById(userId);
+
         const productsPromises = user.products.map(async productId => await productModel.findById(productId));
         const products = await Promise.all(productsPromises);
         return res.render('dashboard', { accountType: req.session.user.accountType, products, sales: "256", profit: '100k' });
