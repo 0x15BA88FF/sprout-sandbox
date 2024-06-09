@@ -1,49 +1,39 @@
 <select name="productSelect" id="productSelect">
+    <% products.forEach(product => { %>
+        <option value="<%= product._id %>"><%= product.title %></option>
+    <% }); %>
 </select>
 <canvas class="flex flex-col p-4 gap-2 bg-background-50 border-2 border-background-100 shadow-lg rounded-lg" id="productPerformanceChart"></canvas>
 
 <script>
     const productPerformanceChartCTX = document.getElementById('productPerformanceChart').getContext('2d');
-    function generateRandomColor() {
-        const r = Math.floor(Math.random() * 256);
-        const g = Math.floor(Math.random() * 256);
-        const b = Math.floor(Math.random() * 256);
-        const a = Math.random().toFixed(2);
 
-        return rgbaColor;
-    }
-    function generateArrayOfColors(numColors) {
-        const colors = [];
-        for (let i = 0; i < numColors; i++) {
-            colors.push(generateRandomColor());
-        }
-        return colors;
-    }
-    const arrayOfColors = generateArrayOfColors(7);
+    let productPerformanceChart = undefined
+    if (productPerformanceChart) { myChart.destroy() }
 
-    let getProductData = async () => {
+    document.getElementById("productSelect").addEventListener('change', async (event) => {
         try {
-            let id = "6664be3c35ea6bd07819ace5"
+            let id = event.target.value;
+            let selectedIndex = event.target.selectedIndex;
+            let productName  = event.target.options[selectedIndex].text;
             let response = await fetch(`http://localhost:3000/getProductData/${ id }`);
             let result = await response.json();
 
-            const labels = result.map(item => `${ item.date} `);
-            const dataValues = result.map(item => item.quantity);
             const data = {
                 labels: [1, 2, 3, 4, 5, 6, 7],
                 datasets: [
                     {
-                        label: 'Sales QTY of Product within last 7 days',
-                        data: dataValues,
-                        backgroundColor: arrayOfColors,
-                        borderColor: arrayOfColors,
-                        borderWidth: 1,
+                        label: `Demand for ${ productName }`,
+                        data: result,
+                        backgroundColor: ["rgba(255,0,0,0.5)", "rgba(0,255,0,0.5)"],
+                        borderColor: 'rgb(75, 192, 192)',
+                        hoverOffset: 4,
                         borderRadius: 5,
-                        tension: 0.5,
+                        borderWidth: 2,
+                        tension: 0.1
                     }
                 ]
             };
-
             const config = {
                 type: 'line',
                 data: data,
@@ -54,14 +44,9 @@
                     },
                 }
             };
-            //CHART OBJ 
-            const myChart = new Chart(productPerformanceChartCTX, config);
-
+            productPerformanceChart = new Chart(productPerformanceChartCTX, config);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-    };
-
-    getProductData();
-
+    })
 </script>

@@ -2,28 +2,13 @@
 <canvas class="flex flex-col p-4 gap-2 bg-background-50 border-2 border-background-100 shadow-lg rounded-lg" id="productDemandChart"></canvas>
 
 <script>
-    const productsDemandCTX = document.getElementById('productDemandChart').getContext('2d');
-
-    const generateRandomColor = () => {
-        const r = Math.floor(Math.random() * 256);
-        const g = Math.floor(Math.random() * 256);
-        const b = Math.floor(Math.random() * 256);
-        const a = Math.random().toFixed(2);
-
-        return `rgba(${r}, ${g}, ${b}, ${a})`;
-    }
-
-    function generateArrayOfColors(numColors) {
-        const colors = [];
-        for (let i = 0; i < numColors; i++) {
-            colors.push(generateRandomColor());
-        }
-        return colors;
-    }
-
-    const arrayOfColors = generateArrayOfColors(2);
+    const productsDemandChartCTX = document.getElementById('productDemandChart').getContext('2d');
 
     document.getElementById("productSearch").addEventListener('change', async (event) => {
+
+        let productsDemandChart = undefined
+        if (productsDemandChart) { productsDemandChartCTX.destroy() }
+
         try {
             let response = await fetch(`http://localhost:3000/getProductsDemand/${ event.target.value }`);
             let result = await response.json();
@@ -37,8 +22,8 @@
                         label: `Demand for ${ productName }`,
                         data: result,
                         backgroundColor: ["rgba(255,0,0,0.5)", "rgba(0,255,0,0.5)"],
-                        hoverOffset: 4,
                         borderColor: 'rgb(75, 192, 192)',
+                        hoverOffset: 4,
                         borderRadius: 5,
                         borderWidth: 2,
                         tension: 0.1
@@ -55,7 +40,7 @@
                     },
                 }
             };
-            const myChart = new Chart(productsDemandCTX, config);
+            productsDemandChart = new Chart(productsDemandChartCTX, config);
         } catch (error) {
             console.error('Error fetching data:', error);
         }

@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.get('/', auth, async (req, res) => {
     const { accountType } = req.session.user;
+    const userId = req.session.user._id;
     let { search, category, filter } = req.query;
 
     if (!search) { search = "" }
@@ -18,7 +19,10 @@ router.get('/', auth, async (req, res) => {
     let drivers = [];
 
     if (accountType === 'producer' || accountType === 'trader') {
-        return res.render('dashboard', { accountType: req.session.user.accountType, sales: "256", profit: '100k' });
+        const user = await userModel.findById(userId);
+        const productsPromises = user.products.map(async productId => await productModel.findById(productId));
+        const products = await Promise.all(productsPromises);
+        return res.render('dashboard', { accountType: req.session.user.accountType, products, sales: "256", profit: '100k' });
     } else {
         if (search) {
             try {
