@@ -54,15 +54,18 @@
 
             <input class="button primary" type="submit" value="Sell Now">
         </form>
-        <button onclick="deleteProduct()" class="button bad">Delete</button>
+        <a href="/sell/delete/<%= product._id %>" class="button bad">Delete</a>
     </section>
 
     <script>
-        const deleteProduct = () => {
-            fetch("/sell/<%= product._id %>", { method: 'DELETE' })
-                .then(response => response.text())
-                .then(data => { console.log(data); })
-                .catch(error => console.error('Error:', error));
+        const deleteProduct = (productId) => {
+            fetch(`/sell/${ productId }`, { method: 'DELETE' })
+                .then(response => {
+                    if (!response.ok) { throw new Error('Network response was not ok ' + response.statusText) }
+                    return response.text();
+                })
+                .then(data => { console.log(data) })
+                .catch(error => { console.error('Error:', error) });
         };
     </script>
 

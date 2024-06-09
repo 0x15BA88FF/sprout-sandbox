@@ -22,7 +22,7 @@ router.post('/:id', auth, allowAccess('consumer', 'trader'), async (req, res) =>
         const reviewPromises = product.reviews.map(reviewId => reviewModel.findOne({ _id: reviewId }));
         const reviews = await Promise.all(reviewPromises);
         const ratings = reviews.map(review => review.rating);
-        const averageRating = ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length;
+        const averageRating = ratings.reduce((acc, rating) => acc + rating, 0) / ratings;
 
         await productModel.findByIdAndUpdate({ _id: productId }, { $push: { reviews: savedReview._id }}, { new: true });
         await productModel.findByIdAndUpdate({ _id: productId }, { $set: { rating: averageRating }}, { new: true });

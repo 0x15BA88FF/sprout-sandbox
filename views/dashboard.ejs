@@ -10,11 +10,18 @@
 
     <section class="container">
         <div class="status grid grid-flow-row grid-cols-2 gap-4">
-            <%- include('./components/statCard', { heading: "sales", data: "100k" }) %>
-            <%- include('./components/statCard', { heading: "sales", data: "100k" }) %>
-            <%- include('./components/statCard', { heading: "sales", data: "100k" }) %>
-            <%- include('./components/statCard', { heading: "sales", data: "100k" }) %>
+            <%- include('./components/statCard', { heading: "sales", data: sales }) %>
+            <%- include('./components/statCard', { heading: "profit", data: profit }) %>
         </div>
+
+        <h2>Products Performance</h2>
+        <%- include('./components/productPerformanceChart') %>
+    
+        <h2>Products Demend</h2>
+        <%- include('./components/productDemandChart') %>
+
+        <h2>My Products Demand</h2>
+        <%- include('./components/myProductsPerformanceChart') %>
     </section>
 
     <%- include('./components/sellButton') %>

@@ -1,7 +1,7 @@
 const express = require("express");
 const auth = require("./middleware/auth");
 const userModel = require("../models/userModel")
-const productsModel = require("../models/productModel")
+const productModel = require("../models/productModel")
 
 const router = express.Router();
 
@@ -18,17 +18,17 @@ router.get('/', auth, async (req, res) => {
     let drivers = [];
 
     if (accountType === 'producer' || accountType === 'trader') {
-        return res.render('dashboard', { accountType: req.session.user.accountType });
+        return res.render('dashboard', { accountType: req.session.user.accountType, sales: "256", profit: '100k' });
     } else {
         if (search) {
             try {
-                products = await productsModel.find({ $and: [{ title: { $regex: new RegExp(search, 'i') }}] }).sort({ rating: -1 }).limit(10).exec();
+                products = await productModel.find({ $and: [{ title: { $regex: new RegExp(search, 'i') }}] }).sort({ rating: -1 }).limit(10).exec();
                 drivers = await userModel.find({ $and: [{ username: { $regex: new RegExp(search, 'i') }}, { accountType: "driver" }]}).sort({ rating: -1 }).limit(10).exec();
                 traders = await userModel.find({ $and: [{ username: { $regex: new RegExp(search, 'i') } }, { accountType: "trader" }]}).sort({ rating: -1 }).limit(10).exec();
                 producers = await userModel.find({ $and: [{ username: { $regex: new RegExp(search, 'i') }}, { accountType: "producer" }]}).sort({ rating: -1 }).limit(10).exec();
             } catch (error) { console.error('Error fetching:', error); }
         } else if (category) {
-            try { products = await productsModel.find({ $and: [{ category: { $regex: new RegExp(category, 'i') } }] }).sort({ rating: -1 }).limit(10).exec() }
+            try { products = await productModel.find({ $and: [{ category: { $regex: new RegExp(category, 'i') } }] }).sort({ rating: -1 }).limit(10).exec() }
             catch (error) { console.error('Error fetching:', error) }
         } else {
             if (filter === 'producer') {
@@ -45,7 +45,7 @@ router.get('/', auth, async (req, res) => {
                 } catch (error) { console.error('Error fetching:', error) }
             } else {
                 try {
-                    products = await productsModel.find({ }).sort({ rating: -1 }).limit(10).exec();
+                    products = await productModel.find({ }).sort({ rating: -1 }).limit(10).exec();
                 } catch (error) { console.error('Error fetching:', error) }
             }
         }

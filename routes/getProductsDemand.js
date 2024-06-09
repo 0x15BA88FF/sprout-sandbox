@@ -1,18 +1,18 @@
 const express = require('express');
 const moment = require('moment');
-const mongodb = require('mongodb');
 const productModel = require("../models/productModel");
 const purchaseModel = require("../models/purchaseModel");
 
 const router = express.Router();
-const ObjectId = mongodb.ObjectId;
 
-router.get("/:id", async (req, res) => {
-    const productId = req.params.id;
+router.get("/:name", async (req, res) => {
+    const search = req.params.name;
 
     try {
         const sevenDaysAgo = moment().subtract(7, 'days').toDate();
-        const purchases = await purchaseModel.find({ $and: [ { productId: productId }, { date: { $gte: sevenDaysAgo }} ]}).exec();
+        const products = await productModel.find({ title: { $regex: new RegExp(search, 'i') } }).exec();
+        const productIds = products.map(product => product._id);
+        const purchases = await purchaseModel.find({ $and: [ { productId: { $in: productIds } }, { date: { $gte: sevenDaysAgo }} ]}).exec();
 
         const quantitiesByDay = new Array(7).fill(0);
 

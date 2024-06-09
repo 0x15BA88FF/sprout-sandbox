@@ -15,7 +15,7 @@ module.exports = mongoose.model("Purchase", mongoose.Schema({
         required: true,
         default: 0,
     },
-    data: {
+    date: {
         type: Date,
         requred: true,
         default: Date.now()

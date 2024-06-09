@@ -72,20 +72,21 @@ router.post('/:id', auth, allowAccess('producer', 'trader'), async (req, res) =>
     }
 });
 
-router.delete('/:id', auth, allowAccess('producer', 'trader'), async (req, res) => {
+router.get('/delete/:id', auth, allowAccess('producer', 'trader'), async (req, res) => {
     try {
+        const userId = req.session.user._id;
         const productId = new ObjectId(req.params.id);
-        await productModel.findByIdAndUpdate({ _id: productId }, { $set: { title: title }}, { new: true });
+        const user = await userModel.findOne({ _id: userId });
+
+        if (user.products.includes(req.params.id)) {
+            await userModel.findByIdAndUpdate({ _id: userId }, { $pull: { products: productId } });
+        }
+
+        await productModel.findByIdAndDelete(productId);
 
         res.redirect("/sell");
     } catch(err) {
-        const userId = new ObjectId(req.session.user._id);
-        const user = await userModel.findOne({ _id: userId });
-
-        const productPromises = user.products.map(async productId =>  await productModel.findOne({ _id: productId }));
-        const products = await Promise.all(productPromises);
-
-        res.render("sell", { notifications: [{ level: "error", message: err.message }], accountType: req.session.user.accountType, products });
+        return res.redirect("/sell");
     }
 });
 
