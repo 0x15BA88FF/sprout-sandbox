@@ -6,7 +6,7 @@ const allowAccess = require("./middleware/allowAccess");
 
 const router = express.Router();
 
-router.post('/', auth, allowAccess('trader', 'consumer'), async (req, res) => {
+router.post('/', auth, allowAccess('producer', 'trader', 'consumer'), async (req, res) => {
     const { productId } = req.body;
     const userId = req.session.user._id;
 

@@ -30,10 +30,10 @@ router.get('/', auth, async (req, res) => {
                 products = await productModel.find({ $and: [{ title: { $regex: new RegExp(search, 'i') }}] }).sort({ rating: -1 }).limit(10).exec();
                 drivers = await userModel.find({ $and: [{ username: { $regex: new RegExp(search, 'i') }}, { accountType: "driver" }]}).sort({ rating: -1 }).limit(10).exec();
                 traders = await userModel.find({ $and: [{ username: { $regex: new RegExp(search, 'i') } }, { accountType: "trader" }]}).sort({ rating: -1 }).limit(10).exec();
-                producers = await userModel.find({ $and: [{ username: { $regex: new RegExp(search, 'i') }}, { accountType: "producer" }]}).sort({ rating: -1 }).limit(10).exec();
+                producers = await userModel.find({ $and: [{ username: { $regex: new RegExp(search, 'i') }}, { accountType: "producer" }]}).sort({ rating: -1, dateCreated: -1 }).limit(10).exec();
             } catch (error) { console.error('Error fetching:', error); }
         } else if (category) {
-            try { products = await productModel.find({ $and: [{ category: { $regex: new RegExp(category, 'i') } }] }).sort({ rating: -1 }).limit(10).exec() }
+            try { products = await productModel.find({ $and: [{ category: { $regex: new RegExp(category, 'i') } }] }).sort({ rating: -1, dateCreated: -1 }).limit(10).exec() }
             catch (error) { console.error('Error fetching:', error) }
         } else {
             if (filter === 'producer') {
@@ -50,7 +50,7 @@ router.get('/', auth, async (req, res) => {
                 } catch (error) { console.error('Error fetching:', error) }
             } else {
                 try {
-                    products = await productModel.find({ }).sort({ rating: -1 }).limit(10).exec();
+                    products = await productModel.find({ }).sort({ rating: -1, dateCreated: -1 }).limit(10).exec();
                 } catch (error) { console.error('Error fetching:', error) }
             }
         }

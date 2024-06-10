@@ -9,7 +9,7 @@ const ObjectId = mongodb.ObjectId;
 
 router.get('/:id', auth, allowAccess('producer', 'trader', 'agent'), async (req, res) => {
     const courseId = new ObjectId(req.params.id);
-    const course = await courseModel.findOne({ _id: courseId });
+    const course = await courseModel.findById(courseId);
 
     res.render('course', { accountType: req.session.user.accountType, course });
 });

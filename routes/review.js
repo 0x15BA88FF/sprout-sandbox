@@ -9,7 +9,7 @@ const allowAccess = require("./middleware/allowAccess");
 const router = express.Router();
 const ObjectId = mongodb.ObjectId;
 
-router.post('/:id', auth, allowAccess('consumer', 'trader'), async (req, res) => {
+router.post('/:id', auth, allowAccess('producer', 'consumer', 'trader'), async (req, res) => {
     try {
         const fromId = req.session.user._id;
         const { rating, comment } = req.body;
@@ -19,7 +19,7 @@ router.post('/:id', auth, allowAccess('consumer', 'trader'), async (req, res) =>
         const savedReview = await review.save();
         const product = await productModel.findById(productId);
 
-        const reviewPromises = product.reviews.map(reviewId => reviewModel.findOne({ _id: reviewId }));
+        const reviewPromises = product.reviews.map(reviewId => reviewModel.findById(reviewId));
         const reviews = await Promise.all(reviewPromises);
         const ratings = reviews.map(review => review.rating);
         const averageRating = ratings.reduce((acc, rating) => acc + rating, 0) / ratings;
@@ -30,11 +30,11 @@ router.post('/:id', auth, allowAccess('consumer', 'trader'), async (req, res) =>
         return res.redirect(`/purchase/${ productId }`);
     } catch(err) {
         const productId = new ObjectId(req.params.id);
-        const product = await productModel.findOne({ _id: productId });
+        const product = await productModel.findById(productId);
         const author = await userModel.findOne({ products: { $in: [productId] }}).exec();
         const products = await productModel.find({ }).sort({ rating: -1 }).limit(10).exec();
 
-        const reviewPromises = product.reviews.map(reviewId => reviewModel.findOne({ _id: reviewId }));
+        const reviewPromises = product.reviews.map(reviewId => reviewModel.findById(reviewId));
         const reviews = await Promise.all(reviewPromises);
 
         res.render('purchase', { accountType: req.session.user.accountType, product, author, products, reviews, notifications: [{ level: "error", message: err.message }] });
