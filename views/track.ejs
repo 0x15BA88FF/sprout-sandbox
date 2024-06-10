@@ -3,7 +3,6 @@
 
 <head>
     <%- include('./components/head', { title: 'Track' }) %>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 
 <body>
@@ -21,35 +20,34 @@
 
 </body>
 
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
     const map = L.map('map').setView([51.505, -0.09], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' }).addTo(map);
 
     let startMarker, endMarker, routeLayer, circle;
 
     // Function to calculate the destination point given a start point, distance in meters, and bearing in degrees
     function calculateDestination(lat, lon, distance, bearing) {
-        const R = 6371e3; // Earth's radius in meters
-        const φ1 = lat * Math.PI / 180; // Latitude in radians
-        const λ1 = lon * Math.PI / 180; // Longitude in radians
-        const θ = bearing * Math.PI / 180; // Bearing in radians
-        const δ = distance / R; // Angular distance in radians
+        const R = 6371e3;
+        const φ1 = lat * Math.PI / 180;
+        const λ1 = lon * Math.PI / 180;
+        const θ = bearing * Math.PI / 180;
+        const δ = distance / R;
 
         const φ2 = Math.asin(Math.sin(φ1) * Math.cos(δ) +
             Math.cos(φ1) * Math.sin(δ) * Math.cos(θ));
         const λ2 = λ1 + Math.atan2(Math.sin(θ) * Math.sin(δ) * Math.cos(φ1),
             Math.cos(δ) - Math.sin(φ1) * Math.sin(φ2));
 
-        const lat2 = φ2 * 180 / Math.PI; // Convert back to degrees
-        const lon2 = λ2 * 180 / Math.PI; // Convert back to degrees
+        const lat2 = φ2 * 180 / Math.PI;
+        const lon2 = λ2 * 180 / Math.PI;
 
         return [lon2, lat2];
     }
 
     async function getRoute(start, end) {
-        const response = await fetch(`/route?start=${start}&end=${end}`);
+        const response = await fetch(`/route?start=${ start }&end=${ end }`);
         const data = await response.json();
         const route = data.routes[0].geometry;
 
@@ -73,8 +71,7 @@
                 .openPopup();
         }
 
-        // const cirlce =  L.circle([startCoords[1], startCoords[0]],{radius:accuracy})
-        
+        // const cirlce =  L.circle([startCoords[1], startCoords[0]],{ radius:accuracy })
 
         // Add or update route layer
         if (routeLayer) {
