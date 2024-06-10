@@ -18,7 +18,7 @@ router.get('/', auth, allowAccess('producer', 'trader', 'consumer'), async (req,
     const purchasePromises = user.cart.map(productId => productModel.findById(productId));
     const purchases = await Promise.all(purchasePromises);
 
-    res.render('cart', { accountType: req.session.user.accountType, products, purchases });
+    res.render('purchases', { accountType: req.session.user.accountType, products, purchases });
 });
 
 module.exports = router;
