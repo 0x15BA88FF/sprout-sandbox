@@ -12,7 +12,6 @@
         <%- include('./components/carousel', { images: product.images }) %>
 
         <p><%= product.title %></p>
-        <%- include('./components/starRating', { rating: product.rating }) %>
 
         <form class="flex flex-col gap-2" action="/purchase/<%= product._id %>" method="post">
             <div class="quantity-section flex flex-col gap-4 p-4 bg-background-100 rounded-lg">
@@ -101,7 +100,7 @@
     const priceElement = document.querySelector("#totalPrice")
 
     input.addEventListener('change', () => {
-        priceElement.innerHTML = Number('<%= product.price %>') * input.value;
+        priceElement.innerHTML = Math.ceil((Number('<%= product.price %>') * input.value) * 100 / 100;
     }) 
 
     closeModals()
