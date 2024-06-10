@@ -15,6 +15,15 @@
                 <%- include('./components/cartItemCard', { product }) %>
             <% }); %>
         </div>
+
+        <% if (purchases) { %>
+            <h1>My Purchases</h1>
+            <div class="cart-items flex flex-col gap-2">
+                <% purchases.forEach((product) => { %>
+                <%- include('./components/purchaseCard', { product }) %>
+                <% }); %>
+            </div>
+        <% } %>
     </section>
 </body>
 
