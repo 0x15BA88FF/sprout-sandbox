@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
 
 module.exports = mongoose.model("Purchase", mongoose.Schema({
+    consumerId: {
+        type: String,
+        required: true,
+    },
+    authorId: {
+        type: String,
+        required: true,
+    },
     productId: {
         type: String,
         required: true,
@@ -9,6 +17,11 @@ module.exports = mongoose.model("Purchase", mongoose.Schema({
         type: Boolean,
         required: true,
         default: false,
+    },
+    price: {
+        type: Number,
+        required: true,
+        default: 0,
     },
     quantity: {
         type: Number,

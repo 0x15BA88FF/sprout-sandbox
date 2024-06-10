@@ -26,7 +26,7 @@ module.exports = mongoose.model("Product", mongoose.Schema({
         required: true,
         default: 0,
     },
-    maxQuantity: {
+    quantity: {
         type: Number,
         required: true,
         default: 0,
@@ -41,4 +41,9 @@ module.exports = mongoose.model("Product", mongoose.Schema({
     rating: {
         type: Number,
     },
+    dataCreated: {
+        type: Date,
+        required: true,
+        default: Date.now()
+    }
 }));
