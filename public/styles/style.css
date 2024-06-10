@@ -14,7 +14,7 @@
         --text-700: #4d4d4d;
         --text-800: #333333;
         --text-900: #1a1a1a;
-        
+
         --background-50: #ffffff;
         --background-100: #e6e6e6;
         --background-200: #cccccc;
@@ -25,7 +25,7 @@
         --background-700: #4d4d4d;
         --background-800: #333333;
         --background-900: #1a1a1a;
-        
+
         --primary-50: #e8fdf0;
         --primary-100: #d1fae1;
         --primary-200: #a2f6c4;
@@ -41,14 +41,14 @@
 
 * { transition: 0.3s }
 
-body { @apply w-screen min-h-screen flex flex-col gap-4 }
+::-webkit-scrollbar { width: 5px }
+::-webkit-scrollbar-track { @apply bg-background-200 }
+::-webkit-scrollbar-thumb { @apply bg-background-300 rounded }
+::-webkit-scrollbar-thumb:hover { @apply bg-background-600 }
+
+body { @apply w-screen min-h-screen flex flex-col gap-4 overflow-y-scroll }
 
 section { @apply flex flex-col flex-grow gap-4  }
-footer { @apply flex flex-col gap-4 }
-footer .main { @apply flex flex-col gap-2 }
-footer .main hr { @apply w-full border-[1px] mx-auto }
-footer .links { @apply flex flex-wrap items-center gap-12 }
-footer .copyright { @apply flex items-center justify-center p-2 bg-background-100 }
 
 h1 { @apply text-4xl font-bold text-text-800; }
 h2 { @apply text-3xl font-bold text-text-800; }
@@ -80,7 +80,7 @@ input[type='submit'] { @apply text-text-50 bg-primary-400 hover:bg-primary-500 }
 .icon-sm { @apply icon h-6 w-6 }
 .icon-base { @apply icon h-6 w-6 }
 .icon-md { @apply icon h-12 w-12 }
-.icon-md { @apply icon h-14 w-14 }
+.icon-lg { @apply icon h-14 w-14 }
 
 .thumbnail { @apply aspect-square }
 .thumbnail-base { @apply thumbnail w-12 h-12 }
@@ -139,18 +139,6 @@ input[type='submit'] { @apply text-text-50 bg-primary-400 hover:bg-primary-500 }
 .carousel .main-image { @apply thumbnail-auto bg-background-100 rounded-lg }
 .carousel .main-image .position { @apply relative top-2 left-2 px-4 py-1 bg-background-50 rounded-full }
 .carousel img { @apply thumbnail-md bg-background-100 rounded-lg }
-
-/* Elements */
-.signup-section { @apply flex flex-col flex-grow items-center justify-center }
-.signup-section form { @apply w-full max-w-80 flex flex-col gap-2 }
-
-.login-section { @apply flex flex-col flex-grow items-center justify-center }
-.login-section form { @apply w-full max-w-80 flex flex-col gap-2 }
-
-.error-section { @apply w-full h-full flex-grow flex flex-col items-center justify-center }
-.categories-section { @apply grid grid-flow-row grid-cols-3 justify-between gap-4 xs:grid-cols-4 sm:grid-cols-5 }
-.users-section { @apply flex flex-col gap-2 }
-.products-section { @apply grid grid-flow-row grid-cols-2 justify-between }
 
 /* Animations */
 @keyframes pulse {
