@@ -18,7 +18,7 @@ router.post('/', auth, async (req, res) => {
     const { accountType } = req.session.user;
 
     try {
-        const content = ""
+        let content = ""
        
         const contexts = {
             producer: `
@@ -30,9 +30,12 @@ router.post('/', auth, async (req, res) => {
                 If the question is not related to farming, respond with 'I can only answer farming-related questions.'
                 Here is the question: 
             `,
-            trader: ``,
-            driver: ``,
-            consumer: ``
+            trader: `
+            `,
+            driver: `
+            `,
+            consumer: `
+            `
         }
 
         content = contexts[accountType]

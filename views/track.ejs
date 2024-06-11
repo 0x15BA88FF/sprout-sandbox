@@ -40,10 +40,8 @@
         const θ = bearing * Math.PI / 180;
         const δ = distance / R;
 
-        const φ2 = Math.asin(Math.sin(φ1) * Math.cos(δ) +
-            Math.cos(φ1) * Math.sin(δ) * Math.cos(θ));
-        const λ2 = λ1 + Math.atan2(Math.sin(θ) * Math.sin(δ) * Math.cos(φ1),
-            Math.cos(δ) - Math.sin(φ1) * Math.sin(φ2));
+        const φ2 = Math.asin(Math.sin(φ1) * Math.cos(δ) + Math.cos(φ1) * Math.sin(δ) * Math.cos(θ));
+        const λ2 = λ1 + Math.atan2(Math.sin(θ) * Math.sin(δ) * Math.cos(φ1), Math.cos(δ) - Math.sin(φ1) * Math.sin(φ2));
 
         const lat2 = φ2 * 180 / Math.PI;
         const lon2 = λ2 * 180 / Math.PI;

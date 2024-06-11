@@ -28,7 +28,9 @@
 
     <div class="fixed bottom-0 right-0 m-8 flex flex-col items-center gap-2">
         <%- include('./components/assistantButton') %>
-        <%- include('./components/sellButton') %>
+        <% if (accountType != 'consumer' && accountType != 'driver') { %>
+            <%- include('./components/sellButton') %>
+        <% } %>
     </div>
 </body>
 
