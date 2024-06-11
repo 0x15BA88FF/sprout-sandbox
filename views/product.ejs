@@ -13,7 +13,7 @@
 
         <% if (accountType != 'producer' && accountType != 'trader') { %>
             <a class="flex items-center gap-4" href="/profile/<%= author._id %>">
-                <img class="rounded-full" src="<%= author.avatar %>" alt="<%= author.username %>">
+                <img class="rounded-full" src="/<%= author.avatar %>" alt="<%= author.username %>">
                 <div class="main flex flex-col">
                     <p class="font-bold"><%= author.username %></p>
                     <p><%= author.accountType %></p>
@@ -24,12 +24,10 @@
         <p class="font-bold text-lg"><%= product.title %></p>
         <%- include('./components/starRating', { rating: product.rating }) %>
 
-        <% if (accountType != 'producer') { %>
-            <div class="actions flex gap-2">
-                <button onclick="addToCart('<%= product._id %>')" class="flex-grow button primary">Add To Cart</button>
-                <a class="flex-grow button secondary" href="/purchase/<%= product._id %>">Buy Now</a>
-            </div>
-        <% } %>
+        <div class="actions flex gap-2">
+            <button onclick="addToCart('<%= product._id %>')" class="flex-grow button primary">Add To Cart</button>
+            <a class="flex-grow button secondary" href="/purchase/<%= product._id %>">Buy Now</a>
+        </div>
 
         <div class="reviews-section flex flex-col gap-2 p-4 bg-background-100 rounded-lg">
             <div class="header flex items-center justify-between">
@@ -80,6 +78,11 @@
             </div>
         </div>
     </section>
+
+    <div class="fixed bottom-0 right-0 m-8 flex flex-col items-center gap-2">
+        <%- include('./components/assistantButton') %>
+        <%- include('./components/sellButton') %>
+    </div>
 
     <%- include('./components/footer') %>
 </body>

@@ -1,28 +1,15 @@
 const express = require("express");
-const { timeStamp } = require('console');
 const auth = require("./middleware/auth");
 const allowAccess = require("./middleware/allowAccess");
 const { VertexAI } = require('@google-cloud/vertexai');
-const Message = require('../models/message.js');
 
 const router = express.Router();
 const projectId = 'chat-room-425715';
 const vertexAI = new VertexAI({ project: projectId, location: 'us-central1' });
 const generativeModel = vertexAI.getGenerativeModel({ model: 'gemini-1.5-flash-001' });
 
-router.get('/', auth, allowAccess('producer', 'trader', 'agent', 'consumer'),  async (_, res) => {
-    try {
-        const messages = await messageModel.find({},'-_id content sender timestamp').lean();
-        res.json(messages);
-    } catch (err) {
-        console.error("Error fetching messages:", err);
-        res.status(500).json({message: 'Error fetching messages'});
-    }
-});
-
 router.post('/', async (req, res) => {
     const userMessage = req.body.message;
-    console.log('Received message:', userMessage);
 
     try {
         const content = `You are a chatbot called "Kwesi" for an app called "Sprout". You answer questions as a farming expert. Only answer farming-related questions.
@@ -34,19 +21,10 @@ router.post('/', async (req, res) => {
                          Here is the question: ${ userMessage }
         `;
 
-        const resp = await generativeModel.generateContent(content);
-        const contentResponse = await resp.response;
+        const contentResponse = await generativeModel.generateContent(content).response;
 
         const text = contentResponse.candidates[0].content.parts[0].text;
         const cleanText = text.replace(/[\n*]+|[\n]+|[\n\n*]+|[\n]+|[##]+ |["\"]+/g, '');
-        console.log('Generated content:', JSON.stringify(cleanText));
-
-        const userMsg = new Message({content: userMessage, sender:'user'});
-        const botMsg = new Message({content: cleanText, sender:'bot'});
-
-        await userMsg.save();
-        await botMsg.save();
-
 
         res.json({ message: JSON.stringify(cleanText) });
     } catch (err) {

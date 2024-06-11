@@ -16,8 +16,8 @@
             <% }); %>
         </div>
 
-        <% if (purchases) { %>
-            <h1>My Purchases</h1>
+        <% if (purchases.length > 0) { %>
+            <h1 class="mt-10">My Purchases</h1>
             <div class="cart-items flex flex-col gap-2">
                 <% purchases.forEach((product) => { %>
                 <%- include('./components/purchaseCard', { product }) %>
@@ -25,6 +25,11 @@
             </div>
         <% } %>
     </section>
+
+    <div class="fixed bottom-0 right-0 m-8 flex flex-col items-center gap-2">
+        <%- include('./components/assistantButton') %>
+        <%- include('./components/sellButton') %>
+    </div>
 </body>
 
 <%- include('./components/cartHandler') %>

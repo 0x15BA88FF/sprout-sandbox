@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     avatar: {
         type: String,
         required: true,
-        default: "default.png"
+        default: "avatar.png"
     },
     accountType: {
         type: String,
@@ -29,11 +29,6 @@ const userSchema = new mongoose.Schema({
     },
     phoneNumbers: {
         type: [String],
-        required: false,
-    },
-    location: {
-        type: String,
-        required: false,
     },
     rating: {
         type: Number,
@@ -42,43 +37,42 @@ const userSchema = new mongoose.Schema({
     },
     products: {
         type: [String],
-        required: false,
     },
     cart: {
         type: [String],
-        required: false,
+    },
+    purchases: {
+        type: [String],
     },
     numberPlate: {
         type: String,
-        required: false,
     },
     isVerified: {
         type: Boolean,
-        required: false,
+    },
+    postalAddress: {
+        type: String,
     },
     houseAddress: {
         type: String,
-        required: false,
     },
     region: {
         type: String,
-        required: false,
     },
     carColor: {
         type: String,
-        required: false,
     },
     driversLicense: {
         type: String,
-        required: false,
     },
     carModel: {
         type: String,
-        required: false,
     },
     ghanaCardNumber: {
         type: String,
-        required: false,
+    },
+    geolocation: {
+        type: String,
     }
 });
 

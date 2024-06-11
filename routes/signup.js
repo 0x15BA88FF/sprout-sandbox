@@ -13,7 +13,9 @@ router.get("/", (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const { username, email, accountType, password } = await req.body;
+        const { username, email, accountType, password, numberPlate, postalAddress, houseAddress, region, carColor, driversLicense, carModel, ghanaCard } = await req.body;
+        let phoneNumbers = await req.body.phoneNumber.split(",");
+
         const userExists = await userModel.findOne({ email });
 
         if (userExists) {
@@ -23,7 +25,7 @@ router.post("/", async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new userModel({ username, email, accountType, password: hashedPassword });
+        const user = new userModel({ username, email, accountType, hashedPassword, phoneNumbers, numberPlate, postalAddress, houseAddress, region, carColor, driversLicense, carModel, ghanaCard });
         const savedUser = await user.save();
 
         req.session.isAuth = true;

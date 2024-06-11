@@ -39,12 +39,13 @@
     }
 }
 
-* { transition: 0.3s }
+* { transition: 0.3s; outline: none }
+
 
 ::-webkit-scrollbar { width: 5px }
-::-webkit-scrollbar-track { @apply bg-background-200 }
-::-webkit-scrollbar-thumb { @apply bg-background-300 rounded }
-::-webkit-scrollbar-thumb:hover { @apply bg-background-600 }
+::-webkit-scrollbar-track { background-color: #f7fafc }
+::-webkit-scrollbar-thumb { background-color: #e2e8f0; border-radius: 0.25rem }
+::-webkit-scrollbar-thumb:hover { background-color: #718096 }
 
 body { @apply w-screen min-h-screen flex flex-col gap-4 overflow-y-scroll }
 

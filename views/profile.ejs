@@ -11,7 +11,7 @@
     <section class="container">
         <div class="flex flex-col gap-1">
             <div class="flex items-center gap-2">
-                <img class="thumbnail-md rounded-full" src="<%= user.avatar %>" alt="<%= user.username %>">
+                <img class="thumbnail-md rounded-full" src="/<%= user.avatar %>" alt="<%= user.username %>">
                 <div class="main flex flex-col">
                     <h4><%= user.username %></h4>
                     <p><%= user.accountType %></p>
@@ -74,6 +74,11 @@
             <% } %>
         </div>
     </section>
+
+    <div class="fixed bottom-0 right-0 m-8 flex flex-col items-center gap-2">
+        <%- include('./components/assistantButton') %>
+        <%- include('./components/sellButton') %>
+    </div>
 
     <%- include('./components/footer') %>
 

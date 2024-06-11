@@ -1,20 +1,14 @@
 <script>
     const addToCart = async (productId) => {
         try {
-            const response = await fetch('/addToCart', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ productId })
-            });
-        } catch (error) {
-            console.error(error);
+            const response = await fetch(`/cart/${ productId }`, { method: 'POST', headers: { 'Content-Type': 'application/json' } });
         }
+        catch (error) { console.error(error) }
     };
     const removeFromCart = async (productId) => {
         try {
-            const response = await fetch('/removeFromCart', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ productId })
-            });
-        } catch (error) {
-            console.error(error);
+            const response = await fetch(`/cart/${ productId }`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
         }
+        catch (error) { console.error(error) }
     }
 </script>

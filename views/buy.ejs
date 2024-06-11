@@ -12,15 +12,15 @@
         <div id="categories-segment" class="flex segment">
             <h3>Categories</h3>
             <div class="grid grid-flow-row grid-cols-3 justify-between gap-4 xs:grid-cols-4 sm:grid-cols-5">
-                <%- include('./components/categoryCard', { image: 'default.png', title: 'Vegitables' }) %>
-                <%- include('./components/categoryCard', { image: 'default.png', title: 'Fruits' }) %>
-                <%- include('./components/categoryCard', { image: 'default.png', title: 'Dairy & Eggs' }) %>
-                <%- include('./components/categoryCard', { image: 'default.png', title: 'Meat & Fish' }) %>
-                <%- include('./components/categoryCard', { image: 'default.png', title: 'Flours & Doughs' }) %>
-                <%- include('./components/categoryCard', { image: 'default.png', title: 'Spices, Seeds & Nuts' }) %>
-                <%- include('./components/categoryCard', { image: 'default.png', title: 'processed' }) %>
-                <%- include('./components/categoryCard', { image: 'default.png', title: 'Beverages' }) %>
-                <%- include('./components/categoryCard', { image: 'default.png', title: 'Others' }) %>
+                <%- include('./components/categoryCard', { image: 'vegitables.jpg', title: 'Vegitables' }) %>
+                <%- include('./components/categoryCard', { image: 'fruits.jpg', title: 'Fruits' }) %>
+                <%- include('./components/categoryCard', { image: 'dairy.jpg', title: 'Dairy & Eggs' }) %>
+                <%- include('./components/categoryCard', { image: 'meet_fish.jpg', title: 'Meat & Fish' }) %>
+                <%- include('./components/categoryCard', { image: 'flours.jpeg', title: 'Flours & Doughs' }) %>
+                <%- include('./components/categoryCard', { image: 'spices.png', title: 'Spices, Seeds & Nuts' }) %>
+                <%- include('./components/categoryCard', { image: 'processed.jpg', title: 'processed' }) %>
+                <%- include('./components/categoryCard', { image: 'beverages.jpg', title: 'Beverages' }) %>
+                <%- include('./components/categoryCard', { image: 'other.png', title: 'Others' }) %>
             </div>
         </div>
 
@@ -60,6 +60,11 @@
             </div>
         </div>
     </section>
+
+    <div class="fixed bottom-0 right-0 m-8 flex flex-col items-center gap-2">
+        <%- include('./components/assistantButton') %>
+        <%- include('./components/sellButton') %>
+    </div>
 
     <%- include('./components/footer') %>
 </body>

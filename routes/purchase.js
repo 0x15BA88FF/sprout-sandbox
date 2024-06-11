@@ -20,20 +20,21 @@ router.get('/:id', auth, allowAccess('producer', 'consumer', 'trader'), async (r
 router.post('/:productId', auth, allowAccess('producer', 'consumer', 'trader'), async (req, res) => {
     try {
         const productId = req.params.productId;
+        const userId = req.session.user._id;
         const { quantity } = await req.body;
 
         await productModel.findByIdAndUpdate(productId, { $inc: { quantity: - quantity } }, { new: true });
-
         const purchase = new purchaseModel({ productId, quantity });
-        await purchase.save();
 
-        res.redirect("/");
+        const savedPurchase = await purchase.save();
+
+        await userModel.findByIdAndUpdate(userId, { $push: { purchases: savedPurchase._id } }, { new: true });
+
+        res.redirect("/purchases");
     } catch(err) {
-        const productId = new ObjectId(req.params.id);
-        const product = await productModel.findById(productId);
-        const author = await userModel.findOne({ products: { $in: [productId] }}).exec();
+        const productId = req.params.productId;
 
-        res.render('purchase', { accountType: req.session.user.accountType, product, author, notifications: [{ level: "error", message: err.message }] });
+        res.redirect(`/purchase/${ productId }`);
     }
 });
 

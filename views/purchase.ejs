@@ -11,7 +11,7 @@
     <section class="container">
         <%- include('./components/carousel', { images: product.images }) %>
 
-        <p><%= product.title %></p>
+        <p class="text-xl font-semibold"><%= product.title %></p>
 
         <form class="flex flex-col gap-2" action="/purchase/<%= product._id %>" method="post">
             <div class="quantity-section flex flex-col gap-4 p-4 bg-background-100 rounded-lg">
@@ -19,7 +19,7 @@
                     <h2>quantity</h2>
                 </div>
                 <div class="flex items-center justify-between">
-                    <input class="quantity-input w-20 text-center bg-background-50 rounded-lg" type="number" name="quantity" id="quantityInput" min="1">
+                    <input class="quantity-input w-20 text-center bg-background-50 rounded-lg" type="number" name="quantity" id="quantityInput" value="1" min="1">
                     <%- include('./components/price', { currency: 'ghc', price: 56.77, metric: 'pcs', classes: 'price-lg' }) %>
                 </div>
             </div>
@@ -29,8 +29,8 @@
                     <h2>delivery method</h2>
                 </div>
                 <div class="flex flex-col gap-1">
-                    <%- include('./components/methodcard', { image: '/images/avatar.png', title: 'Delivery', description: 'Hire a driver to deliver you goods at your door step.' }) %>
-                    <%- include('./components/methodcard', { image: '/images/avatar.png', title: 'Pick Up', description: 'Pick up your products the next time you drop by.' }) %>
+                    <%- include('./components/methodcard', { image: '/images/delivery.svg', title: 'Delivery', description: 'Hire a driver to deliver you goods at your door step.' }) %>
+                    <%- include('./components/methodcard', { image: '/images/pickup.svg', title: 'Pick Up', description: 'Pick up your products the next time you drop by.' }) %>
                 </div>
             </div>
 
@@ -56,7 +56,7 @@
             <input class="button primary" type="submit" value="purchase">
         </form>
 
-        <a href="/purchases" class="button secondary">View purchases</a>
+        <a href="/track/<%= product._id %>" class="button secondary">View purchases</a>
         <button onclick="showReviewSection()" class="button secondary">review</button>
 
     </section>
@@ -79,6 +79,11 @@
         </div>
     </section>
 
+    <div class="fixed bottom-0 right-0 m-8 flex flex-col items-center gap-2">
+        <%- include('./components/assistantButton') %>
+        <%- include('./components/sellButton') %>
+    </div>
+
     <%- include('./components/footer') %>
 </body>
 
@@ -100,7 +105,7 @@
     const priceElement = document.querySelector("#totalPrice")
 
     input.addEventListener('change', () => {
-        priceElement.innerHTML = Math.ceil((Number('<%= product.price %>') * input.value) * 100 / 100;
+        priceElement.innerHTML = Math.ceil((Number('<%= product.price %>') * input.value) * 100 / 100);
     }) 
 
     closeModals()

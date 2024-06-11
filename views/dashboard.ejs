@@ -9,22 +9,25 @@
     <%- include('./components/navbar', { activeLink: '/', accountType }) %>
 
     <section class="container">
-        <!-- <div class="status grid grid-flow-row grid-cols-2 gap-4">
+        <div class="status grid grid-flow-row grid-cols-2 gap-4">
             <%- include('./components/statCard', { heading: "sales", data: sales }) %>
-            <%- include('./components/statCard', { heading: "profit", data: profit }) %>
-        </div> -->
+            <%- include('./components/statCard', { heading: "income", data: income }) %>
+        </div>
 
         <h2>Products Performance</h2>
         <%- include('./components/productPerformanceChart', { products }) %>
     
-        <h2>Products Demend</h2>
+        <h2>Products Demand</h2>
         <%- include('./components/productDemandChart') %>
 
         <h2>My Products Demand</h2>
         <%- include('./components/myProductsPerformanceChart') %>
     </section>
 
-    <%- include('./components/sellButton') %>
+    <div class="fixed bottom-0 right-0 m-8 flex flex-col items-center gap-2">
+        <%- include('./components/assistantButton') %>
+        <%- include('./components/sellButton') %>
+    </div>
 
     <%- include('./components/footer') %>
 </body>
