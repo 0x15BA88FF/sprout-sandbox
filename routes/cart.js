@@ -22,7 +22,7 @@ router.post('/:productId', auth, allowAccess('producer', 'trader', 'consumer'), 
 });
 
 router.delete('/:productId', auth, allowAccess('producer', 'trader', 'consumer'), async (req, res) => {
-    const { productId } = req.body;
+    const { productId } = req.params;
     const userId = req.session.user._id;
 
     try {

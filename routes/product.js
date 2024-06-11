@@ -11,9 +11,15 @@ const ObjectId = mongodb.ObjectId;
 
 router.get('/:id', auth, allowAccess('trader', 'producer', 'consumer'), async (req, res) => {
     const productId = new ObjectId(req.params.id);
-    const product = await productModel.findOne({ _id: productId });
+    const userId = new ObjectId(req.session.user._id);
+
+    const product = await productModel.findById(productId);
+    const user = await userModel.findById(userId);
     const author = await userModel.findOne({ products: { $in: [productId] }}).exec();
     const products = await productModel.find({ }).sort({ rating: -1 }).limit(10).exec();
+
+    let isInCart = false;
+    if (user.cart.includes(productId)) { isInCart = true }
 
     const reviewPromises = product.reviews.map(async reviewId => {
         const review = await reviewModel.findById(reviewId);
@@ -23,7 +29,7 @@ router.get('/:id', auth, allowAccess('trader', 'producer', 'consumer'), async (r
 
     const reviews = await Promise.all(reviewPromises);
 
-    res.render('product', { accountType: req.session.user.accountType, product, author, products, reviews });
+    res.render('product', { accountType: req.session.user.accountType, product, author, products, reviews, isInCart });
 });
 
 module.exports = router;

@@ -1,10 +1,10 @@
 <canvas class="flex flex-col p-4 gap-2 bg-background-50 border-2 border-background-100 shadow-lg rounded-lg" id="myProductDemandChart"></canvas>
 
 <script>
-    const myProductDemandChartCTX = document.getElementById('myProductDemandChart').getContext('2d');
-
     let myProductDemandChart = undefined
     if (myProductDemandChart) { myProductDemandChart.destroy() }
+
+    const myProductDemandChartCTX = document.getElementById('myProductDemandChart').getContext('2d');
 
     const makeProductDemandChart = async () => {
         try {

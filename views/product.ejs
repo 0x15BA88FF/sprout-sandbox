@@ -25,7 +25,11 @@
         <%- include('./components/starRating', { rating: product.rating }) %>
 
         <div class="actions flex gap-2">
-            <button onclick="addToCart('<%= product._id %>')" class="flex-grow button primary">Add To Cart</button>
+            <% if (!isInCart) { %>
+                <button onclick="addToCart('<%= product._id %>')" class="flex-grow button primary">Add To Cart</button>
+            <% } else { %>
+                <button onclick="removeFromCart('<%= product._id %>')" class="flex-grow button bad">Remove From Cart</button>
+            <% } %>
             <a class="flex-grow button secondary" href="/purchase/<%= product._id %>">Buy Now</a>
         </div>
 

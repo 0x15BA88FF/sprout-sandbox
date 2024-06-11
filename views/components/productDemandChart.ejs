@@ -2,12 +2,12 @@
 <canvas class="flex flex-col p-4 gap-2 bg-background-50 border-2 border-background-100 shadow-lg rounded-lg" id="productDemandChart"></canvas>
 
 <script>
+    let productsDemandChart = undefined
+    if (productsDemandChart) { productsDemandChartCTX.destroy() }
+
     const productsDemandChartCTX = document.getElementById('productDemandChart').getContext('2d');
 
     document.getElementById("productSearch").addEventListener('change', async (event) => {
-
-        let productsDemandChart = undefined
-        if (productsDemandChart) { productsDemandChartCTX.destroy() }
 
         try {
             let response = await fetch(`http://localhost:3000/getProductsDemand/${ event.target.value }`);
