@@ -15,21 +15,27 @@ router.get('/:id', auth, allowAccess('trader', 'producer', 'consumer'), async (r
 
     const product = await productModel.findById(productId);
     const user = await userModel.findById(userId);
-    const author = await userModel.findOne({ products: { $in: [productId] }}).exec();
-    const products = await productModel.find({ }).sort({ rating: -1 }).limit(10).exec();
+    const author = await userModel.findOne({ products: { $in: [productId] }});
+    const products = await productModel.find({ }).sort({ rating: -1 }).limit(10);
 
     let isInCart = false;
+    let isMyProduct = false;
+
     if (user.cart.includes(productId)) { isInCart = true }
+    if (user.products.includes(productId)) { isMyProduct = true };
 
     const reviewPromises = product.reviews.map(async reviewId => {
         const review = await reviewModel.findById(reviewId);
         const user = await userModel.findById(review.fromId);
-        return { _id: review._id, fromId: review.fromId, username: user.username, rating: review.rating, comment: review.comment };
+        return { _id: review._id, fromId: review.fromId, avatar: user.avatar, username: user.username, rating: review.rating, comment: review.comment };
     });
 
     const reviews = await Promise.all(reviewPromises);
 
-    res.render('product', { accountType: req.session.user.accountType, product, author, products, reviews, isInCart });
+    const ratings = reviews.map(review => review.rating);
+    const averageRating = ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length;
+
+    res.render('product', { accountType: req.session.user.accountType, product, author, products, reviews, rating: averageRating, isInCart, isMyProduct });
 });
 
 module.exports = router;

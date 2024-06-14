@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./components/head', { title: 'Map' }) %>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+
+<body>
+    <%- include('./components/navbar', { activeLink: '/map', accountType }) %>
+
+    <div class="map mt-10 fixed top-0 bg-background-400 w-screen h-screen" id="map"></div>
+
+    <section class="fixed bottom-0 z-50 w-full flex flex-col p-4 bg-background-50 rounded-t-lg shadow-lg">
+            <div class="header flex items-center justify-between">
+                <h2>Requests</h2>
+            </div>
+            <div id="requests-container" class="flex flex-col gap-2"></div>
+    </section>
+
+</body>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    const requestsContainer = document.getElementById("requests-container");
+
+    const map = L.map('map').setView([51.505, -0.09], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' }).addTo(map);
+    const Icon = L.Icon.extend({ options: { iconSize: [30, 80], shadowSize: [50, 64], iconAnchor: [22, 94], shadowAnchor: [4, 62], popupAnchor: [-3, -76] }});
+                L.icon = function (options) { return new L.Icon(options) };
+    const driverIcon = new Icon({iconUrl: '/images/driverMarker.svg'});
+
+    let driverMarker;
+
+    const getRequests = async () => {
+    const response = await fetch(`/route/requests/<%= id %>`);
+        const requests = await response.json();
+        requestsContainer.innerHTML = "";
+
+        requests.forEach(request => {
+            const requestElement = `
+                <div class="user-card">
+                    <div class="main">
+                        <img class="thumbnail-base" src="${ request.product.images[0] }" alt="${ request.product.title }">
+                        <div class="details">
+                            <h6>${ request.product.title }</h6>
+                            <p>${ request.product.geolocation }</p>
+                        </div>
+                    </div>
+                    <button class="button primary">Cancel</button>
+                    <button class="button primary">Accept</button>
+                </div>
+            `
+            requestsContainer.innerHTML += requestElement;
+        });
+    };
+
+    const fetchAndUpdateMap = async () => {
+        if (!navigator.geolocation) { console.log('Geolocation is not supported by your browser') }
+
+        function error() { console.log('Unable to retrieve your location') }
+        function success(position) { getMap([position.coords.latitude, position.coords.longitude ]) }
+
+        navigator.geolocation.getCurrentPosition(success, error);
+    }
+
+    const getMap = async (location) => {
+        const driverIcon = new Icon({iconUrl: '/images/driverMarker.svg'});
+
+        if (driverMarker) { driverMarker.setLatLng(location) }
+        else { driverMarker = L.marker(location, { icon: driverIcon }).addTo(map).bindPopup('Driver') }
+
+        map.setView(location, 19);
+    }
+
+    fetchAndUpdateMap();
+    setInterval(fetchAndUpdateMap, 5000);
+    setInterval(getRequests, 5000);
+</script>
+<%- include("./components/background") %>
+
+</html>

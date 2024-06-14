@@ -11,42 +11,33 @@ router.get('/', auth, async (req, res) => {
     if (!search) { search = "" }
     if (!category) { category = "" }
 
-    let products = [];
-    let producers = [];
-    let traders = [];
-    let drivers = [];
-
-    if (search) {
-        try {
-            products = await productModel.find({ $and: [{ title: { $regex: new RegExp(search, 'i') } }] }).sort({ rating: -1 }).limit(10).exec();
-            drivers = await userModel.find({ $and: [{ username: { $regex: new RegExp(search, 'i') } }, { accountType: "driver" }] }).sort({ rating: -1 }).limit(10).exec();
-            traders = await userModel.find({ $and: [{ username: { $regex: new RegExp(search, 'i') } }, { accountType: "trader" }] }).sort({ rating: -1 }).limit(10).exec();
-            producers = await userModel.find({ $and: [{ username: { $regex: new RegExp(search, 'i') } }, { accountType: "producer" }] }).sort({ rating: -1, dateCreated: -1 }).limit(10).exec();
-        } catch (error) { console.error('Error fetching:', error); }
-    } else if (category) {
-        try { products = await productModel.find({ $and: [{ category: { $regex: new RegExp(category, 'i') } }] }).sort({ rating: -1, dateCreated: -1 }).limit(10).exec() }
-        catch (error) { console.error('Error fetching:', error) }
+    let productsPromise, producersPromise, tradersPromise, driversPromise;
+    if (req.session.user.accountType === 'driver') {
+        res.render('map', { id: req.session.user._id, accountType: req.session.user.accountType });
     } else {
-        if (filter === 'producer') {
-            try {
-                producers = await userModel.find({ $and: [{ accountType: "producer" }] }).sort({ rating: -1 }).limit(10).exec();
-            } catch (error) { console.error('Error fetching:', error) }
-        } else if (filter === 'trader') {
-            try {
-                traders = await userModel.find({ $and: [{ accountType: "trader" }] }).sort({ rating: -1 }).limit(10).exec();
-            } catch (error) { console.error('Error fetching:', error) }
-        } else if (filter === 'driver') {
-            try {
-                drivers = await userModel.find({ $and: [{ accountType: "driver" }] }).sort({ rating: -1 }).limit(10).exec();
-            } catch (error) { console.error('Error fetching:', error) }
+        if (search) {
+            productsPromise = productModel.find({ title: { $regex: new RegExp(search, 'i') } }).sort({ rating: -1 }).limit(10);
+            driversPromise = userModel.find({ username: { $regex: new RegExp(search, 'i') }, accountType: "driver" }).sort({ rating: -1 }).limit(10);
+            tradersPromise = userModel.find({ username: { $regex: new RegExp(search, 'i') }, accountType: "trader" }).sort({ rating: -1 }).limit(10);
+            producersPromise = userModel.find({ username: { $regex: new RegExp(search, 'i') }, accountType: "producer" }).sort({ rating: -1, dateCreated: -1 }).limit(10);
+        } else if (category) {
+            productsPromise = productModel.find({ category: { $regex: new RegExp(category, 'i') } }).sort({ rating: -1, dateCreated: -1 }).limit(10);
         } else {
-            try {
-                products = await productModel.find({}).sort({ rating: -1, dateCreated: -1 }).limit(10).exec();
-            } catch (error) { console.error('Error fetching:', error) }
+            if (filter === 'producer') {
+                producersPromise = userModel.find({ accountType: "producer" }).sort({ rating: -1 }).limit(10);
+            } else if (filter === 'trader') {
+                tradersPromise = userModel.find({ accountType: "trader" }).sort({ rating: -1 }).limit(10);
+            } else if (filter === 'driver') {
+                driversPromise = userModel.find({ accountType: "driver" }).sort({ rating: -1 }).limit(10);
+            } else {
+                productsPromise = productModel.find({}).sort({ rating: -1, dateCreated: -1 }).limit(10);
+            }
         }
-
-        res.render('buy', { category, accountType: req.session.user.accountType, products, producers, traders, drivers });
-    }
+    
+        const [products = [], producers = [], traders = [], drivers = []] = await Promise.all([productsPromise, producersPromise, tradersPromise, driversPromise]);
+    
+        res.render('buy', { accountType: req.session.user.accountType, products, producers, traders, drivers });
+    };
 });
 
 module.exports = router;

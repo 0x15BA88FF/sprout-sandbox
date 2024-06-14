@@ -2,11 +2,12 @@ const express = require("express");
 const auth = require("./middleware/auth");
 const userModel = require("../models/userModel")
 const productModel = require("../models/productModel")
+const allowAccess = require("./middleware/allowAccess")
 const purchaseModel = require("../models/purchaseModel")
 
 const router = express.Router();
 
-router.get('/', auth, async (req, res) => {
+router.get('/', auth, allowAccess('trader', 'producer'), async (req, res) => {
     const userId = req.session.user._id;
     let { search, category, filter } = req.query;
 

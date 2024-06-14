@@ -50,18 +50,19 @@ router.get('/:id', auth, allowAccess('producer', 'trader'), async (req, res) => 
 
 router.post('/:id', auth, allowAccess('producer', 'trader'), async (req, res) => {
     try {
-        const { title, price, minQuantity, quantity, currency, metric, specification } = await req.body;
+        const { title, category, price, minQuantity, quantity, currency, metric, specification } = await req.body;
         const images = req.body.images.split(",");
         const productId = new ObjectId(req.params.id);
 
-        await productModel.findByIdAndUpdate({ _id: productId }, { $set: { title: title }}, { new: true });
-        await productModel.findByIdAndUpdate({ _id: productId }, { $set: { price: parseFloat(price).toFixed(2) }}, { new: true });
-        await productModel.findByIdAndUpdate({ _id: productId }, { $set: { metric: metric }}, { new: true });
-        await productModel.findByIdAndUpdate({ _id: productId }, { $set: { images: images }}, { new: true });
-        await productModel.findByIdAndUpdate({ _id: productId }, { $set: { currency: currency }}, { new: true });
-        await productModel.findByIdAndUpdate({ _id: productId }, { $set: { minQuantity: minQuantity }}, { new: true });
-        await productModel.findByIdAndUpdate({ _id: productId }, { $set: { quantity: quantity }}, { new: true });
-        await productModel.findByIdAndUpdate({ _id: productId }, { $set: { specification: specification }}, { new: true });
+        await productModel.findByIdAndUpdate(productId, { $set: { title }});
+        await productModel.findByIdAndUpdate(productId, { $set: { category }});
+        await productModel.findByIdAndUpdate(productId, { $set: { price }});
+        await productModel.findByIdAndUpdate(productId, { $set: { metric }});
+        await productModel.findByIdAndUpdate(productId, { $set: { images }});
+        await productModel.findByIdAndUpdate(productId, { $set: { currency }});
+        await productModel.findByIdAndUpdate(productId, { $set: { minQuantity }});
+        await productModel.findByIdAndUpdate(productId, { $set: { quantity }});
+        await productModel.findByIdAndUpdate(productId, { $set: { specification }});
 
         res.redirect("/sell");
     } catch(err) {

@@ -10,9 +10,9 @@ router.get("/:name", async (req, res) => {
 
     try {
         const sevenDaysAgo = moment().subtract(7, 'days').toDate();
-        const products = await productModel.find({ title: { $regex: new RegExp(search, 'i') } }).exec();
+        const products = await productModel.find({ title: { $regex: new RegExp(search, 'i') } });
         const productIds = products.map(product => product._id);
-        const purchases = await purchaseModel.find({ $and: [ { productId: { $in: productIds } }, { date: { $gte: sevenDaysAgo }} ]}).exec();
+        const purchases = await purchaseModel.find({ $and: [ { productId: { $in: productIds } }, { date: { $gte: sevenDaysAgo }} ]});
 
         const quantitiesByDay = new Array(7).fill(0);
 

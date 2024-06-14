@@ -12,7 +12,7 @@ router.get("/:id", async (req, res) => {
 
     try {
         const sevenDaysAgo = moment().subtract(7, 'days').toDate();
-        const purchases = await purchaseModel.find({ $and: [ { productId: productId }, { date: { $gte: sevenDaysAgo }} ]}).exec();
+        const purchases = await purchaseModel.find({ $and: [ { productId: productId }, { date: { $gte: sevenDaysAgo }} ]});
 
         const quantitiesByDay = new Array(7).fill(0);
 

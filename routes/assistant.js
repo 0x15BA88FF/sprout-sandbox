@@ -18,29 +18,31 @@ router.post('/', auth, async (req, res) => {
     const { accountType } = req.session.user;
 
     try {
-        let content = ""
+        let context;
        
-        const contexts = {
-            producer: `
-                You are a chatbot called "Kwesi" for an app called "Sprout". You answer questions as a farming expert. Only answer farming-related questions.
-                If asked what the app(sprout) does say that it is an online marketplace that connects traders, farmers and consumer together to buy and sell all farming related equipment and crops.
-                How does sprout work? For delivery; Farmers get to chose their own deliver personnel that have to be registered on the app.The delivery personnel have to bring their cars to the sprout office and validate registrations made on the app for them to be verified sprout delivery personnel.
-                Also when they are verified their car types will be grouped based on the amount of goods their cars can support.
-                You were created by the brilliant minds of the Cybotics team in Presbyterian boys' secondary high school.
-                If the question is not related to farming, respond with 'I can only answer farming-related questions.'
-                Here is the question: 
-            `,
-            trader: `
-            `,
-            driver: `
-            `,
-            consumer: `
-            `
-        }
+        const producerContext = `
+            You are a chatbot called "Kwesi" for an app called "Sprout". You answer questions as a farming expert. Only answer farming-related questions.
+            If asked what the app(sprout) does say that it is an online marketplace that connects traders, farmers and consumer together to buy and sell all farming related equipment and crops.
+            How does sprout work? For delivery; Farmers get to chose their own deliver personnel that have to be registered on the app.The delivery personnel have to bring their cars to the sprout office and validate registrations made on the app for them to be verified sprout delivery personnel.
+            Also when they are verified their car types will be grouped based on the amount of goods their cars can support.
+            You were created by the brilliant minds of the Cybotics team in Presbyterian boys' secondary high school.
+            If the question is not related to farming, respond with 'I can only answer farming-related questions.'
+            Here is the question: 
+        `;
+        const traderContext = `
+        `;
+        const driverContext = `
+        `;
+        const consumerContext = `
+        `;
 
-        content = contexts[accountType]
+        if (accountType === 'producer') { context = producerContext }
+        else if (accountType === 'trader') { context = traderContext }
+        else if (accountType === 'dirver') { context = driverContext }
+        else if (accountType === 'consumer') { context = consumerContext }
+        else { context = producerContext }
 
-        const contentResponse = await generativeModel.generateContent(content + userMessage).response;
+        const contentResponse = await generativeModel.generateContent(context + userMessage).response;
 
         const text = contentResponse.candidates[0].content.parts[0].text;
         const cleanText = text.replace(/[\n*]+|[\n]+|[\n\n*]+|[\n]+|[##]+ |["\"]+/g, '');

@@ -12,7 +12,21 @@
         <form class="flex flex-col gap-2" action="/sell/<%= product._id %>" method="post">
             <%- include('./components/inputCarousel', { images: product.images }) %>
 
+            <p>Title:</p>
             <input type="text" name="title" id="title" value="<%= product.title.trim() %>" placeholder="Enter a title for the product..." required>
+
+            <p>Category:</p>
+            <select name="category" id="category">
+                <option value="others">Other</option>
+                <option value="vegetables">Vegetables</option>
+                <option value="fuits">Fruits</option>
+                <option value="dairy">Dairy</option>
+                <option value="meat-fish-eggs">Meat, fish & eggs</option>
+                <option value="flours-doughs">Flour & doughs</option>
+                <option value="spices-seeds-nuts">Spices, Seeds & Nuts</option>
+                <option value="processed">Processed Food</option>
+                <option value="beverages">Beverages</option>
+            </select>
         
             <div class="quantity-section flex flex-col gap-4 p-4 bg-background-100 rounded-lg">
                 <div class="header flex items-center justify-between">
@@ -34,7 +48,6 @@
                     <h6>Currency</h6>
                     <select class="bg-background-50" name="currency" id="currency" value="<%= product.currency %>" required>
                         <option value="ghs">GHC</option>
-                        <option value="usd">USD</option>
                     </select>
                 </div>
                 <div class="flex items-center justify-between">
@@ -71,5 +84,7 @@
 
     <%- include('./components/footer') %>
 </body>
+
+<%- include("./components/background") %>
 
 </html>

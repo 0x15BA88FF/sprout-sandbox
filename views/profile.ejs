@@ -6,21 +6,24 @@
 </head>
 
 <body>
-    <%- include('./components/navbar', { activeLink: '/profile', accountType: user.accountType }) %>
+    <%- include('./components/navbar', { activeLink: '/profile', accountType: accountType }) %>
 
     <section class="container">
         <div class="flex flex-col gap-1">
-            <div class="flex items-center gap-2">
+            <div class="w-full flex items-center gap-2">
                 <img class="thumbnail-md rounded-full" src="/<%= user.avatar %>" alt="<%= user.username %>">
                 <div class="main flex flex-col">
                     <h4><%= user.username %></h4>
-                    <p><%= user.accountType %></p>
+                    <p><%= user.accountType.toUpperCase() %></p>
                 </div>
+                <% if (isMe) { %>
+                    <a class="button bad ml-auto" href="/logout">Logout</a>
+                <% } %>
             </div>
             <div class="flex flex-col gap-1">
-                <p><%= user.email %></p>
-                <p><%= user.location %></p>
-                <p><%= user.dateCreated %></p>
+                <p class="font-semibold"><%= user.email %></p>
+                <p class="font-semibold"><%= user.location %></p>
+                <p class="text-text-700">Since <%= new Date(Date.parse(user.dateCreated)).getDay() %>/<%= new Date(Date.parse(user.dateCreated)).getMonth() %>/<%= new Date(Date.parse(user.dateCreated)).getFullYear() %></p>
                 <% if (user.accountType === 'driver') { %>
                     <%- include('./components/starRating', { rating: user.rating }) %>
                 <% } %>
@@ -34,7 +37,7 @@
         <% if (user.accountType === 'producer' || user.accountType === 'trader') { %>
             <div id="products-segment" class="segment">
                 <h3>Products</h3>
-                <div class="products-section">
+                <div class="grid grid-flow-row grid-cols-2 justify-between">
                     <% if (products.length > 0) { %>
                         <% products.forEach(product => { %>
                             <%- include('./components/productCard', { product }) %>
@@ -47,7 +50,7 @@
         <% } %>
     </section>
 
-    <section onclick="closeModals()" id="modal-backdrop" class="fixed top-0 z-40 w-screen h-screen block flex-col opacity-30 bg-background-900"></section>
+    <section onclick="closeModals()" id="modal-backdrop" class="fixed top-0 z-50 w-screen h-screen mt-0 block flex-col opacity-30 bg-background-900"></section>
 
     <section id="contact-modal" class="fixed z-50 h-full w-full flex items-center justify-center pointer-events-none">
         <div class="w-full max-w-72 flex flex-col items-center gap-2 p-4 bg-background-100 rounded-lg pointer-events-auto">
@@ -64,7 +67,7 @@
 
     <section id="message-modal" class="fixed z-50 h-full w-full flex items-center justify-center pointer-events-none">
         <div class="w-full max-w-72 flex flex-col items-center gap-2 p-4 bg-background-100 rounded-lg pointer-events-auto">
-            <h1>Mesage</h1>
+            <h1>Message</h1>
             <% if (user.phoneNumbers.length > 0) { %>
                 <% user.phoneNumbers.forEach(number => { %>
                     <button onclick="window.open('sms:<%= number %>')" class="p-2"><%= number %></button>
@@ -108,5 +111,7 @@
         closeModals()
     </script>
 </body>
+
+<%- include("./components/background") %>
 
 </html>

@@ -7,17 +7,18 @@
 
 <script>
     const productPerformanceChartCTX = document.getElementById('productPerformanceChart').getContext('2d');
+    let productPerformanceChart = undefined;
 
-    let productPerformanceChart = undefined
-    if (productPerformanceChart) { myChart.destroy() }
-
-    document.getElementById("productSelect").addEventListener('change', async (event) => {
+    const makeProductPreformanceChart = async() => {
         try {
-            let id = event.target.value;
-            let selectedIndex = event.target.selectedIndex;
-            let productName  = event.target.options[selectedIndex].text;
+            const target = document.getElementById("productSelect");
+
+            let id = target.value;
+            let selectedIndex = target.selectedIndex;
+            let productName  = target.options[selectedIndex].text;
             let response = await fetch(`http://localhost:3000/getProductData/${ id }`);
             let result = await response.json();
+
 
             const data = {
                 labels: [1, 2, 3, 4, 5, 6, 7],
@@ -25,10 +26,8 @@
                     {
                         label: `Demand for ${ productName }`,
                         data: result,
-                        backgroundColor: ["rgba(255,0,0,0.5)", "rgba(0,255,0,0.5)"],
-                        borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor: "rgba(0,255,0,0.5)",
                         hoverOffset: 4,
-                        borderRadius: 5,
                         borderWidth: 2,
                         tension: 0.1
                     }
@@ -44,9 +43,13 @@
                     },
                 }
             };
+            if (productPerformanceChart) { productPerformanceChart.destroy() }
             productPerformanceChart = new Chart(productPerformanceChartCTX, config);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-    })
+    };
+
+    makeProductPreformanceChart()
+    document.getElementById("productSelect").addEventListener('change', makeProductPreformanceChart())
 </script>

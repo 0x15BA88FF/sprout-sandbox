@@ -1,144 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <%- include('./components/head', { title: 'AI Assistant' }) %>
-    </head>
+<head>
+    <%- include('./components/head', { title: 'AI Assistant' }) %>
+</head>
 
-    <body class="pb-9 bg-background-200">
-        <nav class="flex z-20 p-2 w-full px-6 bg-background-50 fixed top-0 items-center">
-            <a href="/" class="w-max h-max"><svg class="icon-base" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><g clip-path="url(#clip0_101_8720)"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.29303 12.7071C8.10556 12.5196 8.00024 12.2653 8.00024 12.0001C8.00024 11.7349 8.10556 11.4806 8.29303 11.2931L13.95 5.6361C14.0423 5.54059 14.1526 5.46441 14.2746 5.412C14.3966 5.35959 14.5279 5.332 14.6606 5.33085C14.7934 5.32969 14.9251 5.355 15.048 5.40528C15.1709 5.45556 15.2825 5.52981 15.3764 5.6237C15.4703 5.7176 15.5446 5.82925 15.5949 5.95214C15.6451 6.07504 15.6704 6.20672 15.6693 6.3395C15.6681 6.47228 15.6405 6.6035 15.5881 6.7255C15.5357 6.84751 15.4595 6.95785 15.364 7.0501L10.414 12.0001L15.364 16.9501C15.5462 17.1387 15.647 17.3913 15.6447 17.6535C15.6424 17.9157 15.5373 18.1665 15.3518 18.3519C15.1664 18.5373 14.9156 18.6425 14.6534 18.6448C14.3912 18.6471 14.1386 18.5463 13.95 18.3641L8.29303 12.7071Z" fill="black"/></g><defs><clipPath id="clip0_101_8720"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></a>
-            <% if (accountType === 'producer') { %>
-                <p class="flex flex-1 justify-end items-center font-bold text-2xl text-green-500 ">Kwesi™</p>
-            <% } else if (accountType === 'trader') { %>
-                <p class="flex flex-1 justify-end items-center font-bold text-2xl text-green-500 ">Sister Abena™</p>
-            <% } else if (accountType === 'driver') { %>
-                <p class="flex flex-1 justify-end items-center font-bold text-2xl text-green-500 ">Bra Chales™</p>
-            <% } else { %>
-                <p class="flex flex-1 justify-end items-center font-bold text-2xl text-green-500 ">Kwame™</p>
-            <% } %>
-        </nav>
+<body class="pb-9 bg-background-200">
+    <nav class="flex z-20 p-2 w-full px-6 bg-background-50 fixed top-0 items-center">
+        <a href="/" class="w-max h-max"><svg class="icon-base" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><g clip-path="url(#clip0_101_8720)"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.29303 12.7071C8.10556 12.5196 8.00024 12.2653 8.00024 12.0001C8.00024 11.7349 8.10556 11.4806 8.29303 11.2931L13.95 5.6361C14.0423 5.54059 14.1526 5.46441 14.2746 5.412C14.3966 5.35959 14.5279 5.332 14.6606 5.33085C14.7934 5.32969 14.9251 5.355 15.048 5.40528C15.1709 5.45556 15.2825 5.52981 15.3764 5.6237C15.4703 5.7176 15.5446 5.82925 15.5949 5.95214C15.6451 6.07504 15.6704 6.20672 15.6693 6.3395C15.6681 6.47228 15.6405 6.6035 15.5881 6.7255C15.5357 6.84751 15.4595 6.95785 15.364 7.0501L10.414 12.0001L15.364 16.9501C15.5462 17.1387 15.647 17.3913 15.6447 17.6535C15.6424 17.9157 15.5373 18.1665 15.3518 18.3519C15.1664 18.5373 14.9156 18.6425 14.6534 18.6448C14.3912 18.6471 14.1386 18.5463 13.95 18.3641L8.29303 12.7071Z" fill="black" /></g><defs><clipPath id="clip0_101_8720"><rect width="24" height="24" fill="white" /></clipPath></defs></svg></a>
+        <% if (accountType==='producer' ) { %>
+            <p class="flex flex-1 justify-end items-center font-bold text-2xl text-green-500 ">Kwesi™</p>
+        <% } else if (accountType==='trader' ) { %>
+            <p class="flex flex-1 justify-end items-center font-bold text-2xl text-green-500 ">Sister Akos™</p>
+        <% } else if (accountType==='driver' ) { %>
+            <p class="flex flex-1 justify-end items-center font-bold text-2xl text-green-500 ">Bra Chales™</p>
+        <% } else { %>
+            <p class="flex flex-1 justify-end items-center font-bold text-2xl text-green-500 ">Kwame™</p>
+        <% } %>
+    </nav>
 
-        <div id="chat-container" class="h-screen w-full pt-24 p-10 overflow-y-auto"></div>
+    <div id="chat-container" class="h-screen w-full pt-24 p-10 overflow-y-auto bg-background-100"></div>
 
-        <div class="justify-end">
-            <form id="form" class="relative w-full">
-                <div class=" flex w-full fixed bottom-0 left-0 right-0 p-4 justify-center">
-                    <div class="relative w-full max-w-2xl">
-                        <input id="input" class="w-full p-3 px-4 rounded-full text-white border-2 border-background-500 bg-background-600" autocomplete="off" placeholder="Ask any question..." />
-                        <button id="button" class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-primary-400 text-white rounded-full p-2"><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M4.99994 12L4.39594 6.563C4.22294 5.007 5.82494 3.864 7.23994 4.535L19.1839 10.193C20.7089 10.915 20.7089 13.085 19.1839 13.807L7.23994 19.466C5.82494 20.136 4.22294 18.994 4.39594 17.438L4.99994 12ZM4.99994 12H11.9999" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                    </div>
+    <div class="justify-end">
+        <form id="form" class="relative w-full">
+            <div class=" flex w-full fixed bottom-0 left-0 right-0 p-4 justify-center">
+                <div class="relative w-full max-w-2xl">
+                    <input id="input" class="w-full p-3 px-4 rounded-full text-white border-2 border-background-500 bg-background-600" autocomplete="off" placeholder="Ask any question..." />
+                    <button id="button" class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-primary-400 text-white rounded-full p-2"><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M4.99994 12L4.39594 6.563C4.22294 5.007 5.82494 3.864 7.23994 4.535L19.1839 10.193C20.7089 10.915 20.7089 13.085 19.1839 13.807L7.23994 19.466C5.82494 20.136 4.22294 18.994 4.39594 17.438L4.99994 12ZM4.99994 12H11.9999" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
                 </div>
-            </form>
-        </div>
-
-        <div id="loading-spinner" class="hidden justify-center items-center absolute top-0 left-0 w-full h-full bg-transparent">
-            <div id="loading-spinner" class="fixed top-0 left-0 flex justify-center items-center w-screen h-screen bg-transparent">   
-                <svg class="icon-md" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135"/><path d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5"/></svg>
             </div>
+        </form>
+    </div>
+
+    <div id="loading-spinner"
+        class="hidden justify-center items-center absolute top-0 left-0 w-full h-full bg-transparent">
+        <div id="loading-spinner"
+            class="fixed top-0 left-0 flex justify-center items-center w-screen h-screen bg-transparent">
+            <svg class="icon-md" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135" /><path d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5" /></svg>
         </div>
+    </div>
 
-        <script>
-            document.getElementById('form').addEventListener('submit', async function(e) {
-                e.preventDefault();
-                const messageInput = document.getElementById('input');
-                let message = messageInput.value;
 
-                if (message) {
-                    addMessage(message, 'user');
-                    messageInput.value = '';
+    <script>
+        document.getElementById('form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const messageInput = document.getElementById('input');
+            let message = messageInput.value;
 
-                    try {
-                        document.getElementById('loading-spinner').classList.remove('hidden')
+            if (message) {
+                addMessage(message, 'user');
+                messageInput.value = '';
 
-                        const response = await fetch('/assistant', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message, sender: 'user' }) });
-                        if (!response.ok) throw new Error('Failed to send message');
+                try {
+                    document.getElementById('loading-spinner').classList.remove('hidden')
+
+                    if (message == 'sister akos') {
+                        animatemessage("suck ma balls", 'bot');
+                    } else {
+                        const response = await fetch('/assistant', { method: 'post', headers: { 'content-type': 'application/json' }, body: json.stringify({ message, sender: 'user' }) });
+                        if (!response.ok) throw new error('failed to send message');
                         const data = await response.json();
-                        animateMessage(data.message, 'bot');
-                    }
-                    catch (error) { console.error('Error sending message:', error) }
-                    finally{ document.getElementById('loading-spinner').classList.add('hidden') }
-                }
-            });
-
-            function addMessage(message, sender) {
-                const chatContainer = document.getElementById('chat-container');
-                const messageRow = document.createElement('div');
-                messageRow.classList.add('flex', 'mb-12');
-
-                const messageContainer = document.createElement('div');
-                messageContainer.classList.add('max-w-xl', 'break-words', 'p-2', 'rounded-lg');
-
-                const messageElement = document.createElement('p');
-                messageElement.textContent = message;
-
-                messageContainer.appendChild(messageElement);
-                messageRow.appendChild(messageContainer);
-
-                if (sender === 'bot') {
-                    const botName = document.createElement('div')
-                    botName.textContent = 'Kwesi™'
-                    botName.classList.add('text-white','align-center', 'font-sans', 'text-base', 'h-5', 'bg-transparent', 'font-bold', 'w-full','text-right')
-                    messageContainer.appendChild(botName)
-
-                    const loadingSpinner = document.createElement('div');
-                    loadingSpinner.classList.add('loader', 'ease-linear', 'rounded-full', 'border-8', 'border-t-8', 'border-gray-200', 'h-12', 'w-12', 'mr-4');
-                    messageRow.insertBefore(loadingSpinner, messageContainer);
-                    messageContainer.classList.add('bg-blue-400', 'text-black', 'text-5xl', 'p-4',);
-                    messageRow.classList.add('justify-start', 'pl-12');
-                } else {
-                    const myName = document.createElement('div')
-                    myName.textContent = 'Me'
-                    myName.classList.add('text-white','align-center', 'font-sans', 'text-base', 'h-5', 'bg-transparent', 'font-bold', 'w-full','text-left')
-                    messageContainer.appendChild(myName)
-                    messageContainer.classList.add('bg-green-400', 'text-white', 'text-5xl', 'p-4');
-                    messageRow.classList.add('justify-end');
-                }
-
-                chatContainer.appendChild(messageRow);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }
-
-            function animateMessage(message, sender) {
-
-                const chatContainer = document.getElementById('chat-container');
-                const messageRow = document.createElement('div');
-                messageRow.classList.add('flex', 'mb-4');
-
-                const messageContainer = document.createElement('div');
-                messageContainer.classList.add('max-w-xl', 'break-words', 'p-4', 'rounded-lg');
-
-                const messageElement = document.createElement('p');
-                messageContainer.appendChild(messageElement);
-                messageRow.appendChild(messageContainer);
-
-                if (sender === 'bot') {
-                    const botName = document.createElement('div')
-                    botName.textContent = 'Kwesi™'
-                    botName.classList.add('text-white', 'align-center', 'h-5', 'bg-transparent', 'w-full', 'text-base','font-bold','text-right')
-                    messageContainer.appendChild(botName)
-
-                    messageContainer.classList.add('bg-blue-400','font-sans', 'text-black', 'text-5xl');
-                    messageRow.classList.add('justify-start');
-                }
-
-                chatContainer.appendChild(messageRow);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-
-                let i = 0;
-                const speed = 10;
-
-                function typeWriter() {
-                    if (i < message.length) {
-                        messageElement.textContent += message.charAt(i);
-                        i++;
-                        setTimeout(typeWriter, speed);
+                        animatemessage(data.message, 'bot');
                     }
                 }
-
-                typeWriter();
+                catch (error) { console.error('Error sending message:', error) }
+                finally { document.getElementById('loading-spinner').classList.add('hidden') }
             }
-        </script>
-    </body>
+        });
+
+        function addMessage(message, sender) {
+            const chatContainer = document.getElementById('chat-container');
+            const messageRow = document.createElement('div');
+            messageRow.classList.add('flex', 'mb-12');
+
+            const messageContainer = document.createElement('div');
+            messageContainer.classList.add('max-w-xl', 'break-words', 'p-2', 'rounded-lg');
+
+            const messageElement = document.createElement('p');
+            messageElement.textContent = message;
+
+            messageContainer.appendChild(messageElement);
+            messageRow.appendChild(messageContainer);
+
+            if (sender === 'bot') {
+                const botName = document.createElement('div')
+                botName.textContent = 'Kwesi™'
+                botName.classList.add('text-white', 'align-center', 'font-sans', 'text-base', 'h-5', 'bg-transparent', 'font-bold', 'w-full', 'text-right')
+                messageContainer.appendChild(botName)
+
+                const loadingSpinner = document.createElement('div');
+                loadingSpinner.classList.add('loader', 'ease-linear', 'rounded-full', 'border-8', 'border-t-8', 'border-gray-200', 'h-12', 'w-12', 'mr-4');
+                messageRow.insertBefore(loadingSpinner, messageContainer);
+                messageContainer.classList.add('bg-blue-400', 'text-black', 'text-5xl', 'p-4',);
+                messageRow.classList.add('justify-start', 'pl-12');
+            } else {
+                const myName = document.createElement('div')
+                myName.textContent = 'Me'
+                myName.classList.add('text-white', 'align-center', 'font-sans', 'text-base', 'h-5', 'bg-transparent', 'font-bold', 'w-full', 'text-left')
+                messageContainer.appendChild(myName)
+                messageContainer.classList.add('bg-green-400', 'text-white', 'text-5xl', 'p-4');
+                messageRow.classList.add('justify-end');
+            }
+
+            chatContainer.appendChild(messageRow);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function animateMessage(message, sender) {
+
+            const chatContainer = document.getElementById('chat-container');
+            const messageRow = document.createElement('div');
+            messageRow.classList.add('flex', 'mb-4');
+
+            const messageContainer = document.createElement('div');
+            messageContainer.classList.add('max-w-xl', 'break-words', 'p-4', 'rounded-lg');
+
+            const messageElement = document.createElement('p');
+            messageContainer.appendChild(messageElement);
+            messageRow.appendChild(messageContainer);
+
+            if (sender === 'bot') {
+                const botName = document.createElement('div')
+                botName.textContent = 'Kwesi™'
+                botName.classList.add('text-white', 'align-center', 'h-5', 'bg-transparent', 'w-full', 'text-base', 'font-bold', 'text-right')
+                messageContainer.appendChild(botName)
+
+                messageContainer.classList.add('bg-blue-400', 'font-sans', 'text-black', 'text-5xl');
+                messageRow.classList.add('justify-start');
+            }
+
+            chatContainer.appendChild(messageRow);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            let i = 0;
+            const speed = 10;
+
+            function typeWriter() {
+                if (i < message.length) {
+                    messageElement.textContent += message.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
+            }
+
+            typeWriter();
+        }
+    </script>
+</body>
+
+<%- include("./components/background") %>
 
 </html>

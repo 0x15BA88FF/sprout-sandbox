@@ -1,14 +1,11 @@
-<input type="text" name="productSearch" id="productSearch">
+<input type="text" name="productSearch" id="productSearch" placeholder="Type a product keyword...">
 <canvas class="flex flex-col p-4 gap-2 bg-background-50 border-2 border-background-100 shadow-lg rounded-lg" id="productDemandChart"></canvas>
 
 <script>
-    let productsDemandChart = undefined
-    if (productsDemandChart) { productsDemandChartCTX.destroy() }
-
     const productsDemandChartCTX = document.getElementById('productDemandChart').getContext('2d');
+    let productsDemandChart = undefined;
 
     document.getElementById("productSearch").addEventListener('change', async (event) => {
-
         try {
             let response = await fetch(`http://localhost:3000/getProductsDemand/${ event.target.value }`);
             let result = await response.json();
@@ -21,10 +18,8 @@
                     {
                         label: `Demand for ${ productName }`,
                         data: result,
-                        backgroundColor: ["rgba(255,0,0,0.5)", "rgba(0,255,0,0.5)"],
-                        borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor: "rgba(0,255,0,0.5)",
                         hoverOffset: 4,
-                        borderRadius: 5,
                         borderWidth: 2,
                         tension: 0.1
                     }
@@ -40,6 +35,7 @@
                     },
                 }
             };
+            if (productsDemandChart) { productsDemandChart.destroy() }
             productsDemandChart = new Chart(productsDemandChartCTX, config);
         } catch (error) {
             console.error('Error fetching data:', error);

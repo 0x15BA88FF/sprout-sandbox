@@ -12,14 +12,13 @@
         <div id="categories-segment" class="flex segment">
             <h3>Categories</h3>
             <div class="grid grid-flow-row grid-cols-3 justify-between gap-4 xs:grid-cols-4 sm:grid-cols-5">
-                <%- include('./components/categoryCard', { image: 'vegitables.jpg', title: 'Vegitables' }) %>
+                <%- include('./components/categoryCard', { image: 'vegetables.jpg', title: 'Vegetables' }) %>
                 <%- include('./components/categoryCard', { image: 'fruits.jpg', title: 'Fruits' }) %>
-                <%- include('./components/categoryCard', { image: 'dairy.jpg', title: 'Dairy & Eggs' }) %>
-                <%- include('./components/categoryCard', { image: 'meet_fish.jpg', title: 'Meat & Fish' }) %>
+                <%- include('./components/categoryCard', { image: 'dairy.jpg', title: 'Dairy' }) %>
+                <%- include('./components/categoryCard', { image: 'meet_fish.jpg', title: 'Meat, Fish & Eggs' }) %>
                 <%- include('./components/categoryCard', { image: 'flours.jpeg', title: 'Flours & Doughs' }) %>
                 <%- include('./components/categoryCard', { image: 'spices.png', title: 'Spices, Seeds & Nuts' }) %>
-                <%- include('./components/categoryCard', { image: 'processed.jpg', title: 'processed' }) %>
-                <%- include('./components/categoryCard', { image: 'beverages.jpg', title: 'Beverages' }) %>
+                <%- include('./components/categoryCard', { image: 'processed.jpg', title: 'Processed' }) %>
                 <%- include('./components/categoryCard', { image: 'other.png', title: 'Others' }) %>
             </div>
         </div>
@@ -27,7 +26,7 @@
         <div id="farmers-segment" class="<%= producers.length < 1 ? 'hidden' : '' %> segment">
             <h3>In Producers</h3>
             <div class="flex flex-col gap-2">
-                <% producers.forEach((user) => { %>
+                <% producers.forEach(user => { %>
                     <%- include('./components/userCard', { user }) %>
                 <% }); %>
             </div>
@@ -36,13 +35,13 @@
         <div id="traders-segment" class="<%= traders.length < 1 ? 'hidden' : '' %> segment">
             <h3>Traders</h3>
             <div class="users-section">
-                <% traders.forEach((user) => { %>
+                <% traders.forEach(user => { %>
                     <%- include('./components/userCard', { user }) %>
                 <% }); %>
             </div>
         </div>
 
-        <div id="agents-segment" class="<%= drivers.length < 1 ? 'hidden' : '' %> segment">
+        <div id="driver-segment" class="<%= drivers.length < 1 ? 'hidden' : '' %> segment">
             <h3>In Drivers</h3>
             <div class="users-section">
                 <% drivers.forEach((user) => { %>
@@ -71,6 +70,7 @@
     <%- include('./components/footer') %>
 </body>
 
+<%- include("./components/background") %>
 <%- include('./components/cartHandler') %>
 
 </html>

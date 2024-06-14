@@ -1,6 +1,6 @@
-<a href="/?category=<%= title %>">
+<a href="/?category=<%= title.toLowerCase() %>">
     <div class="category-card">
-        <img src="/images/<%= image %>" alt="/images/default.png">
+        <img src="/images/<%= image %>" alt="<%= title %>">
         <p class="title"><%= title %></>
     </div>
 </a>

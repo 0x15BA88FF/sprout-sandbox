@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new userModel({ username, email, accountType, hashedPassword, phoneNumbers, numberPlate, postalAddress, houseAddress, region, carColor, driversLicense, carModel, ghanaCard });
+        const user = new userModel({ username, email, accountType, password: hashedPassword, phoneNumbers, numberPlate, postalAddress, houseAddress, region, carColor, driversLicense, carModel, ghanaCard });
         const savedUser = await user.save();
 
         req.session.isAuth = true;

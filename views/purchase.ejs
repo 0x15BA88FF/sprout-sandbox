@@ -19,7 +19,7 @@
                     <h2>quantity</h2>
                 </div>
                 <div class="flex items-center justify-between">
-                    <input class="quantity-input w-20 text-center bg-background-50 rounded-lg" type="number" name="quantity" id="quantityInput" value="1" min="1">
+                    <input class="quantity-input w-20 text-center bg-background-50 rounded-lg" type="number" name="quantity" id="quantityInput" value="1" min="1" max="<%= product.quantity %>">
                     <%- include('./components/price', { currency: 'ghc', price: 56.77, metric: 'pcs', classes: 'price-lg' }) %>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     <div class="flex item-center justify-between">
                         <p>total</p>
                         <span class="price price-lg">
-                            <p class="currency"><%= product.currency %></p>
+                            <p class="currency"><%= !product.currency ? "GHC" : product.currency.toUpperCase() %></p>
                             <p id="totalPrice" class="priceWhole"><%= product.price %></p>
                         </span>
                     </div>
@@ -56,12 +56,13 @@
             <input class="button primary" type="submit" value="purchase">
         </form>
 
-        <a href="/track/<%= product._id %>" class="button secondary">Track purchase</a>
-        <button onclick="showReviewSection()" class="button secondary">review</button>
-
+        <% if (isPurchased || false) { %>
+            <a href="/track/<%= product._id %>" class="button secondary">Track purchase</a>
+            <button onclick="showReviewSection()" class="button secondary">review</button>
+        <% } %>
     </section>
 
-    <section onclick="closeModals()" id="modal-backdrop" class="fixed top-0 z-40 w-screen h-screen block flex-col opacity-30 bg-background-900"></section>
+    <section onclick="closeModals()" id="modal-backdrop" class="fixed top-0 z-50 w-screen h-screen mt-0 block flex-col opacity-30 bg-background-900"></section>
 
     <section id="review-section" class="fixed bottom-0 z-50 h-max w-full">
         <div class="flex flex-col gap-2 p-4 bg-background-100 rounded-t-lg">
@@ -112,5 +113,7 @@
 
     closeModals()
 </script>
+
+<%- include("./components/background") %>
 
 </html>

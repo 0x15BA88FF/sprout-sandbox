@@ -22,15 +22,17 @@
         <% } %>
 
         <p class="font-bold text-lg"><%= product.title %></p>
-        <%- include('./components/starRating', { rating: product.rating }) %>
+        <%- include('./components/starRating', { rating: rating }) %>
 
         <div class="actions flex gap-2">
-            <% if (!isInCart) { %>
-                <button onclick="addToCart('<%= product._id %>')" class="flex-grow button primary">Add To Cart</button>
-            <% } else { %>
-                <button onclick="removeFromCart('<%= product._id %>')" class="flex-grow button bad">Remove From Cart</button>
+            <% if (!isMyProduct) { %>
+                <% if (!isInCart) { %>
+                    <button onclick="addToCart('<%= product._id %>')" class="flex-grow button primary">Add To Cart</button>
+                <% } else { %>
+                    <button onclick="removeFromCart('<%= product._id %>')" class="flex-grow button bad">Remove From Cart</button>
+                <% } %>
+                <a class="flex-grow button secondary" href="/purchase/<%= product._id %>">Buy Now</a>
             <% } %>
-            <a class="flex-grow button secondary" href="/purchase/<%= product._id %>">Buy Now</a>
         </div>
 
         <div class="reviews-section flex flex-col gap-2 p-4 bg-background-100 rounded-lg">
@@ -56,7 +58,7 @@
         <% if (accountType != 'producer') { %>
             <div id="products-segment" class="segment">
                 <h2>Recommended</h2>
-                <div class="products-section">
+                <div class="grid grid-flow-row grid-cols-2 justify-between">
                     <% products.forEach((product) => { %>
                         <%- include('./components/productCard', { product, currency: product.currency, price: product.price, metric: product.metric, rating: product.rating }) %>
                     <% }); %>
@@ -65,7 +67,7 @@
         <% } %>
     </section>
 
-    <section onclick="closeModals()" id="modal-backdrop" class="fixed top-0 z-40 w-screen h-screen block flex-col opacity-30 bg-background-900"></section>
+    <section onclick="closeModals()" id="modal-backdrop" class="fixed top-0 z-50 w-screen h-screen mt-0 block flex-col opacity-30 bg-background-900"></section>
 
     <section id="reviews-section" class="fixed bottom-0 z-50 w-full h-max">
         <div class="flex flex-col gap-2 p-4 bg-background-100 rounded-t-lg">
@@ -114,5 +116,6 @@
 </script>
 
 <%- include("./components/cartHandler") %>
+<%- include("./components/background") %>
 
 </html>

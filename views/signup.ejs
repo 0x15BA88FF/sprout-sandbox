@@ -8,162 +8,137 @@
 <body>
     <%- include('./components/notificationsModal', { notifications }) %>
     
-    <form class="flex flex-col flex-grow" action="/signup" method="post">
-        <section class="flex flex-col flex-grow items-center justify-center">
-            <img class="thumbnail-md" src="/images/logo.svg" alt="Logo">
-            <h1>Sign Up</h1>
-            <div class="w-full max-w-80 flex flex-col gap-2">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="e.g. John Doe" required>
+    <form id="primary-form" class="h-screen flex flex-col flex-grow items-center justify-center" action="/signup" method="post">
+        <img class="thumbnail-md" src="/images/logo.svg" alt="Logo">
+        <h1>Sign Up</h1>
+        <div class="w-full max-w-80 flex flex-col gap-2">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="e.g. John Doe" required>
 
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" placeholder="e.g. example@mail.com" required>
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="e.g. example@mail.com" required>
 
-                <label for="accountType">Account Type</label>
-                <select name="accountType" id="accountType">
-                    <option value="consumer">Consumer</option>
-                    <option value="trader">Trader</option>
-                    <option value="producer">Producer</option>
-                    <option value="driver">Driver</option>
-                </select>
+            <label for="accountType">Account Type</label>
+            <select name="accountType" id="accountType">
+                <option value="consumer">Consumer</option>
+                <option value="trader">Trader</option>
+                <option value="producer">Producer</option>
+                <option value="driver">Driver</option>
+            </select>
 
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="*************" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="*************" required>
 
-                <div class="button primary cursor-pointer" onclick="pseudoSubmit()">Submit</div>
-                <p>Already have an account? <a href="/login">login instead.</a></p>
-            </>
-        </section>
-
-        <section id="producer-form" class="fixed top-0 left-[100%] w-full h-full flex flex-col flex-grow items-center justify-center bg-background-50">
-            <div class="w-full max-w-80 flex flex-col gap-2">
-                <label for="phoneNumber">Phone Number</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+233 000 000 0000" required>
-
-                <label for="phoneNumber">Region</label>
-                <input type="tel" id="region" name="region" placeholder="Greater Accra" required>
-
-                <label for="postalAddress">Postal Address</label>
-                <input type="text" id="postalAddress" name="postalAddress" placeholder="PO-123-456" required>
-
-                <label for="houseAddress">House Address</label>
-                <input type="text" id="houseAddress" name="houseAddress" placeholder="GD-123-456" required>
-
-                <label for="identificationNumber">Identification Number (Ghana Card)</label>
-                <input type="text" id="identificationNumber" name="identificationNumber" placeholder="12345678" required>
-
-                <input type="submit" value="Sign Up">
+            <input type="submit" class="button primary cursor-pointer" value="Next">
+            <p>Already have an account? <a href="/login">login instead.</a></p>
+        </div>
+        <div id="secondary-form" class="fixed top-0 left-[100%] w-full h-full flex flex-col flex-grow items-center justify-center bg-background-50">
+            <nav class="flex fixed top-0 w-screen p-4 z-50"><div onclick="backToPseudoForm()" class="w-max h-max cursor-pointer"><svg class="icon-base" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><g clip-path="url(#clip0_101_8720)"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.29303 12.7071C8.10556 12.5196 8.00024 12.2653 8.00024 12.0001C8.00024 11.7349 8.10556 11.4806 8.29303 11.2931L13.95 5.6361C14.0423 5.54059 14.1526 5.46441 14.2746 5.412C14.3966 5.35959 14.5279 5.332 14.6606 5.33085C14.7934 5.32969 14.9251 5.355 15.048 5.40528C15.1709 5.45556 15.2825 5.52981 15.3764 5.6237C15.4703 5.7176 15.5446 5.82925 15.5949 5.95214C15.6451 6.07504 15.6704 6.20672 15.6693 6.3395C15.6681 6.47228 15.6405 6.6035 15.5881 6.7255C15.5357 6.84751 15.4595 6.95785 15.364 7.0501L10.414 12.0001L15.364 16.9501C15.5462 17.1387 15.647 17.3913 15.6447 17.6535C15.6424 17.9157 15.5373 18.1665 15.3518 18.3519C15.1664 18.5373 14.9156 18.6425 14.6534 18.6448C14.3912 18.6471 14.1386 18.5463 13.95 18.3641L8.29303 12.7071Z" fill="black"/></g><defs><clipPath id="clip0_101_8720"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></div></nav>
+            <div id="secondary-form-container" class="w-full max-w-80 flex flex-col gap-2">
             </div>
-        </section>
-
-        <section id="trader-form" class="fixed top-0 left-[100%] w-full h-full flex flex-col flex-grow items-center justify-center bg-background-50">
-            <div class="w-full max-w-80 flex flex-col gap-2">
-                <label for="phoneNumber">Phone Number</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+233 000 000 0000" required>
-
-                <label for="phoneNumber">Region</label>
-                <input type="tel" id="region" name="region" placeholder="Greater Accra" required>
-
-                <label for="postalAddress">Postal Address</label>
-                <input type="text" id="postalAddress" name="postalAddress" placeholder="PO-123-456" required>
-
-                <label for="houseAddress">House Address</label>
-                <input type="text" id="houseAddress" name="houseAddress" placeholder="GD-123-456" required>
-
-                <label for="identificationNumber">Identification Number (Ghana Card)</label>
-                <input type="text" id="identificationNumber" name="identificationNumber" placeholder="12345678" required>
-
-                <input type="submit" value="Sign Up">
-            </div>
-        </section>
-
-        <section id="consumer-form" class="fixed top-0 left-[100%] w-full h-full flex flex-col flex-grow items-center justify-center bg-background-50">
-            <div class="w-full max-w-80 flex flex-col gap-2">
-                <label for="phoneNumber">Phone Number</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+233 000 000 0000" required>
-
-                <label for="phoneNumber">Region</label>
-                <input type="tel" id="region" name="region" placeholder="Greater Accra" required>
-
-                <label for="postalAddress">Postal Address</label>
-                <input type="text" id="postalAddress" name="postalAddress" placeholder="PO-123-456" required>
-
-                <label for="houseAddress">House Address</label>
-                <input type="text" id="houseAddress" name="houseAddress" placeholder="GD-123-456" required>
-
-                <input type="submit" value="Sign Up">
-            </div>
-        </section>
-
-        <section id="producer-form" class="fixed top-0 left-[100%] w-full h-full flex flex-col flex-grow items-center justify-center bg-background-50">
-            <div class="w-full max-w-80 flex flex-col gap-2">
-                <label for="phoneNumber">Phone Number</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+233 000 000 0000" required>
-
-                <label for="phoneNumber">Region</label>
-                <input type="tel" id="region" name="region" placeholder="Greater Accra" required>
-
-                <label for="postalAddress">Postal Address</label>
-                <input type="text" id="postalAddress" name="postalAddress" placeholder="PO-123-456" required>
-
-                <label for="houseAddress">House Address</label>
-                <input type="text" id="houseAddress" name="houseAddress" placeholder="GD-123-456" required>
-
-                <label for="identificationNumber">Identification Number (Ghana Card)</label>
-                <input type="text" id="identificationNumber" name="identificationNumber" placeholder="12345678" required>
-
-                <input type="submit" value="Sign Up">
-            </div>
-        </section>
-
-        <section id="driver-form" class="fixed top-0 left-[100%] w-full h-full flex flex-col flex-grow items-center justify-center bg-background-50">
-            <div class="w-full max-w-80 flex flex-col gap-2">
-                <label for="phoneNumber">Phone Number</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+233 000 000 0000" required>
-
-                <label for="identificationNumber">Identification Number (Ghana Card)</label>
-                <input type="text" id="identificationNumber" name="identificationNumber" placeholder="12345678" required>
-
-                <label for="numberPlate">Number Plate</label>
-                <input type="text" id="numberPlate" name="numberPlate" placeholder="AB-123456">
-
-                <label for="carModel">Car Model</label>
-                <input type="text" id="carModel" name="carModel" placeholder="GT-3RS">
-
-                <label for="carColor">Car Color</label>
-                <input type="text" id="carColor" name="carColor" placeholder="Black">
-
-                <label for="driversLicense">Drivers License</label>
-                <input type="text" id="driversLicense" name="driversLicense" placeholder="DL-123456">
-
-                <input type="submit" value="Sign Up">
-            </div>
-        </section>
+        </div>
     </form>
 
+
     <script>
-        const baseForm = document.getElementById("base-form")
-        const driverForm = document.getElementById("driver-form")
-        const producerForm = document.getElementById("producer-form")
-        const traderForm = document.getElementById("trader-form")
-        const consumerForm = document.getElementById("consumer-form")
+        const primaryForm = document.getElementById("primary-form");
+        const secondaryForm = document.getElementById("secondary-form");
+        const secondaryFormContainer = document.getElementById("secondary-form-container");
 
-        const backToPseudoSubmit = () => {
-            producerForm.style.left = "100%";
-            driverForm.style.left = "100%";
-            traderForm.style.left = "100%";
-            consumerForm.style.left = "100%"; 
+        const producerForm = `
+            <label for="phoneNumber">Phone Number</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+233 000 000 0000" required>
+
+            <label for="phoneNumber">Region</label>
+            <input type="text" id="region" name="region" placeholder="Greater Accra" required>
+
+            <label for="postalAddress">Postal Address</label>
+            <input type="text" id="postalAddress" name="postalAddress" placeholder="PO-123-456" required>
+
+            <label for="houseAddress">House Address</label>
+            <input type="text" id="houseAddress" name="houseAddress" placeholder="GD-123-456" required>
+
+            <label for="identificationNumber">Identification Number (Ghana Card)</label>
+            <input type="text" id="identificationNumber" name="identificationNumber" placeholder="12345678" required>
+
+            <input type="submit" class="button primary cursor-pointer" value="Next">
+        `;
+        const traderForm = `
+            <label for="phoneNumber">Phone Number</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+233 000 000 0000" required>
+
+            <label for="phoneNumber">Region</label>
+            <input type="text" id="region" name="region" placeholder="Greater Accra" required>
+
+            <label for="postalAddress">Postal Address</label>
+            <input type="text" id="postalAddress" name="postalAddress" placeholder="PO-123-456" required>
+
+            <label for="houseAddress">House Address</label>
+            <input type="text" id="houseAddress" name="houseAddress" placeholder="GD-123-456" required>
+
+            <label for="identificationNumber">Identification Number (Ghana Card)</label>
+            <input type="text" id="identificationNumber" name="identificationNumber" placeholder="12345678" required>
+
+            <input type="submit" class="button primary cursor-pointer" value="Next">
+        `;
+        const driverForm = `
+            <label for="phoneNumber">Phone Number</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+233 000 000 0000" required>
+
+            <label for="identificationNumber">Identification Number (Ghana Card)</label>
+            <input type="text" id="identificationNumber" name="identificationNumber" placeholder="12345678" required>
+
+            <label for="numberPlate">Number Plate</label>
+            <input type="text" id="numberPlate" name="numberPlate" placeholder="AB-123456">
+
+            <label for="carModel">Car Model</label>
+            <input type="text" id="carModel" name="carModel" placeholder="GT-3RS">
+
+            <label for="carColor">Car Color</label>
+            <input type="text" id="carColor" name="carColor" placeholder="Black">
+
+            <label for="driversLicense">Drivers License</label>
+            <input type="text" id="driversLicense" name="driversLicense" placeholder="DL-123456">
+
+            <input type="submit" class="button primary cursor-pointer" value="Next">
+        `;
+        const consumerForm = `
+            <label for="phoneNumber">Phone Number</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+233 000 000 0000" required>
+
+            <label for="phoneNumber">Region</label>
+            <input type="text" id="region" name="region" placeholder="Greater Accra" required>
+
+            <label for="postalAddress">Postal Address</label>
+            <input type="text" id="postalAddress" name="postalAddress" placeholder="PO-123-456" required>
+
+            <label for="houseAddress">House Address</label>
+            <input type="text" id="houseAddress" name="houseAddress" placeholder="GD-123-456" required>
+
+            <input type="submit" class="button primary cursor-pointer" value="Next">
+        `;
+
+        const backToPseudoForm = () => {
+            secondaryForm.style.left = "100%";
+            secondaryForm.style.display = "hidden";
+            secondaryFormContainer.innerHTML = "";
         }
 
-        const pseudoSubmit = () => {
-            const accountType = document.getElementById("accountType").value
+        document.getElementById("primary-form").addEventListener('submit', event => {
+            event.preventDefault()
+            if (secondaryForm.style.display == "flex") { primaryForm.submit() }
 
-            if (accountType === 'producer') { producerForm.style.left = "0px" }
-            else if (accountType === 'driver') { driverForm.style.left = "0px" }
-            else if (accountType === 'trader') { traderForm.style.left = "0px" }
-            else if (accountType === 'consumer') { consumerForm.style.left = "0px" }
+            const accountType = document.getElementById("accountType").value;
+
+            if (accountType === 'producer') { secondaryFormContainer.innerHTML = producerForm }
+            else if (accountType === 'driver') { secondaryFormContainer.innerHTML = driverForm }
+            else if (accountType === 'trader') { secondaryFormContainer.innerHTML = traderForm }
+            else if (accountType === 'consumer') { secondaryFormContainer.innerHTML = consumerForm }
             else { baseForm.submit() }
-        }
+
+            secondaryForm.style.display = "flex";
+            secondaryForm.style.left = "0px";
+        })
     </script>
 </body>
 

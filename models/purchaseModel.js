@@ -5,15 +5,13 @@ module.exports = mongoose.model("Purchase", mongoose.Schema({
         type: String,
         required: true,
     },
-    isDevlivered: {
-        type: Boolean,
-        required: true,
-        default: false,
+    deviverySession: {
+        type: String
     },
     price: {
         type: Number,
         required: true,
-        default: 0,
+        default: 0.00,
     },
     quantity: {
         type: Number,
@@ -24,5 +22,5 @@ module.exports = mongoose.model("Purchase", mongoose.Schema({
         type: Date,
         requred: true,
         default: Date.now()
-    }
+    },
 }));

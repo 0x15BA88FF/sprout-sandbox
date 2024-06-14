@@ -1,12 +1,9 @@
 <canvas class="flex flex-col p-4 gap-2 bg-background-50 border-2 border-background-100 shadow-lg rounded-lg" id="myProductDemandChart"></canvas>
 
 <script>
-    let myProductDemandChart = undefined
-    if (myProductDemandChart) { myProductDemandChart.destroy() }
-
     const myProductDemandChartCTX = document.getElementById('myProductDemandChart').getContext('2d');
 
-    const makeProductDemandChart = async () => {
+    (async () => {
         try {
             let response = await fetch(`http://localhost:3000/getMyProductsDemand`);
             let result = await response.json();
@@ -21,10 +18,8 @@
                     {
                         label: 'Products Overall Performance',
                         data: productData,
-                        backgroundColor: ["rgba(255,0,0,0.5)", "rgba(0,255,0,0.5)"],
+                        backgroundColor: "rgba(0,255,0,0.5)",
                         hoverOffset: 4,
-                        borderColor: '#262626',
-                        borderRadius: 5,
                         borderWidth: 2,
 
                     }
@@ -41,10 +36,8 @@
                 }
             };
             myProductDemandChart = new Chart(myProductDemandChartCTX, config);
-
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-    };
-    makeProductDemandChart()
+    })();
 </script>

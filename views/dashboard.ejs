@@ -11,17 +11,17 @@
     <section class="container">
         <div class="status grid grid-flow-row grid-cols-2 gap-4">
             <%- include('./components/statCard', { heading: "sales", data: sales }) %>
-            <%- include('./components/statCard', { heading: "income", data: income }) %>
+            <%- include('./components/statCard', { heading: "income", data: `GHS ${ income }` }) %>
         </div>
 
         <h2>Products Performance</h2>
         <%- include('./components/productPerformanceChart', { products }) %>
-    
-        <h2>Products Demand</h2>
-        <%- include('./components/productDemandChart') %>
 
         <h2>My Products Demand</h2>
         <%- include('./components/myProductsPerformanceChart') %>
+    
+        <h2>Products Demand</h2>
+        <%- include('./components/productDemandChart') %>
     </section>
 
     <div class="fixed bottom-0 right-0 m-8 flex flex-col items-center gap-2">
@@ -33,5 +33,7 @@
 
     <%- include('./components/footer') %>
 </body>
+
+<%- include("./components/background") %>
 
 </html>

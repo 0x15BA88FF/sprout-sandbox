@@ -3,8 +3,9 @@ const cors=require("cors");
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
-const session = require('express-session');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const userModel = require("./models/userModel");
 const notFound = require('./routes/middleware/notFound');
 const serverError = require('./routes/middleware/serverError');
 
@@ -21,7 +22,8 @@ mongoose.connect(MONGOURI)
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-app.use(cors())
+app.use(cors());
+app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));

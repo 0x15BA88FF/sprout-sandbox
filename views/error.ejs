@@ -6,12 +6,12 @@
 </head>
 
 <body>
-    <%- include('./components/navbar', { activeLink: '/error', accountType }) %>
-
     <section class="container w-full h-full flex-grow flex flex-col items-center justify-center">
         <h1>ERROR: <%= statusCode %></h1>
         <p><%= statusMessage %></p>
     </section>
 </body>
+
+<%- include("./components/background") %>
 
 </html>

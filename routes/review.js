@@ -22,7 +22,7 @@ router.post('/:id', auth, allowAccess('producer', 'consumer', 'trader'), async (
         const reviewPromises = product.reviews.map(reviewId => reviewModel.findById(reviewId));
         const reviews = await Promise.all(reviewPromises);
         const ratings = reviews.map(review => review.rating);
-        const averageRating = ratings.reduce((acc, rating) => acc + rating, 0) / ratings;
+        const averageRating = ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length;
 
         await productModel.findByIdAndUpdate({ _id: productId }, { $push: { reviews: savedReview._id }}, { new: true });
         await productModel.findByIdAndUpdate({ _id: productId }, { $set: { rating: averageRating }}, { new: true });
@@ -31,8 +31,8 @@ router.post('/:id', auth, allowAccess('producer', 'consumer', 'trader'), async (
     } catch(err) {
         const productId = new ObjectId(req.params.id);
         const product = await productModel.findById(productId);
-        const author = await userModel.findOne({ products: { $in: [productId] }}).exec();
-        const products = await productModel.find({ }).sort({ rating: -1 }).limit(10).exec();
+        const author = await userModel.findOne({ products: { $in: [productId] }});
+        const products = await productModel.find({ }).sort({ rating: -1 }).limit(10);
 
         const reviewPromises = product.reviews.map(reviewId => reviewModel.findById(reviewId));
         const reviews = await Promise.all(reviewPromises);

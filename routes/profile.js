@@ -14,17 +14,20 @@ router.get('/', auth, async (req, res) => {
     const productPromises = user.products.map(async productId => await productModel.findById(productId));
     const products = await Promise.all(productPromises);
 
-    res.render('profile', { accountType: req.session.user.accountType, user, products });
+    res.render('profile', { accountType: req.session.user.accountType, isMe: true, user, products });
 });
 
 router.get('/:id', auth, async (req, res) => {
     const userId = new ObjectId(req.params.id);
+    const myId = new ObjectId(req.session.user._id);
     const user = await userModel.findById(userId);
+
+    isMe = String(userId) === myId
 
     const productPromises = user.products.map(async productId => await productModel.findById(productId));
     const products = await Promise.all(productPromises);
 
-    res.render('profile', { accountType: req.session.user.accountType, user, products });
+    res.render('profile', { accountType: req.session.user.accountType, isMe, user, products });
 });
 
 module.exports = router;
