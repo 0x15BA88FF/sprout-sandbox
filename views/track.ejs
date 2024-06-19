@@ -7,15 +7,18 @@
 </head>
 
 <body>
-    <nav class="flex fixed top-0 w-screen p-2 z-50 bg-background-50 shadow-lg"><a href="/" class="w-max h-max"><svg class="icon-base" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><g clip-path="url(#clip0_101_8720)"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.29303 12.7071C8.10556 12.5196 8.00024 12.2653 8.00024 12.0001C8.00024 11.7349 8.10556 11.4806 8.29303 11.2931L13.95 5.6361C14.0423 5.54059 14.1526 5.46441 14.2746 5.412C14.3966 5.35959 14.5279 5.332 14.6606 5.33085C14.7934 5.32969 14.9251 5.355 15.048 5.40528C15.1709 5.45556 15.2825 5.52981 15.3764 5.6237C15.4703 5.7176 15.5446 5.82925 15.5949 5.95214C15.6451 6.07504 15.6704 6.20672 15.6693 6.3395C15.6681 6.47228 15.6405 6.6035 15.5881 6.7255C15.5357 6.84751 15.4595 6.95785 15.364 7.0501L10.414 12.0001L15.364 16.9501C15.5462 17.1387 15.647 17.3913 15.6447 17.6535C15.6424 17.9157 15.5373 18.1665 15.3518 18.3519C15.1664 18.5373 14.9156 18.6425 14.6534 18.6448C14.3912 18.6471 14.1386 18.5463 13.95 18.3641L8.29303 12.7071Z" fill="black"/></g><defs><clipPath id="clip0_101_8720"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></a></nav>
+    <nav class="flex fixed top-0 w-screen p-2 z-50 bg-background-50 shadow-lg">
+        <a href="/" class="w-max h-max"><svg class="icon-base" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><g clip-path="url(#clip0_101_8720)"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.29303 12.7071C8.10556 12.5196 8.00024 12.2653 8.00024 12.0001C8.00024 11.7349 8.10556 11.4806 8.29303 11.2931L13.95 5.6361C14.0423 5.54059 14.1526 5.46441 14.2746 5.412C14.3966 5.35959 14.5279 5.332 14.6606 5.33085C14.7934 5.32969 14.9251 5.355 15.048 5.40528C15.1709 5.45556 15.2825 5.52981 15.3764 5.6237C15.4703 5.7176 15.5446 5.82925 15.5949 5.95214C15.6451 6.07504 15.6704 6.20672 15.6693 6.3395C15.6681 6.47228 15.6405 6.6035 15.5881 6.7255C15.5357 6.84751 15.4595 6.95785 15.364 7.0501L10.414 12.0001L15.364 16.9501C15.5462 17.1387 15.647 17.3913 15.6447 17.6535C15.6424 17.9157 15.5373 18.1665 15.3518 18.3519C15.1664 18.5373 14.9156 18.6425 14.6534 18.6448C14.3912 18.6471 14.1386 18.5463 13.95 18.3641L8.29303 12.7071Z" fill="black"/></g><defs><clipPath id="clip0_101_8720"><rect width="24" height="24" fill="white"/></clipPath></defs></svg></a>
+    </nav>
 
     <div class="map mt-10 fixed top-0 bg-background-400 w-screen h-screen" id="map"></div>
 
-    <section class="fixed bottom-0 z-50 w-full flex flex-col p-4 bg-background-50 rounded-t-lg shadow-lg">
+    <section class="fixed bottom-0 z-50 w-full flex flex-col p-4 bg-background-50 rounded-t-lg shadow-lg sm">
             <div class="header flex items-center justify-between">
                 <h2>Delivery</h2>
             </div>
             <div id="drivers-container" class="flex flex-col gap-2">
+                <p>Nothing here :(</p>
             </div>
     </section>
 
@@ -28,29 +31,34 @@
     const map = L.map('map').setView([51.505, -0.09], 13);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' }).addTo(map);
     const Icon = L.Icon.extend({ options: { iconSize: [30, 80], shadowSize: [50, 64], iconAnchor: [22, 94], shadowAnchor: [4, 62], popupAnchor: [-3, -76] }});
-                L.icon = function (options) { return new L.Icon(options) };
-    const driverIcon = new Icon({iconUrl: '/images/driverMarker.svg'}),
-          producerIcon = new Icon({iconUrl: '/images/producerMarker.svg'}),
-          consumerIcon = new Icon({iconUrl: '/images/consumerMarker'});
+                 L.icon = function (options) { return new L.Icon(options) };
+    const driverIcon = new Icon({ iconUrl: '/images/driverMarker.svg' }),
+          producerIcon = new Icon({ iconUrl: '/images/producerMarker.svg' }),
+          consumerIcon = new Icon({ iconUrl: '/images/consumerMarker' });
 
     let driverMarker, producerMarker, consumerMarker, routeLayer, circle;
 
     const getDrivers = async () => {
-        const response = await fetch(`/route/drivers`);
+        const response = await fetch(`/route/drivers/<%= id %>`);
         const drivers = await response.json();
         driversContainer.innerHTML = "";
 
-        drivers.forEach(driver => {
+        drivers.driverData.forEach(driver => {
             const driverElement = `
                 <div class="user-card">
-                    <div class="main">
-                        <img class="thumbnail-base" src="/${ driver.avatar }" alt="${ driver.username }">
-                        <div class="details">
-                            <h6>${ driver.username }</h6>
-                            <p>${ driver.geolocation }</p>
+                    <a href="/profile/${ driver._id }">
+                        <div class="main">
+                            <img class="thumbnail-base" src="/${ driver.avatar }" alt="${ driver.username }">
+                            <div class="details">
+                                <h6>${ driver.username }</h6>
+                                <p>${ driver.distance }m</p>
+                            </div>
                         </div>
+                    </a>
+                    <div class="flex gap-1">
+                        <button onclick="sendRequest('${ driver._id }')" class="${ !driver.isRequested ? "" : "hidden" } button primary">Request</button>
+                        <button onclick="cancelRequest('${ driver._id }')" class="${ driver.isRequested? "" : "hidden" } button bad">Cancel</button>
                     </div>
-                    <button onclick="sendRequest('${ driver._id }')" class="button primary">Request</button>
                 </div>
             `
 
@@ -68,12 +76,29 @@
     }
 
     const sendRequest = (id) => {
-        // post id and put it inside deliverySession driverId
-        console.log(id)
+        fetch("/delivery/request/<%= id %>", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
+        .then(response => {
+            if (!response.ok) { throw new Error('Network response was not ok') }
+            console.log(response.text)
+            return response.text();
+        })
+        .then(data => { console.log('Request made successfully:', data) })
+        .catch(error => { console.error('Error making request:', error) });
+    }
+
+    const cancelRequest = (id) => {
+        fetch("/delivery/request/<%= id %>", { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
+        .then(response => {
+            if (!response.ok) { throw new Error('Network response was not ok') }
+            console.log(response.text)
+            return response.text();
+        })
+        .then(data => { console.log('Request made successfully:', data) })
+        .catch(error => { console.error('Error making request:', error) });
     }
 
     const getRoute = async (driverCoord, producerCoord, consumerCoord) => {
-        const response = await fetch(`/route?driverCoords=${ driverCoord }&producerCoords=${ producerCoord }&consumerCoords=${ consumerCoord }`);
+        const response = await fetch(`http://router.project-osrm.org/route/v1/driving/${ driverCoord? driverCoord + ";": "" }${ producerCoord };${ consumerCoord }?overview=full&geometries=geojson`);
         const data = await response.json();
         const route = data.routes[0].geometry;
 
@@ -99,10 +124,10 @@
         map.fitBounds(routeLayer.getBounds());
     }
 
-    fetchAndUpdateMap();
     getDrivers();
+    fetchAndUpdateMap();
+    setInterval(getDrivers, 1000);
     setInterval(fetchAndUpdateMap, 5000);
-    setInterval(getDrivers, 5000);
 </script>
 <%- include("./components/background") %>
 

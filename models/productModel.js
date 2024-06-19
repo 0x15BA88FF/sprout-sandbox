@@ -11,9 +11,13 @@ module.exports = mongoose.model("Product", mongoose.Schema({
     },
     category: {
         type: String,
+        default: "other",
+        required: true
     },
     currency: {
         type: String,
+        default: "ghs",
+        required: true
     },
     price: {
         type: Number,

@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     avatar: {
         type: String,
         required: true,
-        default: "avatar.png"
+        default: "images/avatar.png"
     },
     accountType: {
         type: String,
@@ -25,15 +25,15 @@ const userSchema = new mongoose.Schema({
     dateCreated: {
         type: Date,
         required: true,
-        default: Date.now
-    },
-    phoneNumbers: {
-        type: [String],
+        default: Date.now()
     },
     rating: {
         type: Number,
         required: true,
         default: 0,
+    },
+    phoneNumbers: {
+        type: [String],
     },
     products: {
         type: [String],

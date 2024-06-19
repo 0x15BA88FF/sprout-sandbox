@@ -1,12 +1,12 @@
 <div class="w-full flex items-center gap-2 justify-between">
     <a href="/purchase/<%= product.productId %>">
         <div class="main w-2/3 flex items-center gap-2">
-            <img class="thumbnail-md rounded-lg" src="<%= product.images[0] %>" alt="<%= product.title %>">
+            <img class="thumbnail-md rounded-lg" src="<%= product.thumbnail %>" alt="<%= product.title %>">
             <div class="details w-full flex flex-col">
                 <p class="font-semibold truncate text-ellipsis"><%= product.title %></p>
                 <%- include('./price', { currency: 'GHC' , price: 56.77, metric: 'pcs' , classes: 'price-sm' }) %>
             </div>
         </div>
     </a>
-    <a class="button primary" href="/track/<%= product._id %>">Track</a>
+    <a class="button primary" href="/track/<%= product.deliverySessonId %>">Track</a>
 </div>

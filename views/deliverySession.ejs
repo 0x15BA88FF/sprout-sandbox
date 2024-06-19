@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./components/head', { title: product.title }) %>
+</head>
+
+<body>
+    <%- include('./components/navbar', { activeLink: '/product', accountType: 'driver' }) %>
+
+    <section class="container gap-4">
+        <a href="/product/<%= product._id %>"></a>
+            <div class="flex flex-col gap-1">
+                <%- include('./components/carousel', { images: product.images }) %>
+                <div>
+                    <p class="text-lg font-semibold"><%= product.title %></p>
+                    <p class="font-semibold">Quantuty: <%= purchase.quantity %></p>
+                </div>
+            </div>
+        </a>
+
+        <h2>Seller:</h2>
+        <a href="/profile/<%= from._id %>">
+            <div class="flex items-center gap-2">
+                <img class="thumbnail-base rounded-lg" src="/<%= from.avatar %>" alt="<%= from.username %>">
+                <div class="flex flex-col gap-0">
+                    <p class="text-md font-semibold"><%= from.username %></p>
+                    <p><%= from.accountType %></p>
+                </div>
+            </div>
+        </a>
+
+        <h2>Buyer:</h2>
+        <a href="/profile/<%= consumer._id %>">
+            <div class="flex items-center gap-2">
+                <img class="thumbnail-base rounded-lg" src="/<%= consumer.avatar %>" alt="<%= consumer.username %>">
+                <div class="flex flex-col gap-0">
+                    <p class="text-md font-semibold"><%= consumer.username %></p>
+                    <p><%= consumer.accountType %></p>
+                </div>
+            </div>
+        </a>
+    </section>
+
+    <div class="fixed bottom-0 right-0 m-8 flex flex-col items-center gap-2">
+        <%- include('./components/assistantButton') %>
+    </div>
+
+    <%- include('./components/footer') %>
+</body>
+
+<%- include("./components/background") %>
+
+</html>

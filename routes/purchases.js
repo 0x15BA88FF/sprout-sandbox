@@ -23,8 +23,7 @@ router.get('/', auth, allowAccess('producer', 'trader', 'consumer'), async (req,
             const purchase = await purchaseModel.findById(purchaseId);
             const product = await productModel.findById(purchase.productId);
 
-            return { _id: purchase._id, productId: purchase.productId, images: product.images, title: product.title }
-            // if (purchase || product) { return { _id: purchase._id, productId: purchase.productId, images: product.images, title: product.title } }
+            return { _id: purchase._id, productId: purchase.productId, deliverySessonId: purchase.deliverySession, thumbnail: product.images[0], title: product.title }
         } catch (err) { console.log(err) }
     });
 

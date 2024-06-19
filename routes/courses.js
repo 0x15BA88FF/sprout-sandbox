@@ -5,7 +5,7 @@ const courseModel = require("../models/courseModel");
 
 const router = express.Router();
 
-router.get('/', auth, allowAccess('producer', 'trader', 'agent'), async (req, res) => {
+router.get('/', auth, allowAccess('producer', 'trader', 'driver'), async (req, res) => {
     const courses = await courseModel.find({ });
 
     res.render('courses', { accountType: req.session.user.accountType, courses });

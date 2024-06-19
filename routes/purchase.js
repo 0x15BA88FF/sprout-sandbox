@@ -15,8 +15,7 @@ router.get('/:id', auth, allowAccess('producer', 'consumer', 'trader'), async (r
     const userId = new ObjectId(req.session.user._id);
     const product = await productModel.findById(productId);
     const user = await userModel.findById(userId);
-
-    let isPurchased = false;
+    let isPurchased;
 
     const purchasedProductIdPromises = user.purchases.map(async purchaseId => {
         try {
@@ -26,7 +25,8 @@ router.get('/:id', auth, allowAccess('producer', 'consumer', 'trader'), async (r
     })
     const purchasedProductsId = await Promise.all(purchasedProductIdPromises);
 
-    if (purchasedProductsId.includes(String(productId))) { isPurchased = true };
+    if (purchasedProductsId.includes(String(productId))) { isPurchased = true }
+    else { isPurchased = false }
 
     res.render('purchase', { accountType: req.session.user.accountType, product, isPurchased });
 });
@@ -42,12 +42,13 @@ router.post('/:productId', auth, allowAccess('producer', 'consumer', 'trader'), 
         const purchase = new purchaseModel({ productId, quantity });
         const savedPurchase = await purchase.save();
 
-        const deliverySession = new deliverySessionModel({ purchaseId: purchase._id, driverId: "", producerId: author._id, consumerId: userId });
+
+        const deliverySession = new deliverySessionModel({ purchaseId: purchase._id, driverId: "", fromId: author._id, consumerId: userId });
         const savedDeliverySession = await deliverySession.save();
 
         await productModel.findByIdAndUpdate(productId, { $inc: { quantity: - quantity } });
+        await purchaseModel.findOneAndUpdate({ productId }, { $set: { deliverySession: String(savedDeliverySession._id) } });
         await userModel.findByIdAndUpdate(userId, { $push: { purchases: savedPurchase._id } });
-        await userModel.findByIdAndUpdate(userId, { $set: { deliverySession: savedDeliverySession._id } });
 
         res.redirect("/purchases");
     } catch(err) {

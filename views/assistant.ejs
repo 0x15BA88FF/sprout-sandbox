@@ -55,7 +55,7 @@
                     document.getElementById('loading-spinner').classList.remove('hidden')
 
                     if (message == 'sister akos') {
-                        animatemessage("suck ma balls", 'bot');
+                        animatemessage("ma m3 saa de3 no", 'bot');
                     } else {
                         const response = await fetch('/assistant', { method: 'post', headers: { 'content-type': 'application/json' }, body: json.stringify({ message, sender: 'user' }) });
                         if (!response.ok) throw new error('failed to send message');

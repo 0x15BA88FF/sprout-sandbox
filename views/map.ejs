@@ -12,11 +12,17 @@
     <div class="map mt-10 fixed top-0 bg-background-400 w-screen h-screen" id="map"></div>
 
     <section class="fixed bottom-0 z-50 w-full flex flex-col p-4 bg-background-50 rounded-t-lg shadow-lg">
-            <div class="header flex items-center justify-between">
+            <div class="header flex items-center justify-between">  
                 <h2>Requests</h2>
             </div>
-            <div id="requests-container" class="flex flex-col gap-2"></div>
+            <div id="requests-container" class="flex flex-col gap-2">
+                <p>Nothing here :(</p>
+            </div>
     </section>
+
+    <div class="fixed bottom-0 right-0 m-8 flex flex-col items-center gap-2">
+        <%- include('./components/assistantButton') %>
+    </div>
 
 </body>
 
@@ -40,20 +46,44 @@
         requests.forEach(request => {
             const requestElement = `
                 <div class="user-card">
-                    <div class="main">
-                        <img class="thumbnail-base" src="${ request.product.images[0] }" alt="${ request.product.title }">
-                        <div class="details">
-                            <h6>${ request.product.title }</h6>
-                            <p>${ request.product.geolocation }</p>
+                    <a href="/deliverySession/<%= id %>">
+                        <div class="main">
+                            <img class="thumbnail-base" src="${ request.thumbnail }" alt="${ request.title }">
+                            <div class="details">
+                                <h6>${ request.title }</h6>
+                                <p>${ request.distance }m</p>
+                            </div>
                         </div>
+                    </a>
+                    <div class="flex gap-2">
+                        <button onclick="acceptRequest('${ request._id }')" class="button primary">Accept</button>
+                        <button onclick="declineRequest('${ request._id }')" class="button bad">Decline</button>
                     </div>
-                    <button class="button primary">Cancel</button>
-                    <button class="button primary">Accept</button>
                 </div>
             `
             requestsContainer.innerHTML += requestElement;
         });
     };
+
+    const acceptRequest = (id) => {
+        fetch("/delivery/accept/<%= id %>", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
+        .then(response => {
+            if (!response.ok) { throw new Error('Network response was not ok') }
+            return response.text();
+        })
+        .then(data => { console.log('Request made successfully:', data) })
+        .catch(error => { console.error('Error making request:', error) });
+    }
+
+    const declineRequest = (id) => {
+        fetch("/delivery/cancel/<%= id %>", { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
+        .then(response => {
+            if (!response.ok) { throw new Error('Network response was not ok') }
+            return response.text();
+        })
+        .then(data => { console.log('Request made successfully:', data) })
+        .catch(error => { console.error('Error making request:', error) });
+    }
 
     const fetchAndUpdateMap = async () => {
         if (!navigator.geolocation) { console.log('Geolocation is not supported by your browser') }
@@ -73,9 +103,10 @@
         map.setView(location, 19);
     }
 
+    getRequests()
     fetchAndUpdateMap();
+    setInterval(getRequests, 1000);
     setInterval(fetchAndUpdateMap, 5000);
-    setInterval(getRequests, 5000);
 </script>
 <%- include("./components/background") %>
 

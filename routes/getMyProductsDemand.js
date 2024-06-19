@@ -5,10 +5,9 @@ const productModel = require("../models/productModel");
 const purchaseModel = require("../models/purchaseModel");
 
 const router = express.Router();
-const ObjectId = mongodb.ObjectId;
 
 router.get("/", async (req, res) => {
-	const userId = ObjectId(req.session.user._id);
+	const userId = req.session.user._id;
 
 	try {
 		const user = await userModel.findById(userId);

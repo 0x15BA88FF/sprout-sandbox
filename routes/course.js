@@ -5,10 +5,9 @@ const allowAccess = require("./middleware/allowAccess");
 const courseModel = require("../models/courseModel");
 
 const router = express.Router();
-const ObjectId = mongodb.ObjectId;
 
-router.get('/:id', auth, allowAccess('producer', 'trader', 'agent'), async (req, res) => {
-    const courseId = new ObjectId(req.params.id);
+router.get('/:id', auth, allowAccess('producer', 'trader', 'driver'), async (req, res) => {
+    const courseId = req.params.id;
     const course = await courseModel.findById(courseId);
 
     res.render('course', { accountType: req.session.user.accountType, course });

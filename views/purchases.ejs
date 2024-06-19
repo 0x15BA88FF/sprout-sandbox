@@ -11,15 +11,19 @@
     <section class="container">
         <h1>My Cart</h1>
         <div class="cart-items flex flex-col gap-2">
-            <% products.forEach((product) => { %>
-                <%- include('./components/cartItemCard', { product }) %>
-            <% }); %>
+            <% if (products.length > 0) { %>
+                <% products.forEach(product => { %>
+                    <%- include('./components/cartItemCard', { product }) %>
+                <% }); %>
+            <% } else { %>
+                <!-- <img src="/images/nothing.svg" alt=""> -->
+            <% } %>
         </div>
 
         <% if (purchases.length > 0) { %>
             <h1 class="mt-10">My Purchases</h1>
             <div class="cart-items flex flex-col gap-2">
-                <% purchases.forEach((product) => { %>
+                <% purchases.forEach(product => { %>
                 <%- include('./components/purchaseCard', { product }) %>
                 <% }); %>
             </div>

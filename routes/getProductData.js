@@ -5,7 +5,6 @@ const productModel = require("../models/productModel");
 const purchaseModel = require("../models/purchaseModel");
 
 const router = express.Router();
-const ObjectId = mongodb.ObjectId;
 
 router.get("/:id", async (req, res) => {
     const productId = req.params.id;

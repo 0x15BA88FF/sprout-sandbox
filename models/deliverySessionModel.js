@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 
-module.exports = mongoose.model("DeviverySession", mongoose.Schema({
-    driverId: {
+module.exports = mongoose.model("DeliverySession", mongoose.Schema({
+    purchaseId: {
         type: String,
+        required: true,
     },
     fromId: {
         type: String,
@@ -12,9 +13,8 @@ module.exports = mongoose.model("DeviverySession", mongoose.Schema({
         type: String,
         required: true,
     },
-    purchaseId: {
-        type: String,
-        required: true,
+    driverId: {
+        type: String
     },
     isActive: {
         type: Boolean,

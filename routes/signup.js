@@ -7,9 +7,7 @@ const userModel = require("../models/userModel");
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.get("/", (req, res) => {
-    res.render('signup', { notifications: [] });
-});
+router.get("/", (req, res) => { res.render('signup', { notifications: [] }) });
 
 router.post("/", async (req, res) => {
     try {
@@ -18,11 +16,7 @@ router.post("/", async (req, res) => {
 
         const userExists = await userModel.findOne({ email });
 
-        if (userExists) {
-            return res.render('signup', {
-                notifications: [{ level: "error", message: "This email has already been taken" }]
-            });
-        }
+        if (userExists) { return res.render('signup', { notifications: [{ level: "error", message: "This email has already been taken" }] }) }
 
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = new userModel({ username, email, accountType, password: hashedPassword, phoneNumbers, numberPlate, postalAddress, houseAddress, region, carColor, driversLicense, carModel, ghanaCard });
@@ -33,11 +27,7 @@ router.post("/", async (req, res) => {
 
         res.redirect("/");
 
-    } catch(err) {
-        res.render("signup", {
-            notifications: [{ level: "error", message: err.message }]
-        });
-    }
+    } catch(err) { res.render("signup", { notifications: [{ level: "error", message: err.message }] }) }
 });
 
 module.exports = router;

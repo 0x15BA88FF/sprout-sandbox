@@ -4,7 +4,7 @@ const allowAccess = require("./middleware/allowAccess");
 
 const router = express.Router();
 
-router.get('/:id', auth, allowAccess('producer', 'trader', 'consumer', 'agent'), (req, res) => {
+router.get('/:id', auth, allowAccess('producer', 'trader', 'consumer', 'driver'), (req, res) => {
     res.render('track', { id: req.params.id });
 });
 
