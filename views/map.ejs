@@ -46,7 +46,7 @@
         requests.forEach(request => {
             const requestElement = `
                 <div class="user-card">
-                    <a href="/deliverySession/<%= id %>">
+                    <a href="/session/${ request._id }">
                         <div class="main">
                             <img class="thumbnail-base" src="${ request.thumbnail }" alt="${ request.title }">
                             <div class="details">
@@ -66,7 +66,7 @@
     };
 
     const acceptRequest = (id) => {
-        fetch("/delivery/accept/<%= id %>", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
+        fetch(`/delivery/accept/${ id }`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
         .then(response => {
             if (!response.ok) { throw new Error('Network response was not ok') }
             return response.text();
@@ -76,7 +76,7 @@
     }
 
     const declineRequest = (id) => {
-        fetch("/delivery/cancel/<%= id %>", { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
+        fetch(`/delivery/cancel/${ id }`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
         .then(response => {
             if (!response.ok) { throw new Error('Network response was not ok') }
             return response.text();
@@ -97,8 +97,10 @@
     const getMap = async (location) => {
         const driverIcon = new Icon({iconUrl: '/images/driverMarker.svg'});
 
+        const driverPopup = "Driver";
+
         if (driverMarker) { driverMarker.setLatLng(location) }
-        else { driverMarker = L.marker(location, { icon: driverIcon }).addTo(map).bindPopup('Driver') }
+        else { driverMarker = L.marker(location, { icon: driverIcon }).addTo(map).bindPopup(driverPopup) }
 
         map.setView(location, 19);
     }

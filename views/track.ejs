@@ -76,6 +76,7 @@
     }
 
     const sendRequest = (id) => {
+        console.log(id)
         fetch("/delivery/request/<%= id %>", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
         .then(response => {
             if (!response.ok) { throw new Error('Network response was not ok') }
@@ -87,6 +88,7 @@
     }
 
     const cancelRequest = (id) => {
+        console.log(id)
         fetch("/delivery/request/<%= id %>", { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
         .then(response => {
             if (!response.ok) { throw new Error('Network response was not ok') }
@@ -106,16 +108,20 @@
         const producerCoords = producerCoord.split(',').map(Number);
         const consumerCoords = consumerCoord.split(',').map(Number);
 
+        const driverPopup = `Driver`;
+        const producerPopup = `Producer`;
+        const consumerPopup = `Consumer`;
+
         if (driverCoord) {
             if (driverMarker) { driverMarker.setLatLng([driverCoords[1], driverCoords[0]]) }
-            else { driverMarker = L.marker([driverCoords[1], driverCoords[0]], { icon: driverIcon }).addTo(map).bindPopup('Driver') }
+            else { driverMarker = L.marker([driverCoords[1], driverCoords[0]], { icon: driverIcon }).addTo(map).bindPopup(driverPopup) }
         }
 
         if (producerMarker) { producerMarker.setLatLng([producerCoords[1], producerCoords[0]]) }
-        else { producerMarker = L.marker([producerCoords[1], producerCoords[0]], { icon: producerIcon }).addTo(map).bindPopup('Producer') }
+        else { producerMarker = L.marker([producerCoords[1], producerCoords[0]], { icon: producerIcon }).addTo(map).bindPopup(producerPopup) }
 
         if (consumerMarker) { consumerMarker.setLatLng([consumerCoords[1], consumerCoords[0]]) }
-        else { consumerMarker = L.marker([consumerCoords[1], consumerCoords[0]]).addTo(map).bindPopup('Consumer') }
+        else { consumerMarker = L.marker([consumerCoords[1], consumerCoords[0]]).addTo(map).bindPopup(consumerPopup) }
 
         if (routeLayer) {
             routeLayer.clearLayers();

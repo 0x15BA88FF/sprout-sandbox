@@ -85,7 +85,6 @@ router.get('/:id', auth, async (req, res) => {
 router.post('/:coordinate', auth, async (req, res) => {
     const geolocation = req.params.coordinate;
     const userId = req.session.user._id;
-
     await userModel.findByIdAndUpdate(userId, { $set: { geolocation }}, { new: true })
 });
 
