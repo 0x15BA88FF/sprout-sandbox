@@ -14,17 +14,19 @@
                 <img class="thumbnail-md rounded-full" src="/<%= user.avatar %>" alt="<%= user.username %>">
                 <div class="main flex flex-col">
                     <h4><%= user.username %></h4>
-                    <p><%= user.accountType.toUpperCase() %></p>
+                    <p><%= user.accountType %></p>
                 </div>
                 <% if (isMe) { %>
                     <a class="button bad ml-auto" href="/logout">Logout</a>
                 <% } %>
             </div>
             <div class="flex flex-col gap-1">
-                <p class="font-semibold"><%= user.email %></p>
+                <a class="font-semibold" href="mailto:<%= user.email %>"><%= user.email %></a>
                 <p class="font-semibold"><%= user.location %></p>
                 <p class="text-text-700">Since <%= new Date(Date.parse(user.dateCreated)).getDay() %>/<%= new Date(Date.parse(user.dateCreated)).getMonth() %>/<%= new Date(Date.parse(user.dateCreated)).getFullYear() %></p>
                 <% if (user.accountType === 'driver') { %>
+                    <p class="text-text-700">driver's License: <%= user.driversLicense %></p>
+                    <p class="text-text-700">Car Model: <%= user.carModel %></p>
                     <%- include('./components/starRating', { rating: user.rating }) %>
                 <% } %>
             </div>
@@ -53,7 +55,7 @@
     <section onclick="closeModals()" id="modal-backdrop" class="fixed top-0 z-50 w-screen h-screen mt-0 block flex-col opacity-30 bg-background-900"></section>
 
     <section id="contact-modal" class="fixed z-50 h-full w-full flex items-center justify-center pointer-events-none">
-        <div class="w-full max-w-72 flex flex-col items-center gap-2 p-4 bg-background-100 rounded-lg pointer-events-auto">
+        <div class="w-full max-w-72 flex flex-col items-center gap-2 p-4 bg-background-50 rounded-lg pointer-events-auto">
             <h1>Contact</h1>
             <% if (user.phoneNumbers.length > 0) { %>
                 <% user.phoneNumbers.forEach(number => { %>
@@ -66,7 +68,7 @@
     </section>
 
     <section id="message-modal" class="fixed z-50 h-full w-full flex items-center justify-center pointer-events-none">
-        <div class="w-full max-w-72 flex flex-col items-center gap-2 p-4 bg-background-100 rounded-lg pointer-events-auto">
+        <div class="w-full max-w-72 flex flex-col items-center gap-2 p-4 bg-background-50 rounded-lg pointer-events-auto">
             <h1>Message</h1>
             <% if (user.phoneNumbers.length > 0) { %>
                 <% user.phoneNumbers.forEach(number => { %>
@@ -78,7 +80,7 @@
         </div>
     </section>
 
-    <div class="fixed bottom-0 right-0 m-8 flex flex-col items-center gap-2">
+    <div class="fixed bottom-0 right-0 m-8 flex flex-col items-center gap-2 z-40">
         <%- include('./components/assistantButton') %>
         <% if (accountType != 'consumer' && accountType != 'driver') { %>
             <%- include('./components/sellButton') %>

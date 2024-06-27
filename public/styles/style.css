@@ -68,7 +68,6 @@ select { @apply p-2 rounded-lg bg-background-100 }
 input[type='submit'] { @apply text-text-50 bg-primary-400 hover:bg-primary-500 }
 
 .container { @apply mx-auto px-4; }
-.segment { @apply flex-col gap-2 }
 
 .button { @apply p-2 text-center; }
 .link { @apply hover:text-primary-500; }
@@ -107,7 +106,7 @@ input[type='submit'] { @apply text-text-50 bg-primary-400 hover:bg-primary-500 }
 
 .category-card { @apply w-full flex flex-col gap-2 items-center }
 .category-card img { @apply thumbnail-md rounded-full }
-.category-card .title { @apply text-lg text-center text-text-900 font-semibold }
+.category-card .title { @apply text-center text-text-900 font-semibold }
 
 .price { @apply flex items-baseline }
 .price-base .currency { @apply font-semibold }
@@ -131,11 +130,6 @@ input[type='submit'] { @apply text-text-50 bg-primary-400 hover:bg-primary-500 }
 .user-card .main { @apply flex items-center gap-4 }
 .user-card .main img { @apply bg-background-100 rounded-full }
 .user-card button { @apply rounded-lg }
-
-.carousel { @apply w-full flex flex-col gap-4 }
-.carousel .main-image { @apply thumbnail-auto bg-background-100 rounded-lg }
-.carousel .main-image .position { @apply relative top-2 left-2 px-4 py-1 bg-background-50 rounded-full }
-.carousel img { @apply thumbnail-md bg-background-100 rounded-lg }
 
 /* Animations */
 @keyframes pulse {

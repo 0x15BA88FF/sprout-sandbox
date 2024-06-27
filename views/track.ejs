@@ -13,23 +13,19 @@
 
     <div class="map mt-10 fixed top-0 bg-background-400 w-screen h-screen" id="map"></div>
 
-    <section class="fixed bottom-0 z-50 w-full flex flex-col p-4 bg-background-50 rounded-t-lg shadow-lg sm">
-            <div class="header flex items-center justify-between">
-                <h2>Delivery</h2>
-            </div>
-            <div id="drivers-container" class="flex flex-col gap-2">
-                <p>Nothing here :(</p>
-            </div>
+    <section class="fixed bottom-0 z-50 w-full flex flex-col p-4 bg-background-50 rounded-t-lg shadow-[0_35px_60px_15px]">
+        <div id="drivers-container" class="flex flex-col gap-2">
+            <p>Nothing here :(</p>
+        </div>
     </section>
-
 </body>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-    const driversContainer = document.getElementById("drivers-container");
+    const dataContainer = document.getElementById("drivers-container");
 
-    const map = L.map('map').setView([51.505, -0.09], 13);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' }).addTo(map);
+    const map =  L.map('map').setView([51.505, -0.09], 13);
+                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' }).addTo(map);
     const Icon = L.Icon.extend({ options: { iconSize: [30, 80], shadowSize: [50, 64], iconAnchor: [22, 94], shadowAnchor: [4, 62], popupAnchor: [-3, -76] }});
                  L.icon = function (options) { return new L.Icon(options) };
     const driverIcon = new Icon({ iconUrl: '/images/driverMarker.svg' }),
@@ -37,6 +33,55 @@
           consumerIcon = new Icon({ iconUrl: '/images/consumerMarker' });
 
     let driverMarker, producerMarker, consumerMarker, routeLayer, circle;
+
+    const getSessionData = async () => {
+        const response = await fetch(`/getSessionData/<%= id %>`);
+        const sessionData = await response.json();
+
+        if (sessionData.isActive) {
+            const producerDataRequest = await fetch(`/getUserData/${ sessionData.fromId }`);
+            const producer = await producerDataRequest.json();
+
+            const consumerDataRequest = await fetch(`/getUserData/${ sessionData.consumerId }`);
+            const consumer = await consumerDataRequest.json();
+
+            const driverDataRequest = await fetch(`/getUserData/${ sessionData.driverId }`);
+            const driver = await driverDataRequest.json();
+
+            dataContainer.innerHTML = `
+                <div class="flex flex-col gap-2">
+                    <h1>Arriving in 30mins</h1>
+                    <p>${ driver.carColor } ${ driver.carModel }, (${ driver.numberPlate })</p>
+                    <div class="flex gap-2 justify-between">
+                        <a href="/profile/${ consumer._id }">
+                            <div class="flex flex-col gap-1 items-center">
+                                <img class="rounded-lg bg-background-200 border-2 border-background-200 thumbnail-md" src="/${ consumer.avatar }" alt="Consumer">
+                                <p>Consumer</p>
+                            </div>
+                        </a>
+                        <a href="/profile/${ driver._id }">
+                            <div class="flex flex-col gap-1 items-center">
+                                <img class="rounded-lg bg-background-200 border-2 border-background-200 thumbnail-md" src="/${ driver.avatar }" alt="Driver">
+                                <p>Driver</p>
+                            </div>
+                        </a>
+                        <a href="/profile/${ producer._id }">
+                            <div class="flex flex-col gap-1 items-center">
+                                <img class="rounded-lg bg-background-200 border-2 border-background-200 thumbnail-md" src="/${ producer.avatar }" alt="Producer">
+                                <p>Producer</p>
+                            </div>
+                        </a>
+                        <a href="/profile/${ producer._id }">
+                            <div class="flex flex-col gap-1 items-center">
+                                <img class="rounded-lg bg-background-200 border-2 border-background-200 thumbnail-md" src="/images/joinRoom.svg" alt="Room">
+                                <p>Join Room</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            `
+        } else { getDrivers() }
+    }
 
     const getDrivers = async () => {
         const response = await fetch(`/route/drivers/<%= id %>`);
@@ -76,7 +121,6 @@
     }
 
     const sendRequest = (id) => {
-        console.log(id)
         fetch("/delivery/request/<%= id %>", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
         .then(response => {
             if (!response.ok) { throw new Error('Network response was not ok') }
@@ -88,7 +132,6 @@
     }
 
     const cancelRequest = (id) => {
-        console.log(id)
         fetch("/delivery/request/<%= id %>", { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
         .then(response => {
             if (!response.ok) { throw new Error('Network response was not ok') }
@@ -130,9 +173,9 @@
         map.fitBounds(routeLayer.getBounds());
     }
 
-    getDrivers();
+    getSessionData()
     fetchAndUpdateMap();
-    setInterval(getDrivers, 1000);
+    setInterval(getSessionData, 1000);
     setInterval(fetchAndUpdateMap, 5000);
 </script>
 <%- include("./components/background") %>

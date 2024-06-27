@@ -9,21 +9,24 @@
     <%- include('./components/navbar', { activeLink: '/', accountType }) %>
 
     <section class="container">
-        <div id="categories-segment" class="flex segment">
+        <div id="categories-segment" class="flex flex-col gap-4">
             <h3>Categories</h3>
-            <div class="grid grid-flow-row grid-cols-3 justify-between gap-4 xs:grid-cols-4 sm:grid-cols-5">
+            <div class="grid grid-flow-row grid-cols-4 justify-between gap-4 xs:grid-cols-4 sm:grid-cols-8 sm:p-4 sm:bg-background-100 rounded-lg">
                 <%- include('./components/categoryCard', { image: 'vegetables.jpg', title: 'Vegetables' }) %>
                 <%- include('./components/categoryCard', { image: 'fruits.jpg', title: 'Fruits' }) %>
                 <%- include('./components/categoryCard', { image: 'dairy.jpg', title: 'Dairy' }) %>
-                <%- include('./components/categoryCard', { image: 'meet_fish.jpg', title: 'Meat, Fish & Eggs' }) %>
-                <%- include('./components/categoryCard', { image: 'flours.jpeg', title: 'Flours & Doughs' }) %>
-                <%- include('./components/categoryCard', { image: 'spices.png', title: 'Spices, Seeds & Nuts' }) %>
+                <%- include('./components/categoryCard', { image: 'meet_fish.jpg', title: 'Meat' }) %>
+                <%- include('./components/categoryCard', { image: 'flours.jpeg', title: 'Flours' }) %>
+                <%- include('./components/categoryCard', { image: 'spices.png', title: 'Spices' }) %>
                 <%- include('./components/categoryCard', { image: 'processed.jpg', title: 'Processed' }) %>
                 <%- include('./components/categoryCard', { image: 'other.png', title: 'Others' }) %>
+                <!-- <%- include('./components/categoryCard', { image: 'meet_fish.jpg', title: 'Meat, Fish & Eggs' }) %> -->
+                <!-- <%- include('./components/categoryCard', { image: 'flours.jpeg', title: 'Flours & Doughs' }) %> -->
+                <!-- <%- include('./components/categoryCard', { image: 'spices.png', title: 'Spices, Seeds & Nuts' }) %> -->
             </div>
         </div>
 
-        <div id="farmers-segment" class="<%= producers.length < 1 ? 'hidden' : '' %> segment">
+        <div id="farmers-segment" class="flex flex-col gap-4 <%= producers.length < 1 ? 'hidden' : '' %>">
             <h3>In Producers</h3>
             <div class="flex flex-col gap-2">
                 <% producers.forEach(user => { %>
@@ -32,7 +35,7 @@
             </div>
         </div>
 
-        <div id="traders-segment" class="<%= traders.length < 1 ? 'hidden' : '' %> segment">
+        <div id="traders-segment" class="flex flex-col gap-4 <%= traders.length < 1 ? 'hidden' : '' %>">
             <h3>Traders</h3>
             <div class="users-section">
                 <% traders.forEach(user => { %>
@@ -41,7 +44,7 @@
             </div>
         </div>
 
-        <div id="driver-segment" class="<%= drivers.length < 1 ? 'hidden' : '' %> segment">
+        <div id="driver-segment" class="flex flex-col gap-4 <%= drivers.length < 1 ? 'hidden' : '' %>">
             <h3>In Drivers</h3>
             <div class="users-section">
                 <% drivers.forEach((user) => { %>
@@ -50,9 +53,9 @@
             </div>
         </div>
 
-        <div id="products-segment" class="<%= products.length < 1 ? 'hidden' : '' %> segment">
-            <h3>Recommended Products</h3>
-            <div class="grid grid-flow-row grid-cols-2 justify-between">
+        <div id="products-segment" class="flex flex-col gap-4 <%= products.length < 1 ? 'hidden' : '' %>">
+            <h3>Recommended</h3>
+            <div class="grid grid-flow-row grid-cols-2 justify-between md:grid-cols-6 sm:grid-cols-4">
                 <% products.forEach((product) => { %>
                     <%- include('./components/productCard', { product }) %>
                 <% }); %>
@@ -60,7 +63,7 @@
         </div>
     </section>
 
-    <div class="fixed bottom-0 right-0 m-8 flex flex-col items-center gap-2">
+    <div class="fixed bottom-0 right-0 m-8 flex flex-col items-center gap-2 z-40">
         <%- include('./components/assistantButton') %>
         <% if (accountType != 'consumer' && accountType != 'driver') { %>
             <%- include('./components/sellButton') %>
