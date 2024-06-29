@@ -37,7 +37,7 @@
 
         <div id="traders-segment" class="flex flex-col gap-4 <%= traders.length < 1 ? 'hidden' : '' %>">
             <h3>Traders</h3>
-            <div class="users-section">
+            <div class="users-section flex flex-col gap-2">
                 <% traders.forEach(user => { %>
                     <%- include('./components/userCard', { user }) %>
                 <% }); %>
@@ -46,7 +46,7 @@
 
         <div id="driver-segment" class="flex flex-col gap-4 <%= drivers.length < 1 ? 'hidden' : '' %>">
             <h3>In Drivers</h3>
-            <div class="users-section">
+            <div class="users-section flex flex-col gap-2">
                 <% drivers.forEach((user) => { %>
                     <%- include('./components/userCard', { user }) %>
                 <% }); %>

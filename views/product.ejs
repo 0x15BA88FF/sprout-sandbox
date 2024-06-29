@@ -19,7 +19,7 @@
 
                 <% if (accountType != 'producer' && accountType != 'trader') { %>
                     <a class="flex items-center gap-4" href="/profile/<%= author._id %>">
-                        <img class="rounded-full" src="/<%= author.avatar %>" alt="<%= author.username %>">
+                        <img class="thumbnail-md rounded-full" src="/<%= author.avatar %>" alt="<%= author.username %>">
                         <div class="main flex flex-col">
                             <p class="font-bold"><%= author.username %></p>
                             <p><%= author.accountType %></p>

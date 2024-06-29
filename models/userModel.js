@@ -59,17 +59,20 @@ const userSchema = new mongoose.Schema({
     region: {
         type: String,
     },
-    carColor: {
+    vehicleColor: {
         type: String,
     },
     driversLicense: {
         type: String,
     },
-    carModel: {
+    vehicleModel: {
         type: String,
     },
     ghanaCardNumber: {
         type: String,
+    },
+    vehicleImages: {
+        type: [String]
     },
     geolocation: {
         type: String,

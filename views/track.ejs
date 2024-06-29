@@ -48,10 +48,13 @@
             const driverDataRequest = await fetch(`/getUserData/${ sessionData.driverId }`);
             const driver = await driverDataRequest.json();
 
+            const routeResponse = await fetch(`http://router.project-osrm.org/route/v1/driving/${ driver.geolocation };${ producer.geolocation };${ consumer.geolocation }?overview=full&geometries=geojson`);
+            const route = await routeResponse.json();
+
             dataContainer.innerHTML = `
                 <div class="flex flex-col gap-2">
-                    <h1>Arriving in 30mins</h1>
-                    <p>${ driver.carColor } ${ driver.carModel }, (${ driver.numberPlate })</p>
+                    <h1>Arriving in ${ route.routes[0].duration }mins</h1>
+                    <p>${ driver.vehicleColor } ${ driver.vehicleModel }, (${ driver.numberPlate })</p>
                     <div class="flex gap-2 justify-between">
                         <a href="/profile/${ consumer._id }">
                             <div class="flex flex-col gap-1 items-center">
@@ -86,14 +89,15 @@
     const getDrivers = async () => {
         const response = await fetch(`/route/drivers/<%= id %>`);
         const drivers = await response.json();
-        driversContainer.innerHTML = "";
+        dataContainer.innerHTML = "";
 
         drivers.driverData.forEach(driver => {
             const driverElement = `
                 <div class="user-card">
                     <a href="/profile/${ driver._id }">
                         <div class="main">
-                            <img class="thumbnail-base" src="/${ driver.avatar }" alt="${ driver.username }">
+                            // <img class="thumbnail-base" src="/${ driver.avatar }" alt="${ driver.username }">
+                            <img class="thumbnail-base" src="/${ driver.vehicleImages[0] }" alt="${ driver.vehicleModel }">
                             <div class="details">
                                 <h6>${ driver.username }</h6>
                                 <p>${ driver.distance }m</p>
@@ -109,7 +113,7 @@
 
             const driverCoords = driver.geolocation.split(',').map(Number);
             L.marker([driverCoords[1], driverCoords[0]], { icon: driverIcon }).addTo(map).bindPopup(driver);
-            driversContainer.innerHTML += driverElement;
+            dataContainer.innerHTML += driverElement;
         });
     };
 

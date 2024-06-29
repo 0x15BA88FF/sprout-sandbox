@@ -1200,27 +1200,15 @@ video {
   opacity: 0.3;
 }
 
-.shadow-\[0_35px_60px_-15px_rgba\(0\2c 0\2c 0\2c 0\.3\)\] {
-  --tw-shadow: 0 35px 60px -15px rgba(0,0,0,0.3);
-  --tw-shadow-colored: 0 35px 60px -15px var(--tw-shadow-color);
+.shadow-\[0_35px_60px_15px\] {
+  --tw-shadow: 0 35px 60px 15px;
+  --tw-shadow-colored: 0 35px 60px 15px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .shadow-lg {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.shadow-\[0_35px_60px_-15px\] {
-  --tw-shadow: 0 35px 60px -15px;
-  --tw-shadow-colored: 0 35px 60px -15px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.shadow-\[0_35px_60px_15px\] {
-  --tw-shadow: 0 35px 60px 15px;
-  --tw-shadow-colored: 0 35px 60px 15px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -1416,23 +1404,31 @@ input[type='submit']:hover {
 
 .thumbnail {
   aspect-ratio: 1 / 1;
+  background-size: cover;
+  background-position: center;
 }
 
 .thumbnail-base {
   height: 3rem;
   width: 3rem;
   aspect-ratio: 1 / 1;
+  background-size: cover;
+  background-position: center;
 }
 
 .thumbnail-auto {
   width: 100%;
   aspect-ratio: 1 / 1;
+  background-size: cover;
+  background-position: center;
 }
 
 .thumbnail-md {
   height: 4rem;
   width: 4rem;
   aspect-ratio: 1 / 1;
+  background-size: cover;
+  background-position: center;
 }
 
 /* Components */
@@ -1535,6 +1531,8 @@ input[type='submit']:hover {
   height: 4rem;
   width: 4rem;
   aspect-ratio: 1 / 1;
+  background-size: cover;
+  background-position: center;
 }
 
 .category-card .title {
@@ -1625,6 +1623,8 @@ input[type='submit']:hover {
   background-color: var(--background-100);
   width: 100%;
   aspect-ratio: 1 / 1;
+  background-size: cover;
+  background-position: center;
 }
 
 .product-card .cart-button {
@@ -1694,9 +1694,23 @@ input[type='submit']:hover {
   border-width: 2px;
 }
 
+.hover\:border:hover {
+  border-width: 1px;
+}
+
+.hover\:p-2:hover {
+  padding: 0.5rem;
+}
+
 .hover\:shadow-2xl:hover {
   --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.hover\:shadow-lg:hover {
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 

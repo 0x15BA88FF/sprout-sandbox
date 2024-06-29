@@ -24,7 +24,7 @@ router.get('/drivers/:id', auth, async (req, res) => {
             const driverLocation = driver.geolocation;
             const isRequested = String(driver._id) === deliverySession.driverId;
             const route = await axios.get(`http://router.project-osrm.org/route/v1/driving/${ driverLocation };${ producerLocation };${ consumerLocation }?overview=full&geometries=geojson`);
-            return { _id: driver._id, username: driver.username, avatar: driver.avatar, geolocation: driver.geolocation, distance: route.data.routes[0].distance, isRequested }
+            return { _id: driver._id, username: driver.username, avatar: driver.avatar, geolocation: driver.geolocation, vehicleImages: driver.vehicleImages, distance: route.data.routes[0].distance, isRequested }
         });
         const driversData = await Promise.all(driverPromises);
 

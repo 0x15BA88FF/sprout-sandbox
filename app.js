@@ -55,8 +55,8 @@ fs.readdirSync(routesDirectory).forEach(file => {
     }
 });
 
-// app.use(notFound)
-// app.use(serverError)
+app.use(notFound)
+app.use(serverError)
 
 app.listen(port, () => console.log(`Server listening on port ${ port }`));
 

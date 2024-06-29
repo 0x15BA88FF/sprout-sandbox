@@ -24,9 +24,10 @@
                 <a class="font-semibold" href="mailto:<%= user.email %>"><%= user.email %></a>
                 <p class="font-semibold"><%= user.location %></p>
                 <p class="text-text-700">Since <%= new Date(Date.parse(user.dateCreated)).getDay() %>/<%= new Date(Date.parse(user.dateCreated)).getMonth() %>/<%= new Date(Date.parse(user.dateCreated)).getFullYear() %></p>
+
                 <% if (user.accountType === 'driver') { %>
                     <p class="text-text-700">driver's License: <%= user.driversLicense %></p>
-                    <p class="text-text-700">Car Model: <%= user.carModel %></p>
+                    <p class="text-text-700">Vehicle: <%= user.vehicleColor %> <%= user.vehicleModel %></p>
                     <%- include('./components/starRating', { rating: user.rating }) %>
                 <% } %>
             </div>
@@ -48,6 +49,15 @@
                         <p>No products found :/ ...</p>
                     <% } %>
                 </div>
+            </div>
+        <% } %>
+
+        <% if (accountType == 'driver') { %>
+            <div class="flex flex-col gap-2 p-4 rounded-lg border-2 border-background-100 shadow-lg">
+                    <h2>Vehicle Preview:</h2>
+                    <% user.vehicleImages.forEach(image => { %>
+                        <img class="rounded-lg" src="/<%= image %>" alt="Vehicle Preview">
+                    <% }); %>
             </div>
         <% } %>
     </section>

@@ -82,7 +82,7 @@ input[type='submit'] { @apply text-text-50 bg-primary-400 hover:bg-primary-500 }
 .icon-md { @apply icon h-12 w-12 }
 .icon-lg { @apply icon h-14 w-14 }
 
-.thumbnail { @apply aspect-square }
+.thumbnail { @apply aspect-square bg-center bg-cover }
 .thumbnail-base { @apply thumbnail w-12 h-12 }
 .thumbnail-auto { @apply thumbnail w-full }
 .thumbnail-md { @apply thumbnail w-16 h-16 }

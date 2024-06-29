@@ -46,10 +46,13 @@
             const driverDataRequest = await fetch(`/getUserData/${ sessionData.driverId }`);
             const driver = await driverDataRequest.json();
 
+            const routeResponse = await fetch(`http://router.project-osrm.org/route/v1/driving/${ driver.geolocation };${ producer.geolocation };${ consumer.geolocation }?overview=full&geometries=geojson`);
+            const route = await routeResponse.json();
+
             dataContainer.innerHTML = `
                 <div class="flex flex-col gap-2">
-                    <h1>Arriving in 30mins</h1>
-                    <p>${ driver.carColor } ${ driver.carModel }, (${ driver.numberPlate })</p>
+                    <h1>Arriving in ${ route.routes[0].duration }mins</h1>
+                    <p>${ driver.vehicleColor } ${ driver.vehicleModel }, (${ driver.numberPlate })</p>
                     <div class="flex gap-2 justify-between">
                         <a href="/profile/${ consumer._id }">
                             <div class="flex flex-col gap-1 items-center">
@@ -84,7 +87,7 @@
     const getRequests = async () => {
         const response = await fetch(`/route/requests/<%= id %>`);
         const requests = await response.json();
-        requestsContainer.innerHTML = "";
+        dataContainer.innerHTML = "";
 
         requests.forEach(request => {
             const requestElement = `
@@ -104,7 +107,7 @@
                     </div>
                 </div>
             `
-            requestsContainer.innerHTML += requestElement;
+            dataContainer.innerHTML += requestElement;
         });
     };
 

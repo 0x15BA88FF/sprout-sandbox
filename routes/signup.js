@@ -11,7 +11,7 @@ router.get("/", (req, res) => { res.render('signup', { notifications: [] }) });
 
 router.post("/", async (req, res) => {
     try {
-        const { username, email, accountType, password, numberPlate, postalAddress, houseAddress, region, carColor, driversLicense, carModel, ghanaCard } = await req.body;
+        const { username, email, accountType, password, numberPlate, postalAddress, houseAddress, region, vehicleColor, driversLicense, vehicleModel, ghanaCard } = await req.body;
         let phoneNumbers = await req.body.phoneNumber.split(",");
 
         const userExists = await userModel.findOne({ email });
@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
         if (userExists) { return res.render('signup', { notifications: [{ level: "error", message: "This email has already been taken" }] }) }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new userModel({ username, email, accountType, password: hashedPassword, phoneNumbers, numberPlate, postalAddress, houseAddress, region, carColor, driversLicense, carModel, ghanaCard });
+        const user = new userModel({ username, email, accountType, password: hashedPassword, phoneNumbers, numberPlate, postalAddress, houseAddress, region, vehicleColor, driversLicense, vehicleModel, ghanaCard });
         const savedUser = await user.save();
 
         req.session.isAuth = true;
