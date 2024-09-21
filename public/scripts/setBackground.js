@@ -9,16 +9,14 @@ if (navigator.geolocation) {
                 if (!response.ok) {
                     throw new Error(`Network response was not ok: ${response.statusText}`);
                 }
-            } catch (error) {
-                console.error('Error during fetch:', error);
-            }
+            } catch (error) { pass }
         }, error => { 
             console.error('Geolocation error:', error); 
         }, {
             enableHighAccuracy: true,
             maximumAge: 0
         });
-    }, 10000);
+    }, 20000);
 } else {
     alert("Geolocation is not supported by this browser.");
 }

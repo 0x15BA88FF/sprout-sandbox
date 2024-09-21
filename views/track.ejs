@@ -4,6 +4,9 @@
 <head>
     <%- include('./components/head', { title: 'Track' }) %>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map svg { fill: none !important }
+    </style>
 </head>
 
 <body>
@@ -30,7 +33,7 @@
                  L.icon = function (options) { return new L.Icon(options) };
     const driverIcon = new Icon({ iconUrl: '/images/driverMarker.svg' }),
           producerIcon = new Icon({ iconUrl: '/images/producerMarker.svg' }),
-          consumerIcon = new Icon({ iconUrl: '/images/consumerMarker' });
+          consumerIcon = new Icon({ iconUrl: '/images/consumerMarker.svg' });
 
     let driverMarker, producerMarker, consumerMarker, routeLayer, circle;
 
@@ -74,13 +77,8 @@
                                 <p>Producer</p>
                             </div>
                         </a>
-                        <a href="/profile/${ producer._id }">
-                            <div class="flex flex-col gap-1 items-center">
-                                <img class="rounded-lg bg-background-200 border-2 border-background-200 thumbnail-md" src="/images/joinRoom.svg" alt="Room">
-                                <p>Join Room</p>
-                            </div>
-                        </a>
                     </div>
+                    <a class="button primary" href="/profile/${ producer._id }">Join Room</a>
                 </div>
             `
         } else { getDrivers() }
@@ -96,7 +94,6 @@
                 <div class="user-card">
                     <a href="/profile/${ driver._id }">
                         <div class="main">
-                            // <img class="thumbnail-base" src="/${ driver.avatar }" alt="${ driver.username }">
                             <img class="thumbnail-base" src="/${ driver.vehicleImages[0] }" alt="${ driver.vehicleModel }">
                             <div class="details">
                                 <h6>${ driver.username }</h6>
@@ -179,7 +176,7 @@
 
     getSessionData()
     fetchAndUpdateMap();
-    setInterval(getSessionData, 1000);
+    setInterval(getSessionData, 3000);
     setInterval(fetchAndUpdateMap, 5000);
 </script>
 <%- include("./components/background") %>

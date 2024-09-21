@@ -8,11 +8,10 @@ const purchaseModel = require("../models/purchaseModel");
 const deliverySessionModel = require("../models/deliverySessionModel");
 
 const router = express.Router();
-const ObjectId = mongodb.ObjectId;
 
 router.get('/:id', auth, allowAccess('producer', 'consumer', 'trader'), async (req, res) => {
-    const productId = new ObjectId(req.params.id);
-    const userId = new ObjectId(req.session.user._id);
+    const productId = req.params.id;
+    const userId = req.session.user._id;
     const product = await productModel.findById(productId);
     const user = await userModel.findById(userId);
     let isPurchased;
@@ -47,7 +46,7 @@ router.post('/:productId', auth, allowAccess('producer', 'consumer', 'trader'), 
         const savedDeliverySession = await deliverySession.save();
 
         await productModel.findByIdAndUpdate(productId, { $inc: { quantity: - quantity } });
-        await purchaseModel.findOneAndUpdate({ productId }, { $set: { deliverySession: String(savedDeliverySession._id) } });
+        await purchaseModel.findOneAndUpdate({ productId }, { $set: { deliverySessionId: String(savedDeliverySession._id) } });
         await userModel.findByIdAndUpdate(userId, { $push: { purchases: savedPurchase._id } });
 
         res.redirect("/purchases");

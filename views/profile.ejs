@@ -32,9 +32,10 @@
                 <% } %>
             </div>
         </div>
+
         <div class="actions flex items-center gap-2">
             <button class="button primary flex-grow" onclick="openContactModal()">Contact</button>
-            <button class="button secondary flex-grow" onclick="openMessageModal()">Message</button>
+            <a class="button secondary flex-grow" href="/messages/<%= user._id %>/new">Message</a>
         </div>
 
         <% if (user.accountType === 'producer' || user.accountType === 'trader') { %>
@@ -54,35 +55,22 @@
 
         <% if (accountType == 'driver') { %>
             <div class="flex flex-col gap-2 p-4 rounded-lg border-2 border-background-100 shadow-lg">
-                    <h2>Vehicle Preview:</h2>
-                    <% user.vehicleImages.forEach(image => { %>
-                        <img class="rounded-lg" src="/<%= image %>" alt="Vehicle Preview">
-                    <% }); %>
+                <h2>Vehicle Preview:</h2>
+                <% user.vehicleImages.forEach(image => { %>
+                    <img class="rounded-lg" src="/<%= image %>" alt="Vehicle Preview">
+                <% }); %>
             </div>
         <% } %>
     </section>
 
-    <section onclick="closeModals()" id="modal-backdrop" class="fixed top-0 z-50 w-screen h-screen mt-0 block flex-col opacity-30 bg-background-900"></section>
+    <section onclick="closeModals()" id="modal-backdrop" class="fixed left-0 top-0 z-50 w-screen h-screen mt-0 block flex-col opacity-30 bg-background-900"></section>
 
-    <section id="contact-modal" class="fixed z-50 h-full w-full flex items-center justify-center pointer-events-none">
+    <section id="contact-modal" class="fixed top-0 left-0 z-50 h-full w-full flex items-center justify-center pointer-events-none">
         <div class="w-full max-w-72 flex flex-col items-center gap-2 p-4 bg-background-50 rounded-lg pointer-events-auto">
             <h1>Contact</h1>
             <% if (user.phoneNumbers.length > 0) { %>
                 <% user.phoneNumbers.forEach(number => { %>
                     <button onclick="window.open('tel:<%= number %>')" class="p-2"><%= number %></button>
-                <% }); %>
-            <% } else { %>
-                <p>No Mobile Number</p>
-            <% } %>
-        </div>
-    </section>
-
-    <section id="message-modal" class="fixed z-50 h-full w-full flex items-center justify-center pointer-events-none">
-        <div class="w-full max-w-72 flex flex-col items-center gap-2 p-4 bg-background-50 rounded-lg pointer-events-auto">
-            <h1>Message</h1>
-            <% if (user.phoneNumbers.length > 0) { %>
-                <% user.phoneNumbers.forEach(number => { %>
-                    <button onclick="window.open('sms:<%= number %>')" class="p-2"><%= number %></button>
                 <% }); %>
             <% } else { %>
                 <p>No Mobile Number</p>
@@ -101,7 +89,6 @@
 
     <script>
         const contactModal = document.querySelector('#contact-modal');
-        const messageModal = document.querySelector('#message-modal');
         const modalBackdrop = document.querySelector('#modal-backdrop');
 
         const openContactModal = () => {
@@ -109,14 +96,8 @@
             modalBackdrop.style.display = "flex";
         }
         
-        const openMessageModal = () => {
-            messageModal.style.display = "flex";
-            modalBackdrop.style.display = "flex";
-        }
-
         const closeModals = () => {
             contactModal.style.display = "none";
-            messageModal.style.display = "none";
             modalBackdrop.style.display = "none";
         }
 

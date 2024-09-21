@@ -1,0 +1,10 @@
+<a href="/messages/<%= chat._id %>">
+    <div class="flex items-center gap-4 p-2">
+        <img class="rounded-full" src="<%= chat.avatar %>" alt="<%= chat.roomName %>">
+        <div>
+            <p><%= chat.roomName %></p>
+            <p><%= chat.messages[chat.messages.length - 1]?.message ||  "New Message" %></p>
+        </div>
+        <p class="ml-auto"><%= new Date(chat.messages[chat.messages.length - 1]?.date || Date.now()).toLocaleTimeString() %></p>
+    </div>
+</a>

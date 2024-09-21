@@ -12,27 +12,56 @@ router.get('/drivers/:id', auth, async (req, res) => {
     try {
         const deliverySessionId = req.params.id;
         const deliverySession = await deliverySessionModel.findById(deliverySessionId);
+        if (!deliverySession) {
+            return res.status(404).json({ error: 'Delivery session not found' });
+        }
 
         const drivers = await userModel.find({ accountType: "driver" }).limit(100).exec();
         const producer = await userModel.findById(deliverySession.fromId);
         const consumer = await userModel.findById(deliverySession.consumerId);
 
+        if (!producer || !consumer) {
+            return res.status(404).json({ error: 'Producer or consumer not found' });
+        }
+
         const producerLocation = producer.geolocation;
         const consumerLocation = consumer.geolocation;
 
         const driverPromises = drivers.map(async driver => {
-            const driverLocation = driver.geolocation;
-            const isRequested = String(driver._id) === deliverySession.driverId;
-            const route = await axios.get(`http://router.project-osrm.org/route/v1/driving/${ driverLocation };${ producerLocation };${ consumerLocation }?overview=full&geometries=geojson`);
-            return { _id: driver._id, username: driver.username, avatar: driver.avatar, geolocation: driver.geolocation, vehicleImages: driver.vehicleImages, distance: route.data.routes[0].distance, isRequested }
+            try {
+                const driverLocation = driver.geolocation;
+                const isRequested = String(driver._id) === deliverySession.driverId;
+                const route = await axios.get(`http://router.project-osrm.org/route/v1/driving/${driverLocation};${producerLocation};${consumerLocation}?overview=full&geometries=geojson`);
+                
+                if (!route.data.routes || route.data.routes.length === 0) {
+                    console.warn(`No routes found for driver ${driver._id}`);
+                    return null;
+                }
+                
+                return {
+                    _id: driver._id,
+                    username: driver.username,
+                    avatar: driver.avatar,
+                    geolocation: driver.geolocation,
+                    vehicleImages: driver.vehicleImages,
+                    distance: route.data.routes[0].distance,
+                    isRequested
+                };
+            } catch (error) {
+                console.error(`Error fetching route for driver ${driver._id}:`, error.message);
+                return null;
+            }
         });
-        const driversData = await Promise.all(driverPromises);
+
+        const driversData = (await Promise.all(driverPromises)).filter(data => data !== null);
 
         res.json({ driverData: driversData, isActive: deliverySession.isActive });
     } catch (error) {
+        console.error('Error handling /drivers/:id request:', error);
         res.status(500).send(error.toString());
     }
 });
+
 
 router.get('/requests/:id', auth, async (req, res) => {
     const driverId = req.params.id;

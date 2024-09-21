@@ -4,6 +4,9 @@
 <head>
     <%- include('./components/head', { title: 'Map' }) %>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map svg { fill: none !important }
+    </style>
 </head>
 
 <body>
@@ -72,13 +75,8 @@
                                 <p>Producer</p>
                             </div>
                         </a>
-                        <a href="/profile/${ producer._id }">
-                            <div class="flex flex-col gap-1 items-center">
-                                <img class="rounded-lg bg-background-200 border-2 border-background-200 thumbnail-md" src="/${ producer.avatar }" alt="Producer">
-                                <p>Join Room</p>
-                            </div>
-                        </a>
                     </div>
+                    <a class="button primary" href="/profile/${ producer._id }">Join Room</a>
                 </div>
             `
         } else { getRequests() }
@@ -160,7 +158,7 @@
 
     getSessionData()
     fetchAndUpdateMap();
-    setInterval(getSessionData, 1000);
+    setInterval(getSessionData, 3000);
     setInterval(fetchAndUpdateMap, 5000);
 </script>
 <%- include("./components/background") %>

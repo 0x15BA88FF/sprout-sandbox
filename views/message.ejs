@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+
+<head>
+    <%- include('./components/head', { title: 'message' }) %>
+</head>
+
+<body class="h-screen w-screen flex flex-col gap-0">
+    <nav class="w-screen flex items-center justify-between p-2 bg-white">
+        <div class="flex items-center gap-2">
+            <a href="/messages"><svg class="icon-base" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><g clip-path="url(#clip0_101_8720)"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.29303 12.7071C8.10556 12.5196 8.00024 12.2653 8.00024 12.0001C8.00024 11.7349 8.10556 11.4806 8.29303 11.2931L13.95 5.6361C14.0423 5.54059 14.1526 5.46441 14.2746 5.412C14.3966 5.35959 14.5279 5.332 14.6606 5.33085C14.7934 5.32969 14.9251 5.355 15.048 5.40528C15.1709 5.45556 15.2825 5.52981 15.3764 5.6237C15.4703 5.7176 15.5446 5.82925 15.5949 5.95214C15.6451 6.07504 15.6704 6.20672 15.6693 6.3395C15.6681 6.47228 15.6405 6.6035 15.5881 6.7255C15.5357 6.84751 15.4595 6.95785 15.364 7.0501L10.414 12.0001L15.364 16.9501C15.5462 17.1387 15.647 17.3913 15.6447 17.6535C15.6424 17.9157 15.5373 18.1665 15.3518 18.3519C15.1664 18.5373 14.9156 18.6425 14.6534 18.6448C14.3912 18.6471 14.1386 18.5463 13.95 18.3641L8.29303 12.7071Z" fill="black"></path></g><defs><clipPath id="clip0_101_8720"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg></a>
+            <img src="/<%= avatar %>" class="rounded-full border-2" alt="user">
+            <div class="flex flex-col">
+                <p class="text-lg font-semibold"><%= roomName %></p>
+                <!-- <p>Online</p> -->
+            </div>
+        </div>
+        <!-- <a href="tel:0000000000">call</a> -->
+    </nav>
+
+<div class="flex flex-col flex-grow gap-2 p-2 bg-gray-100 overflow-y-scroll" id="messages-area">
+    <% messages.forEach(message => { %>
+        <div class="max-w-7/12 flex gap-2 mb-2 p-2 <%= message.fromId === _id ? 'ml-auto' : '' %>">
+            <img src="/<%= message.avatar %>" alt="<%= message.username %>" class="w-8 h-8 rounded-full mr-2 <%= message.fromId === _id ? 'hidden' : '' %>">
+            <div class="flex flex-col gap-0 p-2 rounded-lg shadow-lg <%= message.fromId === _id ? 'bg-primary-500 text-white' : 'bg-white' %>">
+                <p class="text-sm font-semibold <%= message.fromId === _id ? 'hidden' : '' %>"><%= message.username %> (<%= message.accountType %>)</p>
+                <% 
+                    const locationPattern = /location\(\[(-?\d+\.\d+),\s*(-?\d+\.\d+)\]\)/;
+
+                    if (locationPattern.test(message.message)) {
+                        const mapEmbed = message.message.replace( locationPattern, (_, lng, lat) => `
+                            <iframe style="border:0" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/view?key=YOUR_GOOGLE_MAPS_API_KEY&center=${lat},${lng}&zoom=14&markers=${lat},${lng}"></iframe>
+                        `);
+                        %><%- mapEmbed %><%
+                    }
+                    else { %><p class="mb-1"><%= message.message %></p><% } 
+                %>
+                <p class="text-sm text-gray-500"><%= new Date(message.date).toLocaleTimeString() %></p>
+            </div>
+        </div>
+    <% }) %>
+</div>
+
+    <button class="fixed left-4 bottom-[80px] w-max h-max p-4 bg-primary-500 rounded-full shadow-lg" id="location-btn"><svg class="icon-sm fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M12 11.5C11.337 11.5 10.7011 11.2366 10.2322 10.7678C9.76339 10.2989 9.5 9.66304 9.5 9C9.5 8.33696 9.76339 7.70107 10.2322 7.23223C10.7011 6.76339 11.337 6.5 12 6.5C12.663 6.5 13.2989 6.76339 13.7678 7.23223C14.2366 7.70107 14.5 8.33696 14.5 9C14.5 9.3283 14.4353 9.65339 14.3097 9.95671C14.1841 10.26 13.9999 10.5356 13.7678 10.7678C13.5356 10.9999 13.26 11.1841 12.9567 11.3097C12.6534 11.4353 12.3283 11.5 12 11.5ZM12 2C10.1435 2 8.36301 2.7375 7.05025 4.05025C5.7375 5.36301 5 7.14348 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 7.14348 18.2625 5.36301 16.9497 4.05025C15.637 2.7375 13.8565 2 12 2Z" /></svg></button>
+
+    <form id="message-form" class="p-2 px-4">
+        <div class="h-max flex items-center p-2 gap-2 bg-gray-200 rounded-full">
+            <input id="message-input" type="text" class="flex-grow" placeholder="Enter your message...">
+            <button type="submit" class="p-2 bg-primary-500 rounded-full" id="send-btn"><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M4.99994 12L4.39594 6.563C4.22294 5.007 5.82494 3.864 7.23994 4.535L19.1839 10.193C20.7089 10.915 20.7089 13.085 19.1839 13.807L7.23994 19.466C5.82494 20.136 4.22294 18.994 4.39594 17.438L4.99994 12ZM4.99994 12H11.9999" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+        </div>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+</body>
+
+<script>
+    const socket = io();
+    const messageForm = document.querySelector("#message-form");
+    const messageArea = document.querySelector("#messages-area");
+    const messageInput = document.querySelector("#message-input");
+    const locationBtn = document.querySelector("#location-btn");
+
+    socket.emit('join room', "<%= roomId %>");
+
+    locationBtn.addEventListener("click", async e => {
+        e.preventDefault();
+
+        navigator.geolocation.getCurrentPosition(async position => {
+            try {
+                const [ latitude, longitude ] = [ position.coords.latitude, position.coords.longitude ];
+                const message = `location([${longitude},${latitude}])`;
+                const messageData = { roomId: "<%= roomId %>", message: message, fromId: "<%= _id %>", username: "<%= username %>", accountType: "<%= accountType %>", avatar: "<%= avatar %>", time: new Date().toLocaleTimeString() };
+
+                try {
+                    const response = await fetch(`/messages/<%= roomId %>/message`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message }) });
+                    if (!response.ok) throw new Error("Failed to save message to the database.");
+                    socket.emit('chat message', messageData);
+                } catch (error) {
+                    console.error(error);
+                    alert("There was an error sending your message. Please try again.");
+                }
+
+            } catch (error) { pass }
+        }, error => console.error('Geolocation error:', error), { enableHighAccuracy: true, maximumAge: 0 });
+    });
+
+    messageForm.addEventListener("submit", async e => {
+        e.preventDefault();
+        const message = messageInput.value.trim();
+        if (message === "") return;
+
+        const messageData = {
+            roomId: "<%= roomId %>",
+            message: message,
+            fromId: "<%= _id %>",
+            username: "<%= username %>",
+            accountType: "<%= accountType %>",
+            avatar: "<%= avatar %>",
+            time: new Date().toLocaleTimeString()
+        };
+
+        try {
+            const response = await fetch(`/messages/<%= roomId %>/message`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message })
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to save message to the database.");
+            }
+
+            socket.emit('chat message', messageData);
+            messageInput.value = "";
+        } catch (error) {
+            console.error(error);
+            alert("There was an error sending your message. Please try again.");
+        }
+    });
+
+    socket.on('chat message', data => {
+        const messageTemplate = `
+            <div class="max-w-7/12 flex gap-2 mb-2 p-2 ${data.fromId === '<%= _id %>' ? 'ml-auto' : ''}">
+                <img src="${data.avatar}" alt="${data.username}" class="w-8 h-8 rounded-full mr-2 ${data.fromId === '<%= _id %>' ? 'hidden' : ''}">
+                <div class="flex flex-col gap-0 p-2 rounded-lg shadow-lg ${data.fromId === '<%= _id %>' ? 'bg-primary-500' : 'bg-white'}">
+                    <p class="text-sm font-semibold ${data.fromId === '<%= _id %>' ? 'hidden' : ''}">${data.username} (${data.accountType})</p>
+                    <p class="mb-1">${data.message}</p>
+                    <p class="text-sm text-gray-500">${data.time}</p>
+                </div>
+            </div>
+        `;
+
+        messageArea.innerHTML += messageTemplate;
+        messageArea.scrollTo(0, messageArea.scrollHeight);
+    });
+
+    socket.on('disconnect', () => console.log(`Disconnected from server`));
+</script>
+
+</html>

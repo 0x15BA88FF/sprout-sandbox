@@ -5,7 +5,7 @@ module.exports = mongoose.model("Purchase", mongoose.Schema({
         type: String,
         required: true,
     },
-    deliverySession: {
+    deliverySessionId: {
         type: String
     },
     price: {

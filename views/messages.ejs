@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./components/head', { title: "My Messages" }) %>
+</head>
+
+<body>
+    <%- include('./components/navbar', { activeLink: '/messages', accountType }) %>
+
+    <section>
+        <% chats.forEach(chat => { %>
+            <%- include('./components/chatBox', { chat }) %>
+        <% }); %>
+    </section>
+</body>
+
+</html>

@@ -76,7 +76,7 @@ const userSchema = new mongoose.Schema({
     },
     geolocation: {
         type: String,
-    }
+    },
 });
 
 module.exports = mongoose.model("User", userSchema);
